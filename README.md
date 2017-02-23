@@ -1,8 +1,10 @@
-# TPS - TéléProcédure Simplifiée
+# OpenSimplif
 
 ## Context
 
-TéléProcédure Simplifiée, ou TPS pour les intimes, est une plateforme 100% web et 0% email, conçue afin de répondre au besoin urgent de l'État d'appliquer la directive sur le 100% démat' à l'horizon 2018 pour les démarches administratives.
+OpenSimplif est un fork du projet TPS (https://github.com/sgmap/tps).
+
+Il a pour vocation de centraliser toutes les propositions, pistes et mesures des différents ministères de l'état français.
 
 
 ## Technologies utilisées
