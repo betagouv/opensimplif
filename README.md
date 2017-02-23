@@ -4,8 +4,13 @@
 
 OpenSimplif est un fork du projet TPS (https://github.com/sgmap/tps).
 
+L'historique de développement du projet est présent dans un autre répertoire GitHub (https://github.com/XjulI1/opensimplif).
+
 Il a pour vocation de centraliser toutes les propositions, pistes et mesures des différents ministères de l'état français.
 
+/!\ ATTENTION /!\
+
+Depuis le commit https://github.com/XjulI1/opensimplif/commit/cecb0e9, les tests n'ont pas été mis à jour pour s'adapter au context OpenSimplif. Les différentes évolutions fonctionnelles ont été tracées dans les commits suivants.
 
 ## Technologies utilisées
 
