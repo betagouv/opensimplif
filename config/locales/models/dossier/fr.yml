@@ -1,0 +1,35 @@
+fr:
+  activerecord:
+    models:
+      dossier: 'Dossier'
+    attributes:
+      dossier:
+        montant_projet: 'Le montant du projet'
+        montant_aide_demande: "Le montant d'aide demandée"
+        date_previsionnelle: "La date de début prévisionnelle"
+        state:
+          draft: "Brouillon"
+          initiated: "Nouveau"
+          replied: "En construction"
+          updated: "En construction"
+          validated: "Figé"
+          submitted: "Déposé / À réceptionner"
+          received: "En instruction"
+          closed: "Accepté"
+          refused: "Refusé"
+          without_continuation: "Sans suite"
+
+    errors:
+      models:
+        dossier:
+          attributes:
+            mail_contact:
+              blank: 'doit être rempli'
+              invalid: 'est incorrect'
+            montant_projet:
+              blank: 'doit être rempli'
+            montant_aide_demande:
+              blank: 'doit être rempli'
+            date_previsionnelle:
+              blank: 'doit être remplie'
+

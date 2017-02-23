@@ -1,0 +1,29 @@
+#form_login
+  %br
+  = image_tag(image_url(LOGO_NAME))
+  %br
+  %h2#gestionnaire_login Accompagnateur
+
+  %br
+  %br
+  #new_user
+    = form_for @gestionnaire, url: gestionnaire_session_path, method: :post do |f|
+      %h4
+        = f.label :email
+      .input-group
+        .input-group-addon
+          %span.fa.fa-user
+        = f.email_field :email, class: 'form-control'
+      %br
+      %h4
+        = f.label :password
+      .input-group
+        .input-group-addon
+          %span.fa.fa-asterisk
+        = f.password_field :password, autocomplete: "off", class: 'form-control', value: @gestionnaire.password
+      %br
+      %br
+      .actions
+        = f.submit "Se connecter", class:'btn btn-primary'
+      %br
+    = render "gestionnaires/shared/links"

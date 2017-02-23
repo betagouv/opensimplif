@@ -1,0 +1,57 @@
+
+%br
+
+-{libelle: 'Libellé*', description: 'Description*', organisation: 'Organisation', direction: 'Direction', lien_site_web: 'Lien site internet', lien_notice: 'Lien notice'}.each do |key, value|
+  .form-group
+    %h4
+      = value
+    - if key == :description
+      = f.text_area key, rows: '6', placeholder: 'Description du projet', class: 'form-control wysihtml5'
+
+    - else
+      = f.text_field key, class: 'form-control', placeholder: value
+
+.row
+  .col-md-6.col-sm-6.col-xs-6.col-lg-6
+    %h4 Logo de la procédure
+    - unless @procedure.logo.blank?
+      = image_tag @procedure.decorate.logo_img, {style: 'height: 40px; display: inline; margin-right: 6px', id: 'preview_procedure_logo'}
+    = f.file_field(:logo, accept: 'image/png, image/jpg, image/jpeg', style: 'display:inline')
+
+    %div{style:'margin-top:5px'}
+      %i
+        Fichier accepté : JPG / JPEG / PNG
+  -#.col-md-6.col-sm-6.col-xs-6.col-lg-6
+  -#  %h4 Drapeau européen
+  -#  %label
+  -#    =f.check_box :euro_flag
+  -#    Afficher le drapeau européen
+
+  -#.col-md-6.col-sm-6.col-xs-6.col-lg-6
+  -#  %h4 Cartographie
+  -#
+  -#  = f.fields_for :module_api_carto, @procedure.module_api_carto do |ff|
+  -#    %label
+  -#      =ff.check_box :use_api_carto, {id: :procedure_module_api_carto_use_api_carto}
+  -#      Utilisation de la cartographie
+  -#
+  -#    %ul#modules_api_carto
+  -#      %li
+  -#        %label
+  -#          = ff.check_box :quartiers_prioritaires
+  -#          Quartiers Prioritaires
+  -#      %li
+  -#        %label
+  -#          = ff.check_box :cadastre
+  -#          Cadastre
+  -#
+  .col-md-6.col-sm-6.col-xs-6.col-lg-6
+    %h4 Particuliers
+    %div
+      %label
+        =f.check_box :for_individual, {checked: 'checked'}
+        Cette procédure s'adresse à un public qui
+        %b
+          ne possède pas (ou pas encore) de numéro SIRET,
+        qui doivent donc s'identifier en tant que personne physique.
+

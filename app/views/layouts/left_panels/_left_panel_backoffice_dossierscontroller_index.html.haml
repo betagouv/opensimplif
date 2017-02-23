@@ -1,0 +1,44 @@
+%div#first-block
+  -#%div.dossiers-en-cours
+  -#  .count= @facade_data_view.total_dossier_follow
+  -#  .text= "SUIVIS"
+  -#- unless Features.opensimplif
+  -#  %div.nouveaux-dossiers
+  -#    .count= @facade_data_view.total_new_dossier
+  -#    .text= "NOUVEAUX"
+  -#%div.nouvelles-notifications
+  -#  .count= @facade_data_view.dossiers_with_unread_notifications.count
+  -#  .text= "MODIFIÉS"
+
+%div#action-block
+
+%div#menu-block
+  %div.split-hr-left
+  #switch-buttons
+    #switch-procedures.active.center Simplif
+    #switch-notifications Notifications
+
+%div#infos-block
+  %div.split-hr-left
+  #procedure_list
+    - @facade_data_view.gestionnaire_procedures_name_and_id_list.each do |procedure|
+
+      - url_path = Features.opensimplif ? simplification_path(procedure[:id]) : backoffice_dossiers_procedure_path(procedure[:id])
+
+      = link_to url_path, {title: procedure[:libelle]} do
+        %div.procedure_list_element{ class: ('active' if procedure[:id] == @facade_data_view.procedure.id rescue '') }
+          = truncate(procedure[:libelle], length: 50)
+          -if procedure[:unread_notifications] > 0
+            .badge.progress-bar-warning{title: 'Notifications'}
+              = procedure[:unread_notifications]
+  #notifications_list.hidden
+    - if @facade_data_view.dossiers_with_unread_notifications.empty?
+      .no-notification= "Aucune notification pour le moment."
+    - else
+      - @facade_data_view.dossiers_with_unread_notifications.each do |dossier|
+        = link_to backoffice_dossier_path(dossier.id) do
+          .notification
+            .dossier-index= "Dossier n°#{dossier.id}"
+            .count= dossier.unreads.where(gestionnaire: @facade_data_view.current_devise_profil).count
+            %br
+            .updated-at= dossier.procedure.libelle.truncate(60)

@@ -1,0 +1,47 @@
+#backoffice_index
+  #pref_list_menu
+    = render partial: 'backoffice/dossiers/pref_list'
+
+  .default_data_block.default_visible
+    %div.row.show-block#new_dossiers
+      %div.header
+        %div.col-lg-8.col-md-8.col-sm-8.col-xs-8.title
+          %div.carret-right
+          %div.carret-down
+          Mes simplifications
+        %div.col-lg-2.col-md-2.col-sm-2.col-xs-2.count
+          =@smart_listings[:mes_dossiers].count
+          SIMPLIFICATIONS
+        %a{href: '/commencer/'+@facade_data_view.procedure.path}
+          %div#new-procedure.col-lg-2.col-md-2.col-sm-2.col-xs-2.action
+            Nouvelle
+
+      %div.body
+        = smart_listing_render :mes_dossiers
+
+  .default_data_block.default_visible
+    %div.row.show-block#new_dossiers
+      %div.header
+        %div.col-lg-10.col-md-10.col-sm-10.col-xs-10.title
+          %div.carret-right
+          %div.carret-down
+          Les simplifications que je suis
+        %div.col-lg-2.col-md-2.col-sm-2.col-xs-2.count
+          =@facade_data_view.suivi_total
+          simplifications
+      %div.body
+        = smart_listing_render :follow_dossiers
+
+
+  .default_data_block.default_visible
+    %div.row.show-block#new_dossiers
+      %div.header
+        %div.col-lg-10.col-md-10.col-sm-10.col-xs-10.title
+          %div.carret-right
+          %div.carret-down
+          Toutes les simplifications
+        %div.col-lg-2.col-md-2.col-sm-2.col-xs-2.count
+          =@facade_data_view.all_state_total
+          simplifications
+      %div.body
+        = smart_listing_render :all_state_dossiers

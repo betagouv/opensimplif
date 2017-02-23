@@ -1,0 +1,18 @@
+.default_data_block.default_visible{style:'margin-top: 40px'}
+  .row.show-block.clearfix#messages
+    .header
+      .col-xs-10.title
+        .carret-right
+        .carret-down
+        MESSAGERIE
+
+      .col-xs-2.count
+        = pluralize(@facade.commentaires.count, "message")
+
+    .body.display-block-on-print
+      - if dossier_facade.commentaires.any?
+        .commentaires
+          = render partial: 'dossiers/commentaires/commentaire', collection: dossier_facade.commentaires.object.sort
+        .split-hr
+      #new-commentaire.hidden-print
+        = render partial: 'dossiers/commentaires/form', locals: { dossier_facade: @facade }

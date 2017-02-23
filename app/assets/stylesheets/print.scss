@@ -1,0 +1,65 @@
+@media print {
+  html, body {
+    margin: 0;
+  }
+
+  #main_div{
+    margin-left: 50px;
+    margin-right: 0;
+  }
+
+  #commentaire_new {
+    display: none;
+  }
+
+  #commentaires_flux {
+    margin-top: -50px;
+  }
+
+  #infos_dossier .row:last-child {
+    display: none;
+  }
+
+  #infos_dossier {
+    margin-bottom: -70px;
+  }
+
+  #backoffice_dossier_show .nav-tabs {
+    display: none;
+  }
+
+  #left-panel {
+    margin-top: 0;
+    height: auto;
+    position: relative;
+    width: 100%;
+  }
+
+  #wrap {
+    overflow: visible;
+  }
+
+  #main-container {
+    width: 100%;
+  }
+
+  #beta {
+    top: 26px;
+    bottom: initial;
+    position: absolute;
+    transform: rotate(45deg);
+  }
+
+  .copyright {
+    width: 100%;
+    left: 0;
+  }
+
+  .no-page-break-inside {
+    page-break-inside: avoid;
+  }
+
+  .display-block-on-print {
+    display: block !important;
+  }
+}

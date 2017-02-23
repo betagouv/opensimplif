@@ -1,0 +1,19 @@
+#modules_api_carto {
+  display: none;
+}
+
+#procedure_lien_demarche{
+  display: none;
+}
+
+#individual_with_siret {
+  display: none;
+}
+
+.procedure {
+  &-description {
+    img {
+      max-width: 100%;
+    }
+  }
+}

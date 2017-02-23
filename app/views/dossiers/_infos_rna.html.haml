@@ -1,0 +1,23 @@
+.row#infos_rna
+  .col-lg-6.col-md-6.col-sm-6.col-xs-6
+    %dl.dl-horizontal
+      %dt Association ID :
+      %dd.text-success= @facade.entreprise.rna_information.association_id
+
+      %dt Titre :
+      %dd= @facade.entreprise.rna_information.titre
+
+      %dt Objet :
+      %dd= @facade.entreprise.rna_information.objet
+
+  .col-lg-6.col-md-6.col-sm-6.col-xs-6
+    %dl.dl-horizontal
+      %dt Date création :
+      %dd= @facade.entreprise.rna_information.date_creation
+
+      %dt Capital publication :
+      %dd= @facade.entreprise.rna_information.date_publication
+
+      %dt Capital déclaration :
+      %dd= @facade.entreprise.rna_information.date_declaration
+
