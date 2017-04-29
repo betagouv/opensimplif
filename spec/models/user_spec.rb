@@ -76,7 +76,7 @@ describe User, type: :model do
   context 'unified login' do
     it 'syncs credentials to associated gestionnaire' do
       user = create(:user)
-      gestionnaire = create(:gestionnaire, email: user.email)
+      gestionnaire = Gestionnaire.find_by_email(user.email)
 
       user.update_attributes(email: 'whoami@plop.com', password: 'super secret')
 

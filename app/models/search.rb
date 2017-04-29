@@ -44,7 +44,7 @@ class Search < ActiveRecord::Base
 
     search_term = Search.connection.quote(to_tsquery)
 
-    dossier_ids = @gestionnaire.dossiers
+    dossier_ids = Dossier.all
       .select(:id)
       .where(archived: false)
       .where.not(state: "draft")

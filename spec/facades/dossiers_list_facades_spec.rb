@@ -3,8 +3,8 @@ require 'spec_helper'
 describe DossiersListFacades do
 
   let(:gestionnaire) { create :gestionnaire }
-  let(:procedure) { create :procedure }
-  let(:procedure_2) { create :procedure, libelle: 'plop' }
+  let(:procedure) { create :procedure, published: true }
+  let(:procedure_2) { create :procedure, libelle: 'plop', published: true }
 
   let!(:preference) { create :preference_list_dossier,
                              gestionnaire: gestionnaire,
@@ -31,7 +31,7 @@ describe DossiersListFacades do
     context 'when procedure is not pasted at the facade' do
       let(:facade) { described_class.new gestionnaire, 'nouveaux' }
 
-      it { expect(subject.size).to eq 6 }
+      it { expect(subject.size).to eq 5 }
     end
 
     context 'when procedure is pasted at the facade' do

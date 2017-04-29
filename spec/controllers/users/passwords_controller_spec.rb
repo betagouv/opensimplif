@@ -8,7 +8,7 @@ describe Users::PasswordsController, type: :controller do
   describe "update" do
     context "unified login" do
       let(:user) { create(:user, email: 'unique@plop.com', password: 'password') }
-      let(:gestionnaire) { create(:gestionnaire, email: 'unique@plop.com', password: 'password') }
+      let(:gestionnaire) { Gestionnaire.find_by_email('unique@plop.com') }
       let(:administrateur) { create(:administrateur, email: 'unique@plop.com', password: 'password') }
 
       before do

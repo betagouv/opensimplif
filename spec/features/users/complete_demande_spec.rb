@@ -72,7 +72,7 @@ feature 'user path for dossier creation' do
               page.find_by_id('suivant').trigger('click')
             end
             scenario 'user is on recap page' do
-              expect(page).to have_css('#users_recapitulatif_dossier_show')
+              expect(page).to have_css('#backoffice_dossier_show')
             end
           end
         end

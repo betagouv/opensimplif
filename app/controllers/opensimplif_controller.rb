@@ -1,7 +1,7 @@
 class OpensimplifController < Backoffice::Dossiers::ProcedureController
   def index
     if params[:id].nil?
-      procedure = current_gestionnaire.procedures.order('libelle ASC').first
+      procedure = Procedure.where(published: true).order('libelle ASC').first
 
       if procedure.nil?
         return redirect_to simplifications_nothing_path

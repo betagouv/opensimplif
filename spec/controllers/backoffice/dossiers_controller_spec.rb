@@ -17,63 +17,6 @@ describe Backoffice::DossiersController, type: :controller do
     create :assign_to, procedure: procedure, gestionnaire: gestionnaire
   end
 
-  describe 'GET #index' do
-    subject { get :index }
-
-    before do
-      sign_in gestionnaire
-    end
-
-    context 'when gestionnaire is assign to a procedure' do
-      it { is_expected.to redirect_to backoffice_dossiers_procedure_path(id: procedure.id) }
-
-      context 'when gestionnaire is assign to many proceudure' do
-        before do
-          create :assign_to, procedure: create(:procedure), gestionnaire: gestionnaire
-          create :assign_to, procedure: create(:procedure), gestionnaire: gestionnaire
-        end
-
-        it { expect(gestionnaire.procedures.count).to eq 3 }
-
-        context 'when gestionnaire procedure_filter is nil' do
-          it { expect(gestionnaire.procedure_filter).to be_nil }
-          it { is_expected.to redirect_to backoffice_dossiers_procedure_path(id: gestionnaire.procedures.order('libelle ASC').first.id) }
-        end
-
-        context 'when gestionnaire procedure_filter is not nil' do
-          let(:procedure_filter_id) { gestionnaire.procedures.order('libelle ASC').last.id }
-
-          before do
-            gestionnaire.update_column :procedure_filter, procedure_filter_id
-          end
-
-          context 'when gestionnaire is assign_to the procedure filter id' do
-            it { is_expected.to redirect_to backoffice_dossiers_procedure_path(id: procedure_filter_id) }
-          end
-
-          context 'when gestionnaire not any more assign_to the procedure filter id' do
-            before do
-              AssignTo.where(procedure: procedure_filter_id, gestionnaire: gestionnaire).delete_all
-            end
-
-            it { expect(gestionnaire.procedure_filter).to be_nil }
-            it { expect(AssignTo.where(procedure: procedure_filter_id, gestionnaire: gestionnaire).count).to eq 0 }
-
-            it { is_expected.to redirect_to backoffice_dossiers_procedure_path(id: gestionnaire.procedures.order('libelle ASC').first.id) }
-          end
-        end
-      end
-    end
-
-    context 'when gestionnaire is not assign to a procedure' do
-      before do
-        AssignTo.where(procedure: procedure, gestionnaire: gestionnaire).delete_all
-      end
-
-      it { is_expected.to redirect_to root_path }
-    end
-  end
-
   describe 'GET #show' do
     subject { get :show, params: {id: dossier_id} }
 
@@ -84,15 +27,6 @@ describe Backoffice::DossiersController, type: :controller do
 
       it 'returns http success' do
         expect(subject).to have_http_status(200)
-      end
-
-      describe 'all notifications unread are changed' do
-        it do
-          expect(Notification).to receive(:where).with(dossier_id: dossier_id).and_return(Notification::ActiveRecord_Relation)
-          expect(Notification::ActiveRecord_Relation).to receive(:update_all).with(already_read: true).and_return(true)
-
-          subject
-        end
       end
 
       context ' when dossier is archived' do
@@ -152,19 +86,6 @@ describe Backoffice::DossiersController, type: :controller do
     end
   end
 
-  describe 'GET #list_fake' do
-    context 'when gestionnaire is connected' do
-      before do
-        sign_in gestionnaire
-      end
-
-      it 'returns http success' do
-        get :index, params: {liste: :list_fake}
-        expect(response).to redirect_to(backoffice_dossiers_procedure_path(id: gestionnaire.procedures.first.id))
-      end
-    end
-  end
-
   describe 'POST #search' do
     before do
       sign_in gestionnaire
@@ -192,13 +113,6 @@ describe Backoffice::DossiersController, type: :controller do
       expect(dossier.state).to eq('validated')
     end
 
-    it 'Notification email is send' do
-      expect(NotificationMailer).to receive(:dossier_validated).and_return(NotificationMailer)
-      expect(NotificationMailer).to receive(:deliver_now!)
-
-      subject
-    end
-
     it { is_expected.to redirect_to backoffice_dossier_path(id: dossier.id) }
   end
 
@@ -221,13 +135,6 @@ describe Backoffice::DossiersController, type: :controller do
       end
     end
 
-    it 'Notification email is send' do
-      expect(NotificationMailer).to receive(:dossier_received).and_return(NotificationMailer)
-      expect(NotificationMailer).to receive(:deliver_now!)
-
-      subject
-    end
-
     it { is_expected.to redirect_to backoffice_dossier_path(id: dossier.id) }
   end
 
@@ -244,13 +151,6 @@ describe Backoffice::DossiersController, type: :controller do
 
       dossier.reload
       expect(dossier.state).to eq('refused')
-    end
-
-    it 'Notification email is sent' do
-      expect(NotificationMailer).to receive(:dossier_refused).and_return(NotificationMailer)
-      expect(NotificationMailer).to receive(:deliver_now!)
-
-      subject
     end
 
     it { is_expected.to redirect_to backoffice_dossier_path(id: dossier.id) }
@@ -271,13 +171,6 @@ describe Backoffice::DossiersController, type: :controller do
       expect(dossier.state).to eq('without_continuation')
     end
 
-    it 'Notification email is sent' do
-      expect(NotificationMailer).to receive(:dossier_without_continuation).and_return(NotificationMailer)
-      expect(NotificationMailer).to receive(:deliver_now!)
-
-      subject
-    end
-
     it { is_expected.to redirect_to backoffice_dossier_path(id: dossier.id) }
   end
 
@@ -293,13 +186,6 @@ describe Backoffice::DossiersController, type: :controller do
 
       dossier.reload
       expect(dossier.state).to eq('closed')
-    end
-
-    it 'Notification email is sent' do
-      expect(NotificationMailer).to receive(:dossier_closed).and_return(NotificationMailer)
-      expect(NotificationMailer).to receive(:deliver_now!)
-
-      subject
     end
 
     it { is_expected.to redirect_to backoffice_dossier_path(id: dossier.id) }

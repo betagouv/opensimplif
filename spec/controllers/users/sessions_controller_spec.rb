@@ -48,24 +48,16 @@ describe Users::SessionsController, type: :controller do
       let(:password) { 'password' }
 
       let(:user) { create(:user, email: email, password: password) }
-      let(:gestionnaire) { create(:gestionnaire, email: email, password: password) }
+      let(:gestionnaire) { Gestionnaire.find_by_email(email) }
       let(:administrateur) { create(:administrateur, email: email, password: password) }
 
       it 'signs user in' do
         post :create, params: {user: {email: user.email, password: user.password}}
         expect(@response.redirect?).to be(true)
         expect(subject.current_user).to eq(user)
-        expect(subject.current_gestionnaire).to be(nil)
-        expect(subject.current_administrateur).to be(nil)
-        expect(user.reload.loged_in_with_france_connect).to be(nil)
-      end
-
-      it 'signs gestionnaire in' do
-        post :create, params: {user: {email: gestionnaire.email, password: gestionnaire.password}}
-        expect(@response.redirect?).to be(true)
-        expect(subject.current_user).to be(nil)
         expect(subject.current_gestionnaire).to eq(gestionnaire)
         expect(subject.current_administrateur).to be(nil)
+        expect(user.reload.loged_in_with_france_connect).to be(nil)
       end
 
       it 'signs administrateur in' do
@@ -155,7 +147,7 @@ describe Users::SessionsController, type: :controller do
 
     context "when associated gestionnaire" do
       let(:user) { create(:user, email: 'unique@plop.com', password: 'password') }
-      let(:gestionnaire) { create(:gestionnaire, email: 'unique@plop.com', password: 'password') }
+      let(:gestionnaire) { Gestionnaire.find_by_email('unique@plop.com') }
 
       it 'signs user out' do
         sign_in user

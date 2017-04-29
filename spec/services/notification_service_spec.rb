@@ -12,14 +12,6 @@ describe NotificationService do
       let(:type_notif) { 'commentaire' }
 
       it { expect { subject }.to change(Notification, :count).by (1) }
-
-      context 'when is not the first notification' do
-        before do
-          create :notification, dossier: dossier, type_notif: type_notif
-        end
-
-        it { expect { subject }.to change(Notification, :count).by (0) }
-      end
     end
   end
 

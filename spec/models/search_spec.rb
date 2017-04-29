@@ -50,28 +50,8 @@ describe Search do
       it { expect(subject.size).to eq(0) }
     end
 
-    describe 'search on SIRET' do
-      context 'when is part of SIRET' do
-        let(:terms) { '4181' }
-
-        it { expect(subject.size).to eq(1) }
-      end
-
-      context 'when is a complet SIRET' do
-        let(:terms) { '41816602300012' }
-
-        it { expect(subject.size).to eq(1) }
-      end
-    end
-
-    describe 'search on raison social' do
-      let(:terms) { 'OCTO' }
-
-      it { expect(subject.size).to eq(2) }
-    end
-
     describe 'search on multiple fields' do
-      let(:terms) { 'octo plop' }
+      let(:terms) { 'OCTO Academy' }
 
       it { expect(subject.size).to eq(1) }
     end

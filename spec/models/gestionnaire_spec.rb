@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Gestionnaire, type: :model do
   let(:admin) { create :administrateur }
-  let!(:procedure) { create :procedure, administrateur: admin }
+  let!(:procedure) { create :procedure, administrateur: admin, published: true }
   let!(:procedure_2) { create :procedure, administrateur: admin }
   let!(:procedure_3) { create :procedure, administrateur: admin }
   let(:gestionnaire) { create :gestionnaire, procedure_filter: procedure_filter, administrateurs: [admin] }
@@ -126,7 +126,8 @@ describe Gestionnaire, type: :model do
     subject { gestionnaire.dossiers_follow }
 
     it { expect(Follow.all.size).to eq 1 }
-    it { expect(subject.first).to eq dossier }
+    it {
+      expect(subject.first).to eq dossier }
   end
 
   describe '#build_default_preferences_list_dossier' do
@@ -134,7 +135,7 @@ describe Gestionnaire, type: :model do
 
     context 'when gestionnaire is created' do
       it 'build default 5 pref list dossier object' do
-        expect(subject.size).to eq 5
+        expect(subject.size).to eq 4
       end
 
       it 'build dossier_id column' do
@@ -142,24 +143,19 @@ describe Gestionnaire, type: :model do
         expect(subject.first.attr).to eq 'id'
       end
 
-      it 'build dossier state column' do
+      it 'build dossier created_at column' do
         expect(subject[1].table).to be_nil
-        expect(subject[1].attr).to eq 'state'
+        expect(subject[1].attr).to eq 'created_at'
       end
 
-      it 'build procedure libelle column' do
-        expect(subject[2].table).to eq 'procedure'
-        expect(subject[2].attr).to eq 'libelle'
+      it 'build dossier updated_at column' do
+        expect(subject[2].table).to be nil
+        expect(subject[2].attr).to eq 'updated_at'
       end
 
-      it 'build entreprise raison_sociale column' do
-        expect(subject[3].table).to eq 'entreprise'
-        expect(subject[3].attr).to eq 'raison_sociale'
-      end
-
-      it 'build entreprise raison_sociale column' do
-        expect(subject.last.table).to eq 'etablissement'
-        expect(subject.last.attr).to eq 'siret'
+      it 'build user email column' do
+        expect(subject[3].table).to eq 'user'
+        expect(subject[3].attr).to eq 'email'
       end
     end
   end
@@ -173,7 +169,7 @@ describe Gestionnaire, type: :model do
       end
 
       it 'build liste column' do
-        expect(subject.liste).to eq 'a_traiter'
+        expect(subject.liste).to eq 'all_state'
       end
 
       it 'build procedure_id column' do
