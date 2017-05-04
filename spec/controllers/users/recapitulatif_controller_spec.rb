@@ -75,14 +75,6 @@ describe Users::RecapitulatifController, type: :controller do
         expect(flash[:notice]).to include('Dossier déposé avec succès.')
       end
 
-      it 'Notification email is send' do
-        expect(NotificationMailer).to receive(:dossier_submitted).and_return(NotificationMailer)
-        expect(NotificationMailer).to receive(:deliver_now!)
-
-        dossier.validated!
-        post :submit, params: {dossier_id: dossier.id}
-      end
-
       it 'Internal notification is created' do
         expect(Notification.where(dossier_id: dossier.id, type_notif: 'submitted').first).not_to be_nil
       end

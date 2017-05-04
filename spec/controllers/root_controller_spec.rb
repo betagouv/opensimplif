@@ -8,7 +8,7 @@ describe RootController, type: :controller do
       sign_in create(:user)
     end
 
-    it { expect(subject).to redirect_to(users_dossiers_path) }
+    it { expect(subject).to redirect_to(simplifications_path) }
   end
 
   context 'when Gestionnaire is connected' do
@@ -16,14 +16,6 @@ describe RootController, type: :controller do
 
     before do
       sign_in gestionnaire
-    end
-
-    context 'when gestionnaire is affect to a procedure' do
-      before do
-        create :assign_to, procedure: (create :procedure), gestionnaire: gestionnaire
-      end
-
-      it { expect(subject).to redirect_to(backoffice_dossiers_procedure_path(id: Procedure.all.first.id)) }
     end
 
     context 'when gestionnaire is not affect to a procedure' do
@@ -81,19 +73,6 @@ describe RootController, type: :controller do
 
     it { expect(response.body).to have_link('Démonstration', href: users_sign_in_demo_path) }
 
-  end
-
-  context 'when opensimplif features is true' do
-    pending
-    # let(:gestionnaire) { create(:gestionnaire) }
-    #
-    # before do
-    #   sign_in gestionnaire
-    #
-    #   allow_any_instance_of(Features).to receive(:opensimplif).and_return(true)
-    # end
-    #
-    # it { expect(subject).to redirect_to(simplifications_path) }
   end
 
   context "unified login" do

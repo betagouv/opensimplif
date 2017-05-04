@@ -76,29 +76,5 @@ describe InvitesController, type: :controller do
         it { expect(flash[:alert]).to be_present }
       end
     end
-
-    describe 'send invitation email' do
-      context 'when user does not exist' do
-        it 'send email' do
-          expect(InviteMailer).to receive(:invite_guest).and_return(InviteMailer)
-          expect(InviteMailer).to receive(:deliver_now!)
-
-          subject
-        end
-      end
-
-      context 'when user exist' do
-        before do
-          create :user, email: email
-        end
-
-        it 'send email' do
-          expect(InviteMailer).to receive(:invite_user).and_return(InviteMailer)
-          expect(InviteMailer).to receive(:deliver_now!)
-
-          subject
-        end
-      end
-    end
   end
 end

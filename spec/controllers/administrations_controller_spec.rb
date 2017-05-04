@@ -37,13 +37,6 @@ describe AdministrationsController, type: :controller do
       it 'add new administrateur in database' do
         expect { subject }.to change(Administrateur, :count).by(1)
       end
-
-      it 'alert new mail are send' do
-        expect(NewAdminMailer).to receive(:new_admin_email).and_return(NewAdminMailer)
-        expect(NewAdminMailer).to receive(:deliver_now!)
-        subject
-      end
-
     end
 
     context 'when email or password are missing' do

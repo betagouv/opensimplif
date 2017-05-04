@@ -17,13 +17,6 @@ describe Users::RegistrationsController, type: :controller do
     context 'when user is correct' do
       it { expect(described_class).to be < Devise::RegistrationsController }
 
-      it 'sends welcome email' do
-        expect(WelcomeMailer).to receive(:welcome_email).and_return(WelcomeMailer)
-        expect(WelcomeMailer).to receive(:deliver_now!)
-
-        subject
-      end
-
       describe '#check_invite!' do
         let!(:invite) { create :invite, email: email }
         let!(:invite2) { create :invite, email: email }

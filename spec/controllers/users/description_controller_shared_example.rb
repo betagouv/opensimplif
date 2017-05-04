@@ -107,7 +107,7 @@ shared_examples 'description_controller_spec' do
         end
 
         it "redirection vers la page recapitulative" do
-          expect(response).to redirect_to("/users/dossiers/#{dossier_id}/recapitulatif")
+          expect(response).to redirect_to("/backoffice/dossiers/#{dossier_id}")
         end
 
         it 'etat du dossier est soumis' do
@@ -135,7 +135,7 @@ shared_examples 'description_controller_spec' do
         end
 
         it 'Redirection vers la page récapitulatif' do
-          expect(response).to redirect_to("/users/dossiers/#{dossier_id}/recapitulatif")
+          expect(response).to redirect_to("/backoffice/dossiers/#{dossier_id}")
         end
 
         it 'etat du dossier n\'est pas soumis' do
@@ -230,7 +230,7 @@ shared_examples 'description_controller_spec' do
       end
 
       it { expect(dossier.champs.first.value).to eq(dossier_champs_first) }
-      it { expect(response).to redirect_to users_dossier_recapitulatif_path }
+      it { expect(response).to redirect_to backoffice_dossier_path(id: dossier.id) }
 
       context 'when champs is type_de_champ datetime' do
         it { expect(dossier.champs.second.value).to eq(dossier_date_value+' '+dossier_hour_value+':'+dossier_minute_value) }
@@ -240,7 +240,7 @@ shared_examples 'description_controller_spec' do
         let(:dossier_champs_first) { '' }
 
         it { expect(dossier.champs.first.value).to eq(dossier_champs_first) }
-        it { expect(response).to redirect_to users_dossier_recapitulatif_path }
+        it { expect(response).to redirect_to backoffice_dossier_path(id: dossier.id) }
 
         context 'when champs is mandatory' do
           let(:procedure) { create(:procedure, :with_two_type_de_piece_justificative, :with_type_de_champ_mandatory, :with_datetime, cerfa_flag: true) }
@@ -300,7 +300,7 @@ shared_examples 'description_controller_spec' do
       end
 
       it 'Notification interne is create' do
-        expect { subject }.to change(Notification, :count).by (1)
+        expect { subject }.to change(Notification, :count).by (2)
       end
 
       context 'when PJ have no documents' do
