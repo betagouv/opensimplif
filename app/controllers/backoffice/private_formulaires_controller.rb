@@ -2,7 +2,7 @@ class Backoffice::PrivateFormulairesController < ApplicationController
   before_action :authenticate_gestionnaire!
 
   def update
-    dossier = current_gestionnaire.dossiers.find(params[:dossier_id])
+    dossier = Dossier.find(params[:dossier_id])
 
     unless params[:champs].nil?
       champs_service_errors = ChampsService.save_formulaire dossier.champs_private, params

@@ -140,7 +140,7 @@ class Backoffice::DossiersController < Backoffice::DossiersListController
   def follow
     follow = current_gestionnaire.toggle_follow_dossier params[:dossier_id]
 
-    current_gestionnaire.dossiers.find(params[:dossier_id]).next_step! 'gestionnaire', 'follow'
+    Dossier.find(params[:dossier_id]).next_step! 'gestionnaire', 'follow'
 
     flash.notice = 'Simplification suivie' if follow.class == Follow
     redirect_to request.referer

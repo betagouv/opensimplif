@@ -36,10 +36,6 @@ describe Backoffice::CommentairesController, type: :controller do
           expect { subject }.to change(Follow, :count).by(0)
         end
       end
-
-      it 'Internal notification is not create' do
-        expect { subject }.to change(Notification, :count).by (0)
-      end
     end
 
     context 'when document is upload whith a commentaire', vcr: {cassette_name: 'controllers_backoffice_commentaires_controller_doc_upload_with_comment'} do
@@ -56,10 +52,6 @@ describe Backoffice::CommentairesController, type: :controller do
       it 'clamav check the pj' do
         expect(ClamavService).to receive(:safe_file?)
         subject
-      end
-
-      it 'Internal notification is not create' do
-        expect { subject }.to change(Notification, :count).by (0)
       end
 
       describe 'piece justificative created' do
@@ -88,31 +80,6 @@ describe Backoffice::CommentairesController, type: :controller do
         it 'have a piece justificative reference' do
           expect(commentaire.piece_justificative).not_to be_nil
           expect(commentaire.piece_justificative).to eq PieceJustificative.last
-        end
-      end
-    end
-
-    describe 'change dossier state after post a comment' do
-      context 'gestionnaire is connected' do
-        context 'when dossier is at state updated' do
-          before do
-            sign_in create(:gestionnaire)
-            dossier.updated!
-
-            post :create, params: {dossier_id: dossier_id, texte_commentaire: texte_commentaire}
-            dossier.reload
-          end
-
-          subject { dossier.state }
-
-          it { is_expected.to eq('replied') }
-
-          it 'Notification email is send' do
-            expect(NotificationMailer).to receive(:new_answer).and_return(NotificationMailer)
-            expect(NotificationMailer).to receive(:deliver_now!)
-
-            post :create, params: {dossier_id: dossier_id, texte_commentaire: texte_commentaire}
-          end
         end
       end
     end

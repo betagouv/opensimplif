@@ -15,7 +15,7 @@ describe Backoffice::Dossiers::ProcedureController, type: :controller do
 
     subject { get :index, params: {id: procedure_id} }
 
-    it { expect(subject.status).to eq 200 }
+    it { expect(subject.status).to eq 302 }
 
     context 'when procedure id is not found' do
       let(:procedure_id) { 100000 }
@@ -25,14 +25,14 @@ describe Backoffice::Dossiers::ProcedureController, type: :controller do
       end
 
       it { expect(response.status).to eq 302 }
-      it { is_expected.to redirect_to backoffice_dossiers_path }
+      it { is_expected.to redirect_to simplifications_path }
       it { expect(flash[:alert]).to be_present}
     end
   end
 
   describe 'GET #filter' do
-    subject { get :filter, params: {id: procedure.id, filter_input: {"entreprise.raison_sociale" => "plop"}} }
+    subject { get :filter, params: {id: procedure.id, filter_input: {"user.email" => "plop@plop.com"}} }
 
-    it { is_expected.to redirect_to backoffice_dossiers_procedure_path(id: procedure.id) }
+    it { is_expected.to redirect_to simplification_path(id: procedure.id) }
   end
 end

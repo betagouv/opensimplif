@@ -219,15 +219,7 @@ describe Backoffice::DossiersController, type: :controller do
         before do
           subject
         end
-        it { expect(flash[:notice]).to have_content 'Dossier suivi' }
-      end
-
-      context 'when dossier is follow by gestionnaire' do
-        before do
-          create :follow, gestionnaire_id: gestionnaire.id, dossier_id: dossier.id
-          subject
-        end
-        it { expect(flash[:notice]).to have_content 'Dossier relaché' }
+        it { expect(flash[:notice]).to have_content 'Simplification suivie' }
       end
     end
   end
