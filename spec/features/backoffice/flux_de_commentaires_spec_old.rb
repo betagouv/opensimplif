@@ -24,7 +24,6 @@ feature 'backoffice: flux de commentaires' do
   end
 
   scenario "affichage des commentaires du champs", js: true do
-    pending 'later: open simplif'
     find("#liste_champs th", text: champ1.libelle).click_link("COM")
     expect(page).to have_css("#modalCommentairesDossierParChamp.in")
 
@@ -33,7 +32,6 @@ feature 'backoffice: flux de commentaires' do
   end
 
   scenario "crée un commentaire sur un champ", js: true do
-    pending 'later: open simplif'
     # ouverture modale
     find("#liste_champs th", text: champ1.libelle).click_link("COM")
 

@@ -160,8 +160,6 @@ describe Admin::ProceduresController, type: :controller do
           subject { ModuleAPICarto.last }
 
           it { expect(subject.procedure).to eq(procedure) }
-          it { expect(subject.use_api_carto).to be_truthy }
-          it { expect(subject.quartiers_prioritaires).to be_truthy }
         end
 
         it { expect(subject).to redirect_to(admin_procedure_types_de_champ_path(procedure_id: Procedure.last.id)) }
@@ -230,14 +228,6 @@ describe Admin::ProceduresController, type: :controller do
           it { expect(subject.organisation).to eq(organisation) }
           it { expect(subject.direction).to eq(direction) }
           it { expect(subject.lien_demarche).to eq(lien_demarche) }
-        end
-
-        describe 'procedure module api carto attributs in database' do
-          subject { procedure.module_api_carto }
-
-          it { expect(subject.use_api_carto).to be_truthy }
-          it { expect(subject.quartiers_prioritaires).to be_falsey }
-          it { expect(subject.cadastre).to be_truthy }
         end
 
         it { expect(subject).to redirect_to(edit_admin_procedure_path id: procedure.id) }
