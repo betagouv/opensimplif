@@ -23,7 +23,6 @@ describe 'admin/procedures/show.html.haml', type: :view do
     end
 
     context 'when procedure have a gestionnare affected' do
-
       before do
         create :assign_to, gestionnaire: create(:gestionnaire), procedure: procedure
         render
@@ -77,5 +76,4 @@ describe 'admin/procedures/show.html.haml', type: :view do
       it { expect(rendered).to have_content('Cette procédure a été archivée et n\'est plus accessible par le public.') }
     end
   end
-
 end

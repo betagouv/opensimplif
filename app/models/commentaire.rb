@@ -13,7 +13,7 @@ class Commentaire < ActiveRecord::Base
   private
 
   def internal_notification
-    NotificationService.new(kind, self.dossier.id).notify
+    NotificationService.new(kind, dossier.id).notify
   end
 
   def kind

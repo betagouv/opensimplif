@@ -1,0 +1,153 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'db/schema.rb'
+    - 'config/initializers/apipie.rb'
+    - 'config/initializers/features.rb'
+    - 'lib/tasks/dev.rake'
+    - 'tmp/**/*'
+
+Style/TrailingBlankLines:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false
+
+Style/PredicateName:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/AccessorMethodName:
+  Enabled: false
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/RegexpLiteral:
+  EnforcedStyle: percent_r
+
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Lint/RescueException:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false
+
+Lint/Void:
+  Exclude:
+    - 'lib/tasks/utils/benchmark.rake'
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Max: 4
+
+Metrics/BlockLength:
+  Enabled: false
+
+Rails/FindBy:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Rails/OutputSafety:
+  Enabled: false
+
+Rails/Output:
+  Exclude:
+    - 'lib/tasks/**/*'
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/DescribedClass:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleDescribes:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/InstanceVariable:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/LeadingSubject:
+  Enabled: false
+
+RSpec/EmptyExampleGroup:
+  Enabled: false
+
+RSpec/SubjectStub:
+  Enabled: false

@@ -1,5 +1,5 @@
 class DossiersListGestionnaireService
-  def initialize current_devise_profil, liste, procedure = nil
+  def initialize(current_devise_profil, liste, procedure = nil)
     @current_devise_profil = current_devise_profil
     @liste = (DossiersListGestionnaireService.dossiers_liste_libelle.include?(liste) ? liste : 'all_state')
     @procedure = procedure
@@ -7,19 +7,18 @@ class DossiersListGestionnaireService
 
   def dossiers_to_display
     @dossiers_to_display ||=
-        {'nouveaux' => nouveaux,
-         # 'suivi' => suivi,
-         'a_traiter' => ouvert,
-         'fige' => fige,
-         'deposes' => deposes,
-         'a_instruire' => a_instruire,
-         'termine' => termine,
-         'all_state' => all_state}[@liste]
-
+      {'nouveaux' => nouveaux,
+       # 'suivi' => suivi,
+       'a_traiter' => ouvert,
+       'fige' => fige,
+       'deposes' => deposes,
+       'a_instruire' => a_instruire,
+       'termine' => termine,
+       'all_state' => all_state}[@liste]
   end
 
   def self.dossiers_liste_libelle
-    ['nouveaux', 'suivi', 'a_traiter', 'fige', 'deposes', 'a_instruire', 'termine', 'all_state']
+    %w[nouveaux suivi a_traiter fige deposes a_instruire termine all_state]
   end
 
   def all_state
@@ -63,21 +62,21 @@ class DossiersListGestionnaireService
     filter_procedure! nil
   end
 
-  def filter_procedure! procedure_id
+  def filter_procedure!(procedure_id)
     @current_devise_profil.update_column :procedure_filter, procedure_id
   end
 
   def default_sort
     sort_preference = @current_devise_profil.preference_list_dossiers
-                          .where(procedure: @procedure)
-                          .where.not(order: nil).first
+      .where(procedure: @procedure)
+      .where.not(order: nil).first
 
     return {'nil' => 'nil'} if sort_preference.nil?
 
     {
-        [sort_preference.table, sort_preference.attr]
-            .reject(&:nil?)
-            .join('.') => sort_preference.order
+      [sort_preference.table, sort_preference.attr]
+        .reject(&:nil?)
+        .join('.') => sort_preference.order
     }
   end
 
@@ -88,7 +87,7 @@ class DossiersListGestionnaireService
     1
   end
 
-  def change_page! new_page
+  def change_page!(new_page)
     pref = current_preference_smart_listing_page
 
     if pref
@@ -109,7 +108,7 @@ class DossiersListGestionnaireService
     end
   end
 
-  def change_sort! new_sort
+  def change_sort!(new_sort)
     return if new_sort.blank?
 
     raw_table_attr = new_sort.keys.first.split('.')
@@ -121,20 +120,20 @@ class DossiersListGestionnaireService
     reset_sort!
 
     preference = @current_devise_profil.preference_list_dossiers
-                     .find_by(table: table, attr: attr, procedure: @procedure)
+      .find_by(table: table, attr: attr, procedure: @procedure)
 
-    preference.update order: order unless (preference.nil?)
+    preference&.update order: order
   end
 
   def reset_sort!
     @current_devise_profil.preference_list_dossiers
-        .where(procedure: @procedure)
-        .where.not(order: nil)
-        .update_all order: nil
+      .where(procedure: @procedure)
+      .where.not(order: nil)
+      .update_all order: nil
   end
 
   def joins_filter
-    filter_preference_list.inject([]) do |acc, preference|
+    filter_preference_list.each_with_object([]) do |preference, acc|
       acc.push(preference.table.to_sym) unless preference.table.blank? || preference.filter.blank?
       acc
     end
@@ -143,32 +142,32 @@ class DossiersListGestionnaireService
   def where_filter
     filter_preference_list.inject('') do |acc, preference|
       unless preference.filter.blank?
-        filter = preference.filter.gsub('*', '%').gsub("'", "''")
-        filter = "%"+filter+"%" unless filter.include? '%'
+        filter = preference.filter.tr('*', '%').gsub("'", "''")
+        filter = '%' + filter + '%' unless filter.include? '%'
 
         value = preference.table_with_s_attr
 
         if preference.table_attr.include?('champs')
           value = 'champs.value'
 
-          acc += (acc.to_s.empty? ? ''.to_s : " AND ") +
-              'champs.type_de_champ_id = ' + preference.attr
+          acc += (acc.to_s.empty? ? ''.to_s : ' AND ') +
+            'champs.type_de_champ_id = ' + preference.attr
         end
 
-        acc += (acc.to_s.empty? ? ''.to_s : " AND ") +
-            "CAST(" +
-            value +
-            " as TEXT)" +
-            " LIKE " +
-            "'" +
-            filter +
-            "'"
+        acc += (acc.to_s.empty? ? ''.to_s : ' AND ') +
+          'CAST(' +
+          value +
+          ' as TEXT)' \
+          ' LIKE ' \
+          "'" +
+          filter +
+          "'"
       end
       acc
     end
   end
 
-  def add_filter new_filter
+  def add_filter(new_filter)
     raw_table_attr = new_filter.keys.first.split('.')
     filter = new_filter.values.first
 
@@ -176,21 +175,20 @@ class DossiersListGestionnaireService
     attr = (raw_table_attr.size == 2 ? raw_table_attr.second : raw_table_attr.first)
 
     @current_devise_profil.preference_list_dossiers
-        .find_by(table: table, attr: attr, procedure: @procedure)
-        .update filter: filter.strip
+      .find_by(table: table, attr: attr, procedure: @procedure)
+      .update filter: filter.strip
   end
 
   private
 
   def filter_preference_list
     @filter_preference ||= @current_devise_profil.preference_list_dossiers
-                               .where(procedure: @procedure)
-                               .where.not(filter: nil)
-                               .order(:id)
+      .where(procedure: @procedure)
+      .where.not(filter: nil)
+      .order(:id)
   end
 
   def current_preference_smart_listing_page
     @current_devise_profil.preference_smart_listing_page
   end
-
 end

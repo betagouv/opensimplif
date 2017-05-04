@@ -66,7 +66,6 @@ describe Users::DossiersController, type: :controller do
           it { expect { subject }.to change(Dossier, :count).by 1 }
 
           describe 'save user siret' do
-
             context 'when user have not a saved siret' do
               context 'when siret is present on request' do
                 subject { get :new, params: {procedure_id: procedure_id, siret: siret} }
@@ -174,19 +173,19 @@ describe Users::DossiersController, type: :controller do
 
     before do
       stub_request(:get, "https://api-dev.apientreprise.fr/v2/etablissements/#{siret_not_found}?token=#{SIADETOKEN}")
-          .to_return(status: 404, body: 'fake body')
+        .to_return(status: 404, body: 'fake body')
 
       stub_request(:get, "https://api-dev.apientreprise.fr/v2/etablissements/#{siret}?token=#{SIADETOKEN}")
-          .to_return(status: status_entreprise_call, body: File.read('spec/support/files/etablissement.json'))
+        .to_return(status: status_entreprise_call, body: File.read('spec/support/files/etablissement.json'))
 
       stub_request(:get, "https://api-dev.apientreprise.fr/v2/entreprises/#{siren}?token=#{SIADETOKEN}")
-          .to_return(status: status_entreprise_call, body: File.read('spec/support/files/entreprise.json'))
+        .to_return(status: status_entreprise_call, body: File.read('spec/support/files/entreprise.json'))
 
       stub_request(:get, "https://api-dev.apientreprise.fr/v1/etablissements/exercices/#{siret}?token=#{SIADETOKEN}")
-          .to_return(status: exercices_status, body: exercices_body)
+        .to_return(status: exercices_status, body: exercices_body)
 
       stub_request(:get, "https://api-dev.apientreprise.fr/v1/associations/#{siret}?token=#{SIADETOKEN}")
-          .to_return(status: rna_status, body: rna_body)
+        .to_return(status: rna_status, body: rna_body)
 
       dossier
     end
@@ -213,7 +212,7 @@ describe Users::DossiersController, type: :controller do
           expect(Entreprise.last.dossier).to eq(Dossier.last)
         end
 
-        it "links dossier to user" do
+        it 'links dossier to user' do
           subject
           expect(Dossier.last.user).to eq(user)
         end
@@ -241,7 +240,7 @@ describe Users::DossiersController, type: :controller do
           let(:exercices_status) { 404 }
           let(:exercices_body) { '' }
 
-          it { expect { subject }.not_to change { Exercice.count } }
+          it { expect { subject }.not_to(change { Exercice.count }) }
         end
 
         it 'links procedure to dossier' do
@@ -305,14 +304,14 @@ describe Users::DossiersController, type: :controller do
         end
       end
 
-      describe "with siret without whitespaces" do
+      describe 'with siret without whitespaces' do
         let(:example_siret) { siret }
-        it_should_behave_like "with valid siret"
+        it_should_behave_like 'with valid siret'
       end
 
-      describe "with siret with whitespaces" do
+      describe 'with siret with whitespaces' do
         let(:example_siret) { siret_with_whitespaces }
-        it_should_behave_like "with valid siret"
+        it_should_behave_like 'with valid siret'
       end
 
       context 'with non existant siret' do
@@ -325,7 +324,7 @@ describe Users::DossiersController, type: :controller do
         subject { post :siret_informations, params: {dossier_id: dossier.id, dossier: {siret: siret_not_found}} }
 
         it 'does not create new dossier' do
-          expect { subject }.not_to change { Dossier.count }
+          expect { subject }.not_to(change { Dossier.count })
         end
 
         it { expect(response.status).to eq 200 }
@@ -345,7 +344,6 @@ describe Users::DossiersController, type: :controller do
       end
 
       it { expect(response.status).to eq 200 }
-
     end
   end
 
@@ -367,10 +365,10 @@ describe Users::DossiersController, type: :controller do
         dossier.reload
       end
 
-      it { expect(dossier.individual.gender).to eq 'Mr'  }
-      it { expect(dossier.individual.nom).to eq 'Julien'  }
-      it { expect(dossier.individual.prenom).to eq 'Xavier'  }
-      it { expect(dossier.individual.birthdate).to eq '20/01/1991'  }
+      it { expect(dossier.individual.gender).to eq 'Mr' }
+      it { expect(dossier.individual.nom).to eq 'Julien' }
+      it { expect(dossier.individual.prenom).to eq 'Xavier' }
+      it { expect(dossier.individual.birthdate).to eq '20/01/1991' }
       it { expect(dossier.procedure.for_individual).to eq true }
     end
 
@@ -417,8 +415,8 @@ describe Users::DossiersController, type: :controller do
 
   describe 'DELETE #destroy' do
     let(:user) { create(:user) }
-    let!(:dossier_draft) { create :dossier, state: "draft", user: user }
-    let!(:dossier_not_draft) { create :dossier, state: "initiated", user: user }
+    let!(:dossier_draft) { create :dossier, state: 'draft', user: user }
+    let!(:dossier_not_draft) { create :dossier, state: 'initiated', user: user }
 
     subject { delete :destroy, params: {id: dossier.id} }
 
@@ -452,7 +450,6 @@ describe Users::DossiersController, type: :controller do
 
       it { expect { subject }.to change { Dossier.count }.by(0) }
     end
-
   end
 
   describe 'PUT #change_siret' do
@@ -562,5 +559,4 @@ describe Users::DossiersController, type: :controller do
       end
     end
   end
-
 end

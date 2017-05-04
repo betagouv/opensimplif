@@ -23,13 +23,13 @@ describe AdminProceduresShowFacades do
   describe '.dossiers' do
     subject { super().dossiers }
 
-    it { expect(subject.size).to eq(7)  }
+    it { expect(subject.size).to eq(7) }
   end
 
   describe '.dossiers_for_pie_highchart' do
     subject { super().dossiers_for_pie_highchart }
 
-    it { expect(subject).to eq({'Nouveau' => 1, 'Figé' => 2, "En construction"=>1}) }
+    it { expect(subject).to eq('Nouveau' => 1, 'Figé' => 2, 'En construction' => 1) }
   end
 
   describe '.dossiers_archived_by_state_total' do
@@ -37,10 +37,10 @@ describe AdminProceduresShowFacades do
 
     it { expect(subject.size).to eq(2)  }
 
-    it { expect(subject.first.state).to eq('initiated')  }
+    it { expect(subject.first.state).to eq('initiated') }
     it { expect(subject.first.total).to eq(1) }
 
-    it { expect(subject.last.state).to eq('validated')  }
+    it { expect(subject.last.state).to eq('validated') }
     it { expect(subject.last.total).to eq(2) }
   end
 

@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe NotificationMailer, type: :mailer do
-  describe ".new_answer" do
+  describe '.new_answer' do
     let(:user) { create(:user) }
     let(:dossier) { create(:dossier, user: user) }
 
@@ -12,7 +12,7 @@ RSpec.describe NotificationMailer, type: :mailer do
     it { expect(subject.subject).to eq("Nouveau message pour votre dossier TPS N°#{dossier.id}") }
   end
 
-  describe ".dossier_validated" do
+  describe '.dossier_validated' do
     let(:user) { create(:user) }
     let(:dossier) { create(:dossier, user: user) }
 
@@ -23,7 +23,7 @@ RSpec.describe NotificationMailer, type: :mailer do
     it { expect(subject.subject).to eq("Votre dossier TPS N°#{dossier.id} a été validé") }
   end
 
-  describe ".dossier_submitted" do
+  describe '.dossier_submitted' do
     let(:user) { create(:user) }
     let(:dossier) { create(:dossier, user: user) }
 

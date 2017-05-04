@@ -10,10 +10,10 @@ class PieceJustificative < ActiveRecord::Base
   alias_attribute :type, :type_de_piece_justificative_id
 
   mount_uploader :content, PieceJustificativeUploader
-  validates :content, :file_size => {:maximum => 20.megabytes}
+  validates :content, file_size: {maximum: 20.megabytes}
   validates :content, presence: true, allow_blank: false, allow_nil: false
 
-  after_save :internal_notification, if: Proc.new { !dossier.nil? }
+  after_save :internal_notification, if: proc { !dossier.nil? }
 
   def empty?
     content.blank?
@@ -21,7 +21,7 @@ class PieceJustificative < ActiveRecord::Base
 
   def libelle
     if type_de_piece_justificative.nil?
-      return content.to_s
+      content.to_s
     else
       type_de_piece_justificative.libelle
     end
@@ -57,8 +57,8 @@ class PieceJustificative < ActiveRecord::Base
   private
 
   def internal_notification
-    unless self.type_de_piece_justificative.nil? && dossier.state == 'draft'
-      NotificationService.new('piece_justificative', self.dossier.id, self.libelle).notify
+    unless type_de_piece_justificative.nil? && dossier.state == 'draft'
+      NotificationService.new('piece_justificative', dossier.id, libelle).notify
     end
   end
 end

@@ -9,7 +9,7 @@ feature 'Administrator connection' do
     expect(page).to have_css('#form_login.user_connexion_page')
   end
 
-  context "admin fills form and log in" do
+  context 'admin fills form and log in' do
     before do
       page.find_by_id('user_email').set admin.email
       page.find_by_id('user_password').set admin.password
@@ -30,8 +30,8 @@ feature 'Administrator connection' do
       end
       context 'when clicking on sign_out' do
         before do
-          stub_request(:get, "https://api.github.com/repos/sgmap/tps/releases/latest").
-              to_return(:status => 200, :body => '{"tag_name": "plip", "body": "blabla", "published_at": "2016-02-09T16:46:47Z"}', :headers => {})
+          stub_request(:get, 'https://api.github.com/repos/sgmap/tps/releases/latest')
+            .to_return(status: 200, body: '{"tag_name": "plip", "body": "blabla", "published_at": "2016-02-09T16:46:47Z"}', headers: {})
 
           page.find_by_id('sign_out').find('a.fa-sign-out').click
         end
@@ -58,6 +58,5 @@ feature 'Administrator connection' do
         end
       end
     end
-
   end
 end

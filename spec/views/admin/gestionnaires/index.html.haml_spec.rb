@@ -7,9 +7,9 @@ describe 'admin/gestionnaires/index.html.haml', type: :view do
   before do
     assign(:gestionnaires, (smart_listing_create :gestionnaires,
                                                  admin.gestionnaires,
-                                                 partial: "admin/gestionnaires/list",
+                                                 partial: 'admin/gestionnaires/list',
                                                  array: true))
-    assign(:gestionnaire, Gestionnaire.new())
+    assign(:gestionnaire, Gestionnaire.new)
   end
 
   context 'Aucun gestionnaire' do
@@ -25,10 +25,10 @@ describe 'admin/gestionnaires/index.html.haml', type: :view do
       admin.reload
       assign(:gestionnaires, (smart_listing_create :gestionnaires,
                                                    admin.gestionnaires,
-                                                   partial: "admin/gestionnaires/list",
+                                                   partial: 'admin/gestionnaires/list',
                                                    array: true))
       render
     end
-    it { expect(rendered).to match(/gest\d+@plop.com/) }
+    it { expect(rendered).to match(%r{gest\d+@plop.com}) }
   end
 end

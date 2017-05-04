@@ -18,13 +18,14 @@ describe Admin::MailsController, type: :controller do
     let(:body) { 'plip modif' }
 
     context 'when is mail_received id' do
-      subject { patch :update,
-                      params: {procedure_id: procedure.id,
-                               id: procedure.mail_received.id,
-                               mail_received: {
-                                   object: object,
-                                   body: body
-                               }} }
+      subject do
+        patch :update,
+              params: {
+                procedure_id: procedure.id,
+                id: procedure.mail_received.id,
+                mail_received: {object: object, body: body}
+              }
+      end
 
       it { expect(subject).to redirect_to admin_procedure_mails_path }
 

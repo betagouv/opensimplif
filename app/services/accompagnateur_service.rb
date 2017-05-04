@@ -1,8 +1,8 @@
 class AccompagnateurService
-  ASSIGN = 'assign'
-  NOT_ASSIGN = 'not_assign'
+  ASSIGN = 'assign'.freeze
+  NOT_ASSIGN = 'not_assign'.freeze
 
-  def initialize accompagnateur, procedure, to
+  def initialize(accompagnateur, procedure, to)
     @accompagnateur = accompagnateur
     @procedure = procedure
     @to = to

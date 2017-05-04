@@ -3,9 +3,9 @@ class Cerfa < ActiveRecord::Base
   belongs_to :user
 
   mount_uploader :content, CerfaUploader
-  validates :content, :file_size => {:maximum => 20.megabytes}
+  validates :content, file_size: {maximum: 20.megabytes}
 
-  after_save :internal_notification, if: Proc.new { !dossier.nil? }
+  after_save :internal_notification, if: proc { !dossier.nil? }
 
   def empty?
     content.blank?
@@ -25,7 +25,7 @@ class Cerfa < ActiveRecord::Base
 
   def internal_notification
     unless dossier.state == 'draft'
-      NotificationService.new('cerfa', self.dossier.id).notify
+      NotificationService.new('cerfa', dossier.id).notify
     end
   end
 end

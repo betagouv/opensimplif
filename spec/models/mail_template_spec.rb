@@ -15,7 +15,6 @@ describe MailTemplate do
       subject { super()['numero_dossier'] }
 
       describe 'attr and description value' do
-
         it { expect(subject['description']).to eq "Permet d'afficher le numéro de dossier de l'utilisateur." }
       end
     end
@@ -24,7 +23,6 @@ describe MailTemplate do
       subject { super()['libelle_procedure'] }
 
       describe 'attr and description value' do
-
         it { expect(subject['description']).to eq "Permet d'afficher le libellé de la procédure." }
       end
     end

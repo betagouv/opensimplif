@@ -13,12 +13,12 @@ describe 'admin/accompagnateurs/show.html.haml', type: :view do
 
     assign(:accompagnateurs_assign, (smart_listing_create :accompagnateurs_assign,
                                                           assign_gestionnaires,
-                                                          partial: "admin/accompagnateurs/list_assign",
+                                                          partial: 'admin/accompagnateurs/list_assign',
                                                           array: true))
 
     assign(:accompagnateurs_not_assign, (smart_listing_create :accompagnateurs_not_assign,
                                                               not_assign_gestionnaires,
-                                                              partial: "admin/accompagnateurs/list_not_assign",
+                                                              partial: 'admin/accompagnateurs/list_not_assign',
                                                               array: true))
   end
 
@@ -44,12 +44,12 @@ describe 'admin/accompagnateurs/show.html.haml', type: :view do
 
       assign(:accompagnateurs_assign, (smart_listing_create :accompagnateurs_assign,
                                                             assign_gestionnaires,
-                                                            partial: "admin/accompagnateurs/list_assign",
+                                                            partial: 'admin/accompagnateurs/list_assign',
                                                             array: true))
 
       assign(:accompagnateurs_not_assign, (smart_listing_create :accompagnateurs_not_assign,
                                                                 not_assign_gestionnaires,
-                                                                partial: "admin/accompagnateurs/list_not_assign",
+                                                                partial: 'admin/accompagnateurs/list_not_assign',
                                                                 array: true))
 
       render

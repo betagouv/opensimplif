@@ -36,14 +36,14 @@ describe Admin::PiecesJustificativesController, type: :controller do
     let(:description) { "relevé d'identité bancaire" }
     let(:update_params) do
       {
-          types_de_piece_justificative_attributes:
-              {
-                  '0' =>
-                      {
-                          libelle: libelle,
-                          description: description
-                      }
-              }
+        types_de_piece_justificative_attributes:
+            {
+              '0' =>
+                    {
+                      libelle: libelle,
+                      description: description
+                    }
+            }
       }
     end
 

@@ -25,7 +25,7 @@ describe 'users/dossiers/index.html.haml', type: :view do
       assign :dossiers_list_facade, (DossiersListFacades.new user, liste)
       assign(:dossiers, (smart_listing_create :dossiers,
                                               dossiers_to_display,
-                                              partial: "users/dossiers/list",
+                                              partial: 'users/dossiers/list',
                                               array: true))
       render
     end

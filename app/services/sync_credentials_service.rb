@@ -1,6 +1,5 @@
 class SyncCredentialsService
-
-  def initialize klass, email_was, email, encrypted_password
+  def initialize(klass, email_was, email, encrypted_password)
     @klass = klass
     @email_was = email_was
     @email = email
@@ -12,8 +11,9 @@ class SyncCredentialsService
       user = User.find_by(email: @email_was)
       if user
         return false unless user.update_columns(
-            email: @email,
-            encrypted_password: @encrypted_password)
+          email: @email,
+          encrypted_password: @encrypted_password
+        )
       end
     end
 
@@ -21,8 +21,9 @@ class SyncCredentialsService
       gestionnaire = Gestionnaire.find_by(email: @email_was)
       if gestionnaire
         return false unless gestionnaire.update_columns(
-            email: @email,
-            encrypted_password: @encrypted_password)
+          email: @email,
+          encrypted_password: @encrypted_password
+        )
       end
     end
 
@@ -30,8 +31,9 @@ class SyncCredentialsService
       administrateur = Administrateur.find_by(email: @email_was)
       if administrateur
         return false unless administrateur.update_columns(
-            email: @email,
-            encrypted_password: @encrypted_password)
+          email: @email,
+          encrypted_password: @encrypted_password
+        )
       end
     end
 

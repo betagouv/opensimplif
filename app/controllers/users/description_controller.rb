@@ -12,11 +12,10 @@ class Users::DescriptionController < UsersController
     @procedure = @dossier.procedure
     @champs = @dossier.ordered_champs
 
-    @headers = @champs.inject([]) do |acc, champ|
+    @headers = @champs.each_with_object([]) do |champ, acc|
       acc.push(champ) if champ.type_champ == 'header_section'
       acc
     end
-
   rescue ActiveRecord::RecordNotFound
     flash.alert = t('errors.messages.dossier_not_found')
     redirect_to url_for(root_path)
@@ -34,7 +33,7 @@ class Users::DescriptionController < UsersController
     @champs = @dossier.ordered_champs
 
     mandatory = true
-    mandatory = !(params[:submit].keys.first == 'brouillon') unless params[:submit].nil?
+    mandatory = params[:submit].keys.first != 'brouillon' unless params[:submit].nil?
 
     unless @dossier.update_attributes(create_params)
       @dossier = @dossier.decorate
@@ -47,7 +46,7 @@ class Users::DescriptionController < UsersController
       champs_service_errors = ChampsService.save_formulaire @dossier.champs, params, mandatory
 
       unless champs_service_errors.empty?
-        flash.alert = (champs_service_errors.inject('') { |acc, error| acc+= error[:message]+'<br>' }).html_safe
+        flash.alert = champs_service_errors.map { |e| e[:message] }.join('<br>')
         return redirect_to users_dossier_description_path(dossier_id: @dossier.id)
       end
     end
@@ -67,11 +66,8 @@ class Users::DescriptionController < UsersController
       return redirect_to users_dossier_description_path(dossier_id: @dossier.id)
     end
 
-
     if mandatory
-      if @dossier.draft?
-        @dossier.initiated!
-      end
+      @dossier.initiated! if @dossier.draft?
 
       flash.notice = 'Votre simplification a été enregistrée.'
       redirect_to url_for(controller: :'backoffice/dossiers', action: :show, id: @dossier.id)
@@ -96,7 +92,7 @@ class Users::DescriptionController < UsersController
       end
     end
 
-    if !((errors_upload = PiecesJustificativesService.upload!(@dossier, current_user, params)).empty?)
+    if !(errors_upload = PiecesJustificativesService.upload!(@dossier, current_user, params)).empty?
       if flash.alert.nil?
         flash.alert = errors_upload.html_safe
       else
@@ -115,7 +111,7 @@ class Users::DescriptionController < UsersController
 
   def self.route_authorization
     {
-        states: [:draft, :initiated, :replied, :updated]
+      states: %i[draft initiated replied updated]
     }
   end
 
@@ -137,7 +133,6 @@ class Users::DescriptionController < UsersController
   end
 
   def create_params
-    params.permit()
+    params.permit
   end
-
 end

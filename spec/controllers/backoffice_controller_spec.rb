@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe BackofficeController, type: :controller do
   describe 'GET #index' do
-    context 'when gestionnaire is not connected'do
+    context 'when gestionnaire is not connected' do
       before do
         get :index
       end
@@ -10,7 +10,7 @@ describe BackofficeController, type: :controller do
       it { expect(response).to redirect_to :new_gestionnaire_session }
     end
 
-    context 'when gestionnaire is connected'do
+    context 'when gestionnaire is connected' do
       before do
         sign_in create(:gestionnaire)
         get :index

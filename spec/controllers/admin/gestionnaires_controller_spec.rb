@@ -57,11 +57,11 @@ describe Admin::GestionnairesController, type: :controller do
       it { expect(flash[:alert]).to be_present }
 
       describe 'Email Notification' do
-        it {
+        it do
           expect(GestionnaireMailer).not_to receive(:new_gestionnaire)
           expect(GestionnaireMailer).not_to receive(:deliver_now!)
           subject
-        }
+        end
       end
     end
 
@@ -124,7 +124,7 @@ describe Admin::GestionnairesController, type: :controller do
         subject
       end
 
-      it "creates associated user with same credentials" do
+      it 'creates associated user with same credentials' do
         gestionnaire = controller.instance_variable_get(:@gestionnaire)
         user = User.find_by(email: gestionnaire.email)
         expect(user.valid_password?(gestionnaire.password)).to be(true)
@@ -147,7 +147,7 @@ describe Admin::GestionnairesController, type: :controller do
 
     subject { delete :destroy, params: {id: gestionnaire.id} }
 
-    context "when gestionaire_id is valid" do
+    context 'when gestionaire_id is valid' do
       before do
         subject
         admin.reload

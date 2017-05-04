@@ -12,7 +12,7 @@ describe ClamavService do
     end
 
     it 'change permission of file path' do
-      allow(FileUtils).to receive(:chmod).with(0666, path_file).and_return(true)
+      allow(FileUtils).to receive(:chmod).with(0o666, path_file).and_return(true)
 
       subject
     end

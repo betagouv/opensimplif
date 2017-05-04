@@ -27,13 +27,13 @@ feature 'user arrive on siret page' do
       context 'when enter a siret' do
         before do
           stub_request(:get, "https://api-dev.apientreprise.fr/v2/etablissements/#{siret}?token=#{SIADETOKEN}")
-              .to_return(status: 200, body: File.read('spec/support/files/etablissement.json'))
+            .to_return(status: 200, body: File.read('spec/support/files/etablissement.json'))
           stub_request(:get, "https://api-dev.apientreprise.fr/v2/entreprises/#{siren}?token=#{SIADETOKEN}")
-              .to_return(status: 200, body: File.read('spec/support/files/entreprise.json'))
+            .to_return(status: 200, body: File.read('spec/support/files/entreprise.json'))
           stub_request(:get, "https://api-dev.apientreprise.fr/v1/etablissements/exercices/#{siret}?token=#{SIADETOKEN}")
-              .to_return(status: 200, body: File.read('spec/support/files/exercices.json'))
+            .to_return(status: 200, body: File.read('spec/support/files/exercices.json'))
           stub_request(:get, "https://api-dev.apientreprise.fr/v1/associations/#{siret}?token=#{SIADETOKEN}")
-              .to_return(status: 404, body: '')
+            .to_return(status: 404, body: '')
 
           page.find_by_id('dossier_siret').set siret
           page.click_on 'Valider'

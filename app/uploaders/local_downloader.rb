@@ -1,12 +1,12 @@
 require 'securerandom'
 
 class LocalDownloader
-  BASE_PATH_DISK = File.join(Rails.root, "public/downloads/")
+  BASE_PATH_DISK = File.join(Rails.root, 'public/downloads/')
 
   def initialize(filename, filename_suffix = '')
     @filename = filename.to_s
     @filename_suffix = filename_suffix.empty? ? '' : "_#{filename_suffix}"
-    @extension = @filename.split(/[.]/).last
+    @extension = @filename.split(%r{[.]}).last
 
     generate_random_base_path!
 
@@ -25,11 +25,9 @@ class LocalDownloader
     @base_path ||= begin
       loop do
         self.random_folder_name = SecureRandom.hex
-        base_path = File.join(BASE_PATH_DISK, self.random_folder_name)
+        base_path = File.join(BASE_PATH_DISK, random_folder_name)
 
-        unless File.directory?(BASE_PATH_DISK)
-          Dir.mkdir(BASE_PATH_DISK)
-        end
+        Dir.mkdir(BASE_PATH_DISK) unless File.directory?(BASE_PATH_DISK)
 
         unless File.directory?(base_path)
           Dir.mkdir(base_path)

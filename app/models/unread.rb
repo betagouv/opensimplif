@@ -8,5 +8,5 @@ class Unread < ActiveRecord::Base
   validates :gestionnaire, presence: true
   validates :notification, presence: true
 
-  validates_uniqueness_of :gestionnaire_id, :scope => :notification_id
+  validates_uniqueness_of :gestionnaire_id, scope: :notification_id
 end

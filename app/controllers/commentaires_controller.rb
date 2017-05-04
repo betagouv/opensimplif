@@ -1,9 +1,9 @@
 class CommentairesController < ApplicationController
   def index
     @facade = DossierFacades.new(
-        params[:dossier_id],
-        (current_gestionnaire || current_user).email,
-        params[:champs_id]
+      params[:dossier_id],
+      (current_gestionnaire || current_user).email,
+      params[:champs_id]
     )
     render layout: false
   rescue ActiveRecord::RecordNotFound
@@ -30,16 +30,16 @@ class CommentairesController < ApplicationController
       if pj.errors.empty?
         @commentaire.piece_justificative = pj
       else
-        flash.alert = pj.errors.full_messages.join("<br>").html_safe
+        flash.alert = pj.errors.full_messages.join('<br>').html_safe
       end
     end
 
     @commentaire.body = params['texte_commentaire']
     saved = false
-    unless @commentaire.body.blank? && @commentaire.piece_justificative.nil?
-      saved = @commentaire.save unless flash.alert
+    if @commentaire.body.blank? && @commentaire.piece_justificative.nil?
+      flash.alert = 'Veuillez rédiger un message ou ajouter une pièce jointe.'
     else
-      flash.alert = "Veuillez rédiger un message ou ajouter une pièce jointe."
+      saved = @commentaire.save unless flash.alert
     end
 
     notify_user_with_mail(@commentaire) if saved
@@ -50,13 +50,11 @@ class CommentairesController < ApplicationController
       end
 
       redirect_to url_for(controller: 'backoffice/dossiers', action: :show, id: params['dossier_id'])
+    elsif current_user.email != @commentaire.dossier.user.email
+      invite = Invite.where(dossier: @commentaire.dossier, email: current_user.email).first
+      redirect_to url_for(controller: 'users/dossiers/invites', action: :show, id: invite.id)
     else
-      if current_user.email != @commentaire.dossier.user.email
-        invite = Invite.where(dossier: @commentaire.dossier, email: current_user.email).first
-        redirect_to url_for(controller: 'users/dossiers/invites', action: :show, id: invite.id)
-      else
-        redirect_to users_dossier_recapitulatif_path(params['dossier_id'])
-      end
+      redirect_to users_dossier_recapitulatif_path(params['dossier_id'])
     end
   end
 

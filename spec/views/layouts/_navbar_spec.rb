@@ -7,38 +7,36 @@ describe 'layouts/_navbar.html.haml', type: :view do
   let!(:procedure) { create(:procedure, administrateur: administrateur) }
 
   describe 'navbar entries' do
-
     context 'when disconnected' do
       before do
         render
       end
       subject { rendered }
-      it { is_expected.to match(/Connexion/) }
+      it { is_expected.to match(%r{Connexion}) }
     end
 
     context 'when administrateur is connected' do
       before do
-        @request.env["devise.mapping"] = Devise.mappings[:administrateur]
+        @request.env['devise.mapping'] = Devise.mappings[:administrateur]
         @current_user = administrateur
         sign_in @current_user
         render
       end
 
       subject { rendered }
-      it { is_expected.to match(/Déconnexion/) }
+      it { is_expected.to match(%r{Déconnexion}) }
     end
 
     context 'when gestionnaire is connected' do
       before do
-        @request.env["devise.mapping"] = Devise.mappings[:gestionnaire]
+        @request.env['devise.mapping'] = Devise.mappings[:gestionnaire]
         @current_user = gestionnaire
         sign_in @current_user
         render
       end
 
       subject { rendered }
-      it { is_expected.to match(/Déconnexion/) }
+      it { is_expected.to match(%r{Déconnexion}) }
     end
-
   end
 end

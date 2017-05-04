@@ -5,7 +5,7 @@ class Champ < ActiveRecord::Base
 
   delegate :libelle, :type_champ, :order_place, :mandatory, :description, :drop_down_list, to: :type_de_champ
 
-  after_save :internal_notification, if: Proc.new { !dossier.nil? }
+  after_save :internal_notification, if: proc { !dossier.nil? }
 
   def mandatory?
     mandatory
@@ -20,19 +20,17 @@ class Champ < ActiveRecord::Base
     ('dd/mm/yyyy' if type_champ == 'datetime' || type_champ == 'date')
   end
 
-  def same_hour? num
+  def same_hour?(num)
     same_date? num, '%H'
   end
 
-  def same_minute? num
+  def same_minute?(num)
     same_date? num, '%M'
   end
 
-  def same_date? num, compare
+  def same_date?(num, compare)
     if type_champ == 'datetime' && !value.nil?
-      if value.to_datetime.strftime(compare) == num
-        return true
-      end
+      return true if value.to_datetime.strftime(compare) == num
     end
     false
   end
@@ -53,7 +51,7 @@ class Champ < ActiveRecord::Base
 
   def internal_notification
     unless dossier.state == 'draft'
-      NotificationService.new('champs', self.dossier.id, self.libelle).notify
+      NotificationService.new('champs', dossier.id, libelle).notify
     end
   end
 end

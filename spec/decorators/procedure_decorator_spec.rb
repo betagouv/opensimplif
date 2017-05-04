@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe ProcedureDecorator do
-  let(:procedure) { create(:procedure, :published,  created_at: Time.new(2015, 12, 24, 14, 10)) }
+  let(:procedure) { create(:procedure, :published, created_at: Time.new(2015, 12, 24, 14, 10)) }
   subject { procedure.decorate }
 
   describe 'lien' do
     subject { super().lien }
-    it { is_expected.to match(/fake_path/) }
+    it { is_expected.to match(%r{fake_path}) }
   end
 
   describe 'created_at_fr' do
@@ -16,7 +16,7 @@ describe ProcedureDecorator do
 
   describe 'logo_img' do
     subject { super().logo_img }
-    it { is_expected.to match(/http.*#{ActionController::Base.helpers.image_url(LOGO_NAME)}/) }
+    it { is_expected.to match(%r{http.*#{ActionController::Base.helpers.image_url(LOGO_NAME)}}) }
   end
 
   describe 'geographic_information' do
@@ -25,5 +25,4 @@ describe ProcedureDecorator do
     it { expect(subject.quartiers_prioritaires).to be_falsey }
     it { expect(subject.cadastre).to be_falsey }
   end
-
 end

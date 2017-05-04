@@ -1,3 +1,1 @@
-BROWSER = Hashie::Mash.new ({
-                              value: nil
-                          })
+BROWSER = Hashie::Mash.new(value: nil)

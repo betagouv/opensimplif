@@ -5,8 +5,8 @@ describe SIADE::ExercicesAdapter do
   subject { described_class.new(siret).to_params }
 
   before do
-    stub_request(:get, /https:\/\/api-dev.apientreprise.fr\/v1\/etablissements\/exercices\/.*token=/)
-        .to_return(body: File.read('spec/support/files/exercices.json', status: 200))
+    stub_request(:get, %r{https:\/\/api-dev.apientreprise.fr\/v1\/etablissements\/exercices\/.*token=})
+      .to_return(body: File.read('spec/support/files/exercices.json', status: 200))
   end
 
   it '#to_params class est une Hash ?' do
@@ -23,11 +23,11 @@ describe SIADE::ExercicesAdapter do
     end
 
     it 'L\'exercice contient bien une date de fin d\'exercice' do
-      expect(subject[0][:dateFinExercice]).to eq("2013-12-31T00:00:00+01:00")
+      expect(subject[0][:dateFinExercice]).to eq('2013-12-31T00:00:00+01:00')
     end
 
     it 'L\'exercice contient bien une date_fin_exercice_timestamp' do
-      expect(subject[0][:date_fin_exercice_timestamp]).to eq(1388444400)
+      expect(subject[0][:date_fin_exercice_timestamp]).to eq(1_388_444_400)
     end
   end
 end

@@ -7,7 +7,7 @@ class DemoController < ApplicationController
 
     smart_listing_create :procedures,
                          Procedure.where(archived: false, published: true),
-                         partial: "demo/list",
+                         partial: 'demo/list',
                          array: true
   end
 end

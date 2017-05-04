@@ -2,13 +2,13 @@ class Admin::ProceduresController < AdminController
   include SmartListing::Helper::ControllerExtensions
   helper SmartListing::Helper
 
-  before_action :retrieve_procedure, only: [:show, :edit]
+  before_action :retrieve_procedure, only: %i[show edit]
   before_action :procedure_locked?, only: [:edit]
 
   def index
     @procedures = smart_listing_create :procedures,
                                        current_administrateur.procedures.where(published: true, archived: false).order(created_at: :desc),
-                                       partial: "admin/procedures/list",
+                                       partial: 'admin/procedures/list',
                                        array: true
 
     active_class
@@ -17,7 +17,7 @@ class Admin::ProceduresController < AdminController
   def archived
     @procedures = smart_listing_create :procedures,
                                        current_administrateur.procedures.where(archived: true).order(created_at: :desc),
-                                       partial: "admin/procedures/list",
+                                       partial: 'admin/procedures/list',
                                        array: true
 
     archived_class
@@ -28,7 +28,7 @@ class Admin::ProceduresController < AdminController
   def draft
     @procedures = smart_listing_create :procedures,
                                        current_administrateur.procedures.where(published: false, archived: false).order(created_at: :desc),
-                                       partial: "admin/procedures/list",
+                                       partial: 'admin/procedures/list',
                                        array: true
 
     draft_class
@@ -40,9 +40,7 @@ class Admin::ProceduresController < AdminController
     @facade = AdminProceduresShowFacades.new @procedure.decorate
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def destroy
     procedure = Procedure.find(params[:id])
@@ -89,11 +87,10 @@ class Admin::ProceduresController < AdminController
     procedure = current_administrateur.procedures.find(params[:procedure_id])
 
     new_procedure_path = ProcedurePath.new(
-        {
-            path: params[:procedure_path],
-            procedure: procedure,
-            administrateur: procedure.administrateur
-        })
+      path: params[:procedure_path],
+      procedure: procedure,
+      administrateur: procedure.administrateur
+    )
     if new_procedure_path.validate
       new_procedure_path.delete
     else
@@ -112,7 +109,7 @@ class Admin::ProceduresController < AdminController
       end
     end
 
-    #assign all gestionnaire
+    # assign all gestionnaire
 
     Gestionnaire.all.each do |gestionnaire|
       AssignTo.create gestionnaire: gestionnaire, procedure: procedure
@@ -121,9 +118,8 @@ class Admin::ProceduresController < AdminController
 
     procedure.publish!(params[:procedure_path])
 
-    flash.notice = "Procédure publiée"
+    flash.notice = 'Procédure publiée'
     render js: "window.location = '#{admin_procedures_path}'"
-
   rescue ActiveRecord::RecordNotFound
     flash.alert = 'Procédure inéxistante'
     redirect_to admin_procedures_path
@@ -140,7 +136,7 @@ class Admin::ProceduresController < AdminController
     clone_procedure.administrateur = admin
     clone_procedure.save
 
-    flash.now.notice = "La procédure a correctement été cloné vers le nouvel administrateur."
+    flash.now.notice = 'La procédure a correctement été cloné vers le nouvel administrateur.'
 
     render '/admin/procedures/transfer', formats: 'js', status: 200
   end
@@ -149,9 +145,8 @@ class Admin::ProceduresController < AdminController
     procedure = current_administrateur.procedures.find(params[:procedure_id])
     procedure.archive
 
-    flash.notice = "Procédure archivée"
+    flash.notice = 'Procédure archivée'
     redirect_to admin_procedures_path
-
   rescue ActiveRecord::RecordNotFound
     flash.alert = 'Procédure inéxistante'
     redirect_to admin_procedures_path
@@ -168,7 +163,6 @@ class Admin::ProceduresController < AdminController
       flash.now.alert = procedure.errors.full_messages.join('<br />').html_safe
       render 'index'
     end
-
   rescue ActiveRecord::RecordNotFound
     flash.alert = 'Procédure inéxistante'
     redirect_to admin_procedures_path
@@ -188,13 +182,13 @@ class Admin::ProceduresController < AdminController
 
   def path_list
     render json: ProcedurePath
-                     .joins(', procedures')
-                     .where("procedures.id = procedure_paths.procedure_id AND procedures.archived != true")
-                     .where("path LIKE '%#{params[:request]}%'")
-                     .pluck(:path, :administrateur_id)
-                     .inject([]) {
-               |acc, value| acc.push({label: value.first, mine: value.second == current_administrateur.id})
-           }.to_json
+      .joins(', procedures')
+      .where('procedures.id = procedure_paths.procedure_id AND procedures.archived != true')
+      .where("path LIKE '%#{params[:request]}%'")
+      .pluck(:path, :administrateur_id)
+      .inject([]) { |acc, value|
+                   acc.push(label: value.first, mine: value.second == current_administrateur.id)
+                 }.to_json
   end
 
   private

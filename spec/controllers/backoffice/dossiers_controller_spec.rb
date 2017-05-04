@@ -95,7 +95,6 @@ describe Backoffice::DossiersController, type: :controller do
       post :search, params: {search_terms: 'test'}
       expect(response).to have_http_status(200)
     end
-
   end
 
   describe 'POST #valid' do
@@ -163,7 +162,6 @@ describe Backoffice::DossiersController, type: :controller do
     end
     subject { post :without_continuation, params: {dossier_id: dossier_id} }
 
-
     it 'change state to without_continuation' do
       subject
 
@@ -211,7 +209,6 @@ describe Backoffice::DossiersController, type: :controller do
       it 'change state for updated' do
         expect(dossier.state).to eq 'updated'
       end
-
     end
 
     describe 'flash alert' do
@@ -223,7 +220,6 @@ describe Backoffice::DossiersController, type: :controller do
       end
     end
   end
-
 
   describe 'POST #archive' do
     before do

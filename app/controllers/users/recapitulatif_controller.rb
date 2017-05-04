@@ -1,5 +1,4 @@
 class Users::RecapitulatifController < UsersController
-
   before_action only: [:show] do
     authorized_routes? self.class
   end
@@ -28,7 +27,7 @@ class Users::RecapitulatifController < UsersController
 
   def self.route_authorization
     {
-        states: [:initiated, :replied, :updated, :validated, :received, :submitted, :without_continuation, :closed, :refused]
+      states: %i[initiated replied updated validated received submitted without_continuation closed refused]
     }
   end
 
@@ -36,7 +35,6 @@ class Users::RecapitulatifController < UsersController
 
   def create_dossier_facade
     @facade = DossierFacades.new current_user_dossier.id, current_user.email
-
   rescue ActiveRecord::RecordNotFound
     flash.alert = t('errors.messages.dossier_not_found')
     redirect_to url_for(root_path)

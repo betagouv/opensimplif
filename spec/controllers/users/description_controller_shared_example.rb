@@ -32,7 +32,7 @@ shared_examples 'description_controller_spec' do
       expect(response).to redirect_to(root_path)
     end
 
-    it_behaves_like "not owner of dossier", :show
+    it_behaves_like 'not owner of dossier', :show
 
     describe 'before_action authorized_routes?' do
       context 'when dossier does not have a valid state' do
@@ -72,7 +72,6 @@ shared_examples 'description_controller_spec' do
 
       context 'when dossier does not have an enterprise datas' do
         before do
-
         end
 
         it { expect(dossier.entreprise).to be_nil }
@@ -106,7 +105,7 @@ shared_examples 'description_controller_spec' do
           dossier.reload
         end
 
-        it "redirection vers la page recapitulative" do
+        it 'redirection vers la page recapitulative' do
           expect(response).to redirect_to("/backoffice/dossiers/#{dossier_id}")
         end
 
@@ -117,8 +116,8 @@ shared_examples 'description_controller_spec' do
         context 'when user whould like save just a draft' do
           let(:submit) { {brouillon: 'brouillon'} }
 
-          it "redirection vers la page recapitulative" do
-            expect(response).to redirect_to("/users/dossiers?liste=brouillon")
+          it 'redirection vers la page recapitulative' do
+            expect(response).to redirect_to('/users/dossiers?liste=brouillon')
           end
 
           it 'etat du dossier est soumis' do
@@ -145,11 +144,13 @@ shared_examples 'description_controller_spec' do
     end
 
     context 'Quand la procédure accepte les CERFA' do
-      subject { post :create, params: {dossier_id: dossier_id,
-                                       cerfa_pdf: cerfa_pdf} }
+      subject do
+        post :create, params: {dossier_id: dossier_id,
+                               cerfa_pdf: cerfa_pdf}
+      end
 
       it 'Notification interne is create' do
-        expect { subject }.to change(Notification, :count).by (1)
+        expect { subject }.to change(Notification, :count).by 1
       end
 
       context 'Sauvegarde du CERFA PDF', vcr: {cassette_name: 'controllers_users_description_controller_save_cerfa'} do
@@ -184,7 +185,7 @@ shared_examples 'description_controller_spec' do
             post :create, params: {dossier_id: dossier_id, cerfa_pdf: cerfa_pdf}
           end
 
-          it "il y a deux CERFA PDF pour ce dossier" do
+          it 'il y a deux CERFA PDF pour ce dossier' do
             expect(cerfas.size).to eq 2
           end
         end
@@ -216,16 +217,15 @@ shared_examples 'description_controller_spec' do
       before do
         post :create, params: {dossier_id: dossier_id,
                                champs: {
-                                   "'#{dossier.champs.first.id}'" => dossier_champs_first,
-                                   "'#{dossier.champs.second.id}'" => dossier_date_value
+                                 "'#{dossier.champs.first.id}'" => dossier_champs_first,
+                                 "'#{dossier.champs.second.id}'" => dossier_date_value
                                },
                                time_hour: {
-                                   "'#{dossier.champs.second.id}'" => dossier_hour_value,
+                                 "'#{dossier.champs.second.id}'" => dossier_hour_value
                                },
                                time_minute: {
-                                   "'#{dossier.champs.second.id}'" => dossier_minute_value,
-                               }
-                    }
+                                 "'#{dossier.champs.second.id}'" => dossier_minute_value
+                               }}
         dossier.reload
       end
 
@@ -233,7 +233,7 @@ shared_examples 'description_controller_spec' do
       it { expect(response).to redirect_to backoffice_dossier_path(id: dossier.id) }
 
       context 'when champs is type_de_champ datetime' do
-        it { expect(dossier.champs.second.value).to eq(dossier_date_value+' '+dossier_hour_value+':'+dossier_minute_value) }
+        it { expect(dossier.champs.second.value).to eq(dossier_date_value + ' ' + dossier_hour_value + ':' + dossier_minute_value) }
       end
 
       context 'when champs value is empty' do
@@ -255,8 +255,8 @@ shared_examples 'description_controller_spec' do
       let(:all_pj_type) { dossier.procedure.type_de_piece_justificative_ids }
       before do
         post :create, params: {dossier_id: dossier_id,
-                               'piece_justificative_'+all_pj_type[0].to_s => piece_justificative_0,
-                               'piece_justificative_'+all_pj_type[1].to_s => piece_justificative_1}
+                               'piece_justificative_' + all_pj_type[0].to_s => piece_justificative_0,
+                               'piece_justificative_' + all_pj_type[1].to_s => piece_justificative_1}
         dossier.reload
       end
 
@@ -265,8 +265,8 @@ shared_examples 'description_controller_spec' do
           expect(ClamavService).to receive(:safe_file?).twice
 
           post :create, params: {dossier_id: dossier_id,
-                                 'piece_justificative_'+all_pj_type[0].to_s => piece_justificative_0,
-                                 'piece_justificative_'+all_pj_type[1].to_s => piece_justificative_1}
+                                 'piece_justificative_' + all_pj_type[0].to_s => piece_justificative_0,
+                                 'piece_justificative_' + all_pj_type[1].to_s => piece_justificative_1}
         end
       end
 
@@ -286,9 +286,11 @@ shared_examples 'description_controller_spec' do
   describe 'POST #pieces_justificatives', vcr: {cassette_name: 'controllers_users_description_controller_pieces_justificatives'} do
     let(:all_pj_type) { dossier.procedure.type_de_piece_justificative_ids }
 
-    subject { patch :pieces_justificatives, params: {dossier_id: dossier.id,
-                                                     'piece_justificative_'+all_pj_type[0].to_s => piece_justificative_0,
-                                                     'piece_justificative_'+all_pj_type[1].to_s => piece_justificative_1} }
+    subject do
+      patch :pieces_justificatives, params: {dossier_id: dossier.id,
+                                             'piece_justificative_' + all_pj_type[0].to_s => piece_justificative_0,
+                                             'piece_justificative_' + all_pj_type[1].to_s => piece_justificative_1}
+    end
 
     context 'when user is a guest' do
       let(:guest) { create :user }
@@ -300,7 +302,7 @@ shared_examples 'description_controller_spec' do
       end
 
       it 'Notification interne is create' do
-        expect { subject }.to change(Notification, :count).by (2)
+        expect { subject }.to change(Notification, :count).by 2
       end
 
       context 'when PJ have no documents' do
@@ -339,7 +341,7 @@ shared_examples 'description_controller_spec' do
       end
 
       context 'when one of PJs is not valid' do
-        let(:piece_justificative_0) { Rack::Test::UploadedFile.new("./spec/support/files/entreprise.json", 'application/json') }
+        let(:piece_justificative_0) { Rack::Test::UploadedFile.new('./spec/support/files/entreprise.json', 'application/json') }
 
         it { expect(dossier.pieces_justificatives.size).to eq 0 }
 
@@ -361,9 +363,11 @@ end
 shared_examples 'description_controller_spec_POST_piece_justificatives_for_owner' do
   let(:all_pj_type) { dossier.procedure.type_de_piece_justificative_ids }
 
-  subject { patch :pieces_justificatives, params: {dossier_id: dossier.id,
-                                                   'piece_justificative_'+all_pj_type[0].to_s => piece_justificative_0,
-                                                   'piece_justificative_'+all_pj_type[1].to_s => piece_justificative_1} }
+  subject do
+    patch :pieces_justificatives, params: {dossier_id: dossier.id,
+                                           'piece_justificative_' + all_pj_type[0].to_s => piece_justificative_0,
+                                           'piece_justificative_' + all_pj_type[1].to_s => piece_justificative_1}
+  end
 
   context 'when user is the owner', vcr: {cassette_name: 'controllers_users_description_controller_pieces_justificatives'} do
     before do
@@ -406,7 +410,7 @@ shared_examples 'description_controller_spec_POST_piece_justificatives_for_owner
     end
 
     context 'when one of PJs is not valid' do
-      let(:piece_justificative_0) { Rack::Test::UploadedFile.new("./spec/support/files/entreprise.json", 'application/json') }
+      let(:piece_justificative_0) { Rack::Test::UploadedFile.new('./spec/support/files/entreprise.json', 'application/json') }
 
       it { expect(dossier.pieces_justificatives.size).to eq 0 }
 

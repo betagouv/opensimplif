@@ -13,7 +13,7 @@ describe Sessions::SessionsController, type: :controller do
 
   describe '.create' do
     before do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
+      @request.env['devise.mapping'] = Devise.mappings[:user]
     end
 
     it 'calls before_sign_in' do
@@ -24,7 +24,7 @@ describe Sessions::SessionsController, type: :controller do
 
   describe '.create with user connected' do
     before do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
+      @request.env['devise.mapping'] = Devise.mappings[:user]
 
       allow_any_instance_of(described_class).to receive(:user_signed_in?).and_return(true)
     end
@@ -37,7 +37,7 @@ describe Sessions::SessionsController, type: :controller do
 
   describe '.create with gestionnaire connected' do
     before do
-      @request.env["devise.mapping"] = Devise.mappings[:gestionnaire]
+      @request.env['devise.mapping'] = Devise.mappings[:gestionnaire]
 
       allow_any_instance_of(described_class).to receive(:gestionnaire_signed_in?).and_return(true)
     end
@@ -50,7 +50,7 @@ describe Sessions::SessionsController, type: :controller do
 
   describe '.create with administrateur connected' do
     before do
-      @request.env["devise.mapping"] = Devise.mappings[:administrateur]
+      @request.env['devise.mapping'] = Devise.mappings[:administrateur]
 
       allow_any_instance_of(described_class).to receive(:administrateur_signed_in?).and_return(true)
     end

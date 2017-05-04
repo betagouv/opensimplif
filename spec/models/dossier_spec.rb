@@ -620,7 +620,6 @@ describe Dossier do
     let(:dossier) { create(:dossier, :with_entreprise, user: user, procedure: procedure, follows: [follow]) }
 
     describe '#export_headers' do
-
       subject { dossier.export_headers }
 
       it { expect(subject).to include(:description) }
@@ -635,7 +634,7 @@ describe Dossier do
       it { expect(subject[2]).to be_a_kind_of(Time) }
       it { expect(subject[3]).to be_in([true, false]) }
       it { expect(subject[4]).to be_in([true, false]) }
-      it { expect(subject[5]).to eq("draft") }
+      it { expect(subject[5]).to eq('draft') }
       it { expect(subject[6]).to eq(dossier.followers_gestionnaires_emails) }
       it { expect(subject.count).to eq(DossierProcedureSerializer.new(dossier).attributes.count + dossier.procedure.types_de_champ.count + dossier.export_entreprise_data.count) }
     end
@@ -647,11 +646,11 @@ describe Dossier do
 
     subject do
       dossier_hash = {}
-      dossier_splitted = Dossier.to_csv.split("\n").map { |cell| cell.split(",") }
+      dossier_splitted = Dossier.to_csv.split("\n").map { |cell| cell.split(',') }
       index = 0
       dossier_splitted[0].each do |column|
         dossier_hash.store(column.to_sym, dossier_splitted[1][index])
-        index = index + 1
+        index += 1
       end
       dossier_hash
     end
@@ -682,7 +681,6 @@ describe Dossier do
     it { expect(subject[:entreprise_nom]).to be_nil }
     it { expect(subject[:entreprise_prenom]).to be_nil }
   end
-
 
   describe '#Dossier.to_xlsx' do
     let!(:procedure) { create(:procedure) }
@@ -774,7 +772,6 @@ describe Dossier do
       it { expect(subject.second.type_de_champ.libelle).to eq 'type_2_2' }
       it { expect(subject.last.type_de_champ.libelle).to eq 'type_2_3' }
     end
-
   end
 
   describe '#ordered_champs_private' do
@@ -870,13 +867,12 @@ describe Dossier do
   end
 
   describe '#followers_gestionnaires_emails' do
-
     context 'when there is no follower' do
       let(:dossier) { create(:dossier, follows: []) }
 
       subject { dossier.followers_gestionnaires_emails }
 
-      it { is_expected.to eq "" }
+      it { is_expected.to eq '' }
     end
 
     let(:gestionnaire) { create(:gestionnaire) }
@@ -890,7 +886,7 @@ describe Dossier do
       it { is_expected.to eq gestionnaire.email }
     end
 
-    let(:gestionnaire2) { create :gestionnaire}
+    let(:gestionnaire2) { create :gestionnaire }
     let(:follow2) { create(:follow, gestionnaire: gestionnaire2) }
 
     context 'when there is 2 followers' do
@@ -900,7 +896,5 @@ describe Dossier do
 
       it { is_expected.to eq "#{gestionnaire.email} #{gestionnaire2.email}" }
     end
-
-
   end
 end

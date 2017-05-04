@@ -1,11 +1,8 @@
 class CreateFranceConnectInformation < ActiveRecord::Migration
-
   class User < ActiveRecord::Base
-
   end
 
   class FranceConnectInformation < ActiveRecord::Base
-
   end
 
   def up
@@ -21,13 +18,14 @@ class CreateFranceConnectInformation < ActiveRecord::Migration
     add_reference :france_connect_informations, :user, references: :users
 
     User.all.each do |user|
-      FranceConnectInformation.create({gender: user.gender,
-                                       given_name: user.given_name,
-                                       family_name: user.family_name,
-                                       birthdate: user.birthdate,
-                                       birthplace: user.birthplace,
-                                       france_connect_particulier_id: user.france_connect_particulier_id,
-                                       user_id: user.id}) unless user.france_connect_particulier_id.nil?
+      next if user.france_connect_particulier_id.nil?
+      FranceConnectInformation.create(gender: user.gender,
+                                      given_name: user.given_name,
+                                      family_name: user.family_name,
+                                      birthdate: user.birthdate,
+                                      birthplace: user.birthplace,
+                                      france_connect_particulier_id: user.france_connect_particulier_id,
+                                      user_id: user.id)
     end
 
     remove_column :users, :gender
@@ -38,7 +36,6 @@ class CreateFranceConnectInformation < ActiveRecord::Migration
     remove_column :users, :france_connect_particulier_id
   end
 
-
   def down
     add_column :users, :gender, :string
     add_column :users, :given_name, :string
@@ -48,12 +45,12 @@ class CreateFranceConnectInformation < ActiveRecord::Migration
     add_column :users, :france_connect_particulier_id, :string
 
     FranceConnectInformation.all.each do |fci|
-      User.find(fci.user_id).update_attributes({gender: fci.gender,
-                                                given_name: fci.given_name,
-                                                family_name: fci.family_name,
-                                                birthdate: fci.birthdate,
-                                                birthplace: fci.birthplace,
-                                                france_connect_particulier_id: fci.france_connect_particulier_id})
+      User.find(fci.user_id).update_attributes(gender: fci.gender,
+                                               given_name: fci.given_name,
+                                               family_name: fci.family_name,
+                                               birthdate: fci.birthdate,
+                                               birthplace: fci.birthplace,
+                                               france_connect_particulier_id: fci.france_connect_particulier_id)
     end
 
     drop_table :france_connect_informations

@@ -5,11 +5,10 @@ class Admin::GestionnairesController < AdminController
   def index
     @gestionnaires = smart_listing_create :gestionnaires,
                                           current_administrateur.gestionnaires,
-                                          partial: "admin/gestionnaires/list",
+                                          partial: 'admin/gestionnaires/list',
                                           array: true
     @gestionnaire ||= Gestionnaire.new
   end
-
 
   def create
     @gestionnaire = Gestionnaire.find_by_email(params[:gestionnaire][:email])
@@ -40,7 +39,7 @@ class Admin::GestionnairesController < AdminController
       .merge(password: SecureRandom.hex(5))
 
     @gestionnaire = Gestionnaire.create(attributes.merge(
-      administrateurs: [current_administrateur]
+                                          administrateurs: [current_administrateur]
     ))
 
     if @gestionnaire.errors.messages.empty?
@@ -60,7 +59,7 @@ class Admin::GestionnairesController < AdminController
       # GestionnaireMailer.new_assignement(@gestionnaire.email, current_administrateur.email).deliver_now!
       @gestionnaire.administrateurs.push current_administrateur
       flash.notice = 'Accompagnateur ajouté'
-      #TODO Mailer no assign_to
+      # TODO: Mailer no assign_to
     end
   end
 end

@@ -3,9 +3,7 @@ FactoryGirl.define do
     body 'plop'
 
     before(:create) do |commentaire, _evaluator|
-      unless commentaire.dossier
-        commentaire.dossier = create :dossier
-      end
+      commentaire.dossier = create :dossier unless commentaire.dossier
     end
   end
 end

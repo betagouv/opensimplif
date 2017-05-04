@@ -4,8 +4,8 @@ FactoryGirl.define do
     lien_demarche 'http://localhost'
     libelle 'Demande de subvention'
     description "Demande de subvention à l'intention des associations"
-    organisation "Orga SGMAP"
-    direction "direction SGMAP"
+    organisation 'Orga SGMAP'
+    direction 'direction SGMAP'
     published false
     administrateur { create(:administrateur) }
 

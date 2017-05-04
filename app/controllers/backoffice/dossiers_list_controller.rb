@@ -23,11 +23,11 @@ class Backoffice::DossiersListController < ApplicationController
     dossiers_list_facade.service.add_filter param_filter
   end
 
-  def dossiers_list_facade liste='all_state'
+  def dossiers_list_facade(liste = 'all_state')
     @facade_data_view ||= DossiersListFacades.new current_gestionnaire, liste, retrieve_procedure
   end
 
-  def smartlisting_dossier dossiers_list=nil, liste='all_state'
+  def smartlisting_dossier(_dossiers_list = nil, liste = 'all_state')
     dossiers_list_facade liste
 
     new_dossiers_list = dossiers_list_facade.service.nouveaux
@@ -40,19 +40,19 @@ class Backoffice::DossiersListController < ApplicationController
 
     smart_listing_create :new_dossiers,
                          new_dossiers_list,
-                         partial: "backoffice/dossiers/list",
+                         partial: 'backoffice/dossiers/list',
                          array: true,
                          default_sort: dossiers_list_facade.service.default_sort
 
     smart_listing_create :follow_dossiers,
                          follow_dossiers_list,
-                         partial: "backoffice/dossiers/list",
+                         partial: 'backoffice/dossiers/list',
                          array: true,
                          default_sort: dossiers_list_facade.service.default_sort
 
     smart_listing_create :all_state_dossiers,
                          all_state_dossiers_list,
-                         partial: "backoffice/dossiers/list",
+                         partial: 'backoffice/dossiers/list',
                          array: true,
                          default_sort: dossiers_list_facade.service.default_sort
   end

@@ -1,6 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-# before_action :configure_sign_up_params, only: [:create]
-# before_action :configure_account_update_params, only: [:update]
+  # before_action :configure_sign_up_params, only: [:create]
+  # before_action :configure_account_update_params, only: [:update]
 
   def after_sign_up_path_for(resource_or_scope)
     check_invite! resource_or_scope
@@ -67,7 +67,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   private
 
-  def check_invite! user
+  def check_invite!(user)
     Invite.where(email: user.email).update_all user_id: user.id
   end
 end

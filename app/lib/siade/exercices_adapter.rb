@@ -16,8 +16,6 @@ class SIADE::ExercicesAdapter
   end
 
   def attr_to_fetch
-    [:ca,
-     :dateFinExercice,
-     :date_fin_exercice_timestamp]
+    %i[ca dateFinExercice date_fin_exercice_timestamp]
   end
 end

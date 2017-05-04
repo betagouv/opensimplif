@@ -1,5 +1,4 @@
 class ProcedureDecorator < Draper::Decorator
-
   delegate_all
 
   def lien
@@ -14,6 +13,7 @@ class ProcedureDecorator < Draper::Decorator
     return h.image_url(LOGO_NAME) if logo.blank?
     File.join(STORAGE_URL, File.basename(logo.path))
   end
+
   def geographic_information
     module_api_carto
   end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Gestionnaires::SessionsController, type: :controller do
   before do
-    @request.env["devise.mapping"] = Devise.mappings[:gestionnaire]
+    @request.env['devise.mapping'] = Devise.mappings[:gestionnaire]
   end
 
   describe '.demo' do
@@ -10,7 +10,7 @@ describe Gestionnaires::SessionsController, type: :controller do
 
     context 'when rails env is production' do
       before do
-        allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
+        allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('production'))
       end
 
       it { is_expected.to redirect_to root_path }

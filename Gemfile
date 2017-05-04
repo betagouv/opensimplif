@@ -40,10 +40,10 @@ gem 'unicorn'
 # serializer
 gem 'active_model_serializers'
 
-#haml
+# haml
 gem 'haml-rails'
 
-#bootstrap saas
+# bootstrap saas
 gem 'bootstrap-sass', '~> 3.3.5'
 
 # Pagination
@@ -53,7 +53,7 @@ gem 'will_paginate-bootstrap'
 gem 'draper', '~> 3.0.0.pre1'
 gem 'unicode_utils'
 
-#Gestion des comptes utilisateurs
+# Gestion des comptes utilisateurs
 gem 'devise'
 gem 'openid_connect'
 
@@ -68,10 +68,10 @@ gem 'fog-openstack'
 gem 'pg'
 gem 'scenic'
 
-gem 'rgeo-geojson'
-gem 'leaflet-rails'
-gem 'leaflet-markercluster-rails', '~> 0.7.0'
 gem 'leaflet-draw-rails'
+gem 'leaflet-markercluster-rails', '~> 0.7.0'
+gem 'leaflet-rails'
+gem 'rgeo-geojson'
 
 gem 'bootstrap-datepicker-rails'
 
@@ -79,13 +79,13 @@ gem 'chartkick'
 
 gem 'logstasher'
 
-gem "font-awesome-rails"
+gem 'font-awesome-rails'
 
 gem 'hashie'
 
 gem 'mailjet'
 
-gem "smart_listing"
+gem 'smart_listing'
 
 gem 'bootstrap-wysihtml5-rails', '~> 0.3.3.8'
 
@@ -93,7 +93,7 @@ gem 'as_csv'
 gem 'spreadsheet_architect'
 
 gem 'apipie-rails'
-gem "maruku" # for Markdown support in apipie
+gem 'maruku' # for Markdown support in apipie
 
 gem 'openstack'
 
@@ -101,20 +101,20 @@ gem 'browser'
 
 group :test do
   gem 'capybara'
-  gem 'launchy'
-  gem 'factory_girl'
   gem 'database_cleaner'
+  gem 'factory_girl'
+  gem 'guard'
+  gem 'launchy'
+  gem 'poltergeist'
   gem 'selenium-webdriver'
-  gem 'webmock'
   gem 'shoulda-matchers', require: false
   gem 'simplecov', require: false
-  gem 'poltergeist'
   gem 'timecop'
-  gem 'guard'
+  gem 'webmock'
   # gem 'guard-rspec', require: false
   gem 'guard-livereload', '~> 2.4', require: false
-  gem 'vcr'
   gem 'rails-controller-testing'
+  gem 'vcr'
 end
 
 group :development do

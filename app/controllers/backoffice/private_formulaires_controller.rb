@@ -4,13 +4,13 @@ class Backoffice::PrivateFormulairesController < ApplicationController
   def update
     dossier = Dossier.find(params[:dossier_id])
 
-    unless params[:champs].nil?
+    if params[:champs]
       champs_service_errors = ChampsService.save_formulaire dossier.champs_private, params
 
       if champs_service_errors.empty?
-        flash[:notice] = "Formulaire enregistré"
+        flash.notice = 'Formulaire enregistré'
       else
-        flash[:alert] = (champs_service_errors.inject('') { |acc, error| acc+= error[:message]+'<br>' }).html_safe
+        flash.alert = champs_service_errors.map { |e| e[:message] }.join('<br>')
       end
     end
 

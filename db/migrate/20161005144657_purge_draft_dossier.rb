@@ -1,6 +1,6 @@
 class PurgeDraftDossier < ActiveRecord::Migration
   class Dossier < ActiveRecord::Base
-    BROUILLON = %w(draft)
+    BROUILLON = %w[draft].freeze
 
     def brouillon?
       BROUILLON.include?(state)

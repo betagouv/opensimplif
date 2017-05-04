@@ -21,7 +21,11 @@ class Search < ActiveRecord::Base
     end
 
     def method_missing(name, *args, &block)
-      @results.__send__(name, *args, &block)
+      @results.__send__(name, *args, &block) || super
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      super
     end
 
     def decorate!
@@ -38,45 +42,41 @@ class Search < ActiveRecord::Base
   belongs_to :dossier
 
   def results
-    unless @query.present?
-      return Search.none
-    end
+    return Search.none unless @query.present?
 
     search_term = Search.connection.quote(to_tsquery)
 
     dossier_ids = Dossier.all
       .select(:id)
       .where(archived: false)
-      .where.not(state: "draft")
+      .where.not(state: 'draft')
 
     q = Search
-      .select("DISTINCT(searches.dossier_id)")
+      .select('DISTINCT(searches.dossier_id)')
       .select("COALESCE(ts_rank(to_tsvector('french', searches.term::text), to_tsquery('french', #{search_term})), 0) AS rank")
       .joins(:dossier)
       .where(dossier_id: dossier_ids)
       .where("to_tsvector('french', searches.term::text) @@ to_tsquery('french', #{search_term})")
-      .order("rank DESC")
+      .order('rank DESC')
       .preload(:dossier)
 
-    if @page.present?
-      q = q.paginate(page: @page)
-    end
+    q = q.paginate(page: @page) if @page.present?
 
     Results.new(q)
   end
 
-  #def self.refresh
+  # def self.refresh
   #  # TODO: could be executed concurrently
   #  # See https://github.com/thoughtbot/scenic#what-about-materialized-views
   #  Scenic.database.refresh_materialized_view(table_name, concurrently: false)
-  #end
+  # end
 
   private
 
   def to_tsquery
-    @query.gsub(/['?\\:&|!]/, "") # drop disallowed characters
-      .split(/\s+/)               # split words
-      .map { |x| "#{x}:*" }       # enable prefix matching
-      .join(" & ")
+    @query.gsub(%r{['?\\:&|!]}, '') # drop disallowed characters
+      .split(%r{\s+})               # split words
+      .map { |x| "#{x}:*" } # enable prefix matching
+      .join(' & ')
   end
 end

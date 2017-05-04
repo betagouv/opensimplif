@@ -52,7 +52,7 @@ describe API::V1::DossiersController do
         describe 'dossier' do
           subject { super().first }
           it { expect(subject[:id]).to eq(dossier.id) }
-          it { expect(subject[:updated_at]).to eq("2008-09-01T08:05:00.000Z") }
+          it { expect(subject[:updated_at]).to eq('2008-09-01T08:05:00.000Z') }
           it { expect(subject.keys.size).to eq(2) }
         end
       end
@@ -95,10 +95,9 @@ describe API::V1::DossiersController do
     end
 
     context 'when procedure is found and belongs to current admin' do
-
       context 'when dossier does not exist' do
         let(:procedure_id) { procedure.id }
-        let(:dossier_id) { 99999 }
+        let(:dossier_id) { 99_999 }
         it { expect(subject.code).to eq('404') }
       end
 
@@ -115,7 +114,7 @@ describe API::V1::DossiersController do
         let!(:dossier) { Timecop.freeze(date_creation) { create(:dossier, :with_entreprise, procedure: procedure) } }
         let(:dossier_id) { dossier.id }
         let(:body) { JSON.parse(retour.body, symbolize_names: true) }
-        let(:field_list) { [:id, :created_at, :updated_at, :archived, :mandataire_social, :entreprise, :etablissement, :cerfa, :types_de_piece_justificative, :pieces_justificatives, :champs, :champs_private, :commentaires, :state] }
+        let(:field_list) { %i[id created_at updated_at archived mandataire_social entreprise etablissement cerfa types_de_piece_justificative pieces_justificatives champs champs_private commentaires state] }
         subject { body[:dossier] }
 
         it 'return REST code 200', :show_in_doc do
@@ -132,19 +131,22 @@ describe API::V1::DossiersController do
         it { expect(subject.keys).to match_array(field_list) }
 
         describe 'entreprise' do
-          let(:field_list) { [
-              :siren,
-              :capital_social,
-              :numero_tva_intracommunautaire,
-              :forme_juridique,
-              :forme_juridique_code,
-              :nom_commercial,
-              :raison_sociale,
-              :siret_siege_social,
-              :code_effectif_entreprise,
-              :date_creation,
-              :nom,
-              :prenom] }
+          let(:field_list) do
+            %i[
+              siren
+              capital_social
+              numero_tva_intracommunautaire
+              forme_juridique
+              forme_juridique_code
+              nom_commercial
+              raison_sociale
+              siret_siege_social
+              code_effectif_entreprise
+              date_creation
+              nom
+              prenom
+            ]
+          end
           subject { super()[:entreprise] }
 
           it { expect(subject[:siren]).to eq('440117620') }
@@ -161,10 +163,13 @@ describe API::V1::DossiersController do
         end
 
         describe 'types_de_piece_justificative' do
-          let(:field_list) { [
-              :id,
-              :libelle,
-              :description] }
+          let(:field_list) do
+            %i[
+              id
+              libelle
+              description
+            ]
+          end
           subject { super()[:types_de_piece_justificative] }
 
           it { expect(subject.length).to eq 2 }
@@ -183,10 +188,14 @@ describe API::V1::DossiersController do
             create :piece_justificative, :rib, dossier: dossier, type_de_piece_justificative: dossier.procedure.types_de_piece_justificative.first, user: dossier.user
           end
 
-          let(:field_list) { [
-              :url, :created_at, :type_de_piece_justificative_id] }
-          subject {
-            super()[:pieces_justificatives].first }
+          let(:field_list) do
+            %i[
+              url created_at type_de_piece_justificative_id
+            ]
+          end
+          subject do
+            super()[:pieces_justificatives].first
+          end
 
           it { expect(subject.keys.include?(:content_url)).to be_truthy }
           it { expect(subject[:created_at]).not_to be_nil }
@@ -202,8 +211,11 @@ describe API::V1::DossiersController do
         end
 
         describe 'champs' do
-          let(:field_list) { [
-              :url] }
+          let(:field_list) do
+            [
+              :url
+            ]
+          end
           subject { super()[:champs] }
 
           it { expect(subject.length).to eq 1 }
@@ -215,12 +227,15 @@ describe API::V1::DossiersController do
             it { expect(subject.keys.include?(:type_de_champ)).to be_truthy }
 
             describe 'type de champ' do
-              let(:field_list) { [
-                  :id,
-                  :libelle,
-                  :description,
-                  :order_place,
-                  :type] }
+              let(:field_list) do
+                %i[
+                  id
+                  libelle
+                  description
+                  order_place
+                  type
+                ]
+              end
               subject { super()[:type_de_champ] }
 
               it { expect(subject.keys.include?(:id)).to be_truthy }
@@ -233,8 +248,11 @@ describe API::V1::DossiersController do
         end
 
         describe 'champs_private' do
-          let(:field_list) { [
-              :url] }
+          let(:field_list) do
+            [
+              :url
+            ]
+          end
           subject { super()[:champs_private] }
 
           it { expect(subject.length).to eq 1 }
@@ -246,12 +264,15 @@ describe API::V1::DossiersController do
             it { expect(subject.keys.include?(:type_de_champ)).to be_truthy }
 
             describe 'type de champ' do
-              let(:field_list) { [
-                  :id,
-                  :libelle,
-                  :description,
-                  :order_place,
-                  :type] }
+              let(:field_list) do
+                %i[
+                  id
+                  libelle
+                  description
+                  order_place
+                  type
+                ]
+              end
               subject { super()[:type_de_champ] }
 
               it { expect(subject.keys.include?(:id)).to be_truthy }
@@ -291,36 +312,42 @@ describe API::V1::DossiersController do
 
           it { expect(subject[:created_at]).not_to be_nil }
           if Features.remote_storage
-            it { expect(subject[:content_url]).to match /^https:\/\/storage.apientreprise.fr\/tps_dev\/cerfa-.*\.pdf$/ }
+            it { expect(subject[:content_url]).to match %r{^https:\/\/storage.apientreprise.fr\/tps_dev\/cerfa-.*\.pdf$} }
           else
-            it { expect(subject[:content_url]).to match /^http:\/\/.*downloads.*_CERFA\.pdf$/ }
+            it { expect(subject[:content_url]).to match %r{^http:\/\/.*downloads.*_CERFA\.pdf$} }
           end
 
           describe 'user' do
-            let(:field_list) { [
-                :url, :created_at, :type_de_piece_justificative_id] }
-            subject {
-              super()[:user] }
+            let(:field_list) do
+              %i[
+                url created_at type_de_piece_justificative_id
+              ]
+            end
+            subject do
+              super()[:user]
+            end
 
             it { expect(subject[:email]).not_to be_nil }
           end
         end
 
         describe 'etablissement' do
-          let(:field_list) { [
-              :siret,
-              :siege_social,
-              :naf,
-              :libelle_naf,
-              :adresse,
-              :numero_voie,
-              :type_voie,
-              :nom_voie,
-              :complement_adresse,
-              :code_postal,
-              :localite,
-              :code_insee_localite
-          ] }
+          let(:field_list) do
+            %i[
+              siret
+              siege_social
+              naf
+              libelle_naf
+              adresse
+              numero_voie
+              type_voie
+              nom_voie
+              complement_adresse
+              code_postal
+              localite
+              code_insee_localite
+            ]
+          end
           subject { super()[:etablissement] }
 
           it { expect(subject[:siret]).to eq('44011762001530') }

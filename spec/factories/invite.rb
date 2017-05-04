@@ -3,13 +3,9 @@ FactoryGirl.define do
     email 'plop@octo.com'
 
     after(:build) do |invite, _evaluator|
-      if invite.dossier.nil?
-        invite.dossier = create(:dossier)
-      end
+      invite.dossier = create(:dossier) if invite.dossier.nil?
 
-      unless invite.user.nil?
-        invite.email = invite.user.email
-      end
+      invite.email = invite.user.email unless invite.user.nil?
     end
 
     trait :with_user do

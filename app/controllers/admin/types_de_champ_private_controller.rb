@@ -7,7 +7,7 @@ class Admin::TypesDeChampPrivateController < AdminController
     create_facade
     render 'admin/types_de_champ/show', format: :js
   rescue ActiveRecord::RecordNotFound
-    render json: {message: 'Champ not found'}, status: 404
+    render json: {message: 'Champ non trouvé'}, status: 404
   end
 
   def show
@@ -16,7 +16,7 @@ class Admin::TypesDeChampPrivateController < AdminController
   end
 
   def update
-    @procedure.update_attributes(TypesDeChampService.create_update_procedure_params params, true)
+    @procedure.update_attributes(TypesDeChampService.create_update_procedure_params(params, true))
     create_facade
     flash.now.notice = 'Modifications sauvegardées'
     render 'admin/types_de_champ/show', format: :js

@@ -1,1 +1,1 @@
-LOGO_NAME = 'logos/logo-opensimplif.jpg'
+LOGO_NAME = 'logos/logo-opensimplif.jpg'.freeze

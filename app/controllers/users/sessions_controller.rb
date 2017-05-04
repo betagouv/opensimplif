@@ -1,5 +1,5 @@
 class Users::SessionsController < Sessions::SessionsController
-# before_action :configure_sign_in_params, only: [:create]
+  # before_action :configure_sign_in_params, only: [:create]
 
   def demo
     return redirect_to root_path if Rails.env.production?
@@ -8,7 +8,7 @@ class Users::SessionsController < Sessions::SessionsController
     render 'new'
   end
 
-# GET /resource/sign_in
+  # GET /resource/sign_in
   def new
     unless user_return_to_procedure_id.nil?
       @dossier = Dossier.new(procedure: Procedure.active(user_return_to_procedure_id))
@@ -19,7 +19,7 @@ class Users::SessionsController < Sessions::SessionsController
     error_procedure
   end
 
-#POST /resource/sign_in
+  # POST /resource/sign_in
   def create
     try_to_authenticate(User)
     try_to_authenticate(Gestionnaire)
@@ -44,7 +44,7 @@ class Users::SessionsController < Sessions::SessionsController
     end
   end
 
-# DELETE /resource/sign_out
+  # DELETE /resource/sign_out
   def destroy
     sign_out :gestionnaire if gestionnaire_signed_in?
     sign_out :administrateur if administrateur_signed_in?
@@ -92,18 +92,17 @@ class Users::SessionsController < Sessions::SessionsController
   end
 
   def user_return_to_procedure_id
-    return nil if session["user_return_to"].nil?
+    return nil if session['user_return_to'].nil?
 
-    NumberService.to_number session["user_return_to"].split("?procedure_id=").second
+    NumberService.to_number session['user_return_to'].split('?procedure_id=').second
   end
 
   def try_to_authenticate(klass)
-    if resource = klass.find_for_database_authentication(email: params[:user][:email])
-      if resource.valid_password?(params[:user][:password])
-        sign_in resource
-        resource.force_sync_credentials
-        set_flash_message :notice, :signed_in
-      end
+    resource = klass.find_for_database_authentication(email: params[:user][:email])
+    if resource && resource.valid_password?(params[:user][:password])
+      sign_in resource
+      resource.force_sync_credentials
+      set_flash_message :notice, :signed_in
     end
   end
 end

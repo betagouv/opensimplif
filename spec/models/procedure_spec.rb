@@ -32,7 +32,6 @@ describe Procedure do
 
       it { expect(procedure.mail_received).not_to be_nil }
     end
-
   end
 
   describe '#build_default_mails' do
@@ -44,7 +43,6 @@ describe Procedure do
     end
 
     describe 'accessible values' do
-
       before do
         subject.save
       end
@@ -168,12 +166,12 @@ describe Procedure do
     let!(:piece_justificative_1) { create(:type_de_piece_justificative, procedure: procedure, order_place: 1) }
 
     before do
-      procedure.mail_received.object = "Je vais être cloné"
+      procedure.mail_received.object = 'Je vais être cloné'
     end
 
     subject { procedure.clone }
 
-    it 'should duplicate specific objects with different id' do
+    it 'duplicates specific objects with different id' do
       expect(subject.id).not_to eq(procedure.id)
       expect(subject).to have_same_attributes_as(procedure)
       expect(subject.module_api_carto).to have_same_attributes_as(procedure.module_api_carto)
@@ -200,7 +198,7 @@ describe Procedure do
       end
     end
 
-    it 'should not duplicate specific related objects' do
+    it 'does not duplicate specific related objects' do
       expect(subject.dossiers).to eq([])
       expect(subject.gestionnaires).to eq([])
       expect(subject.assign_to).to eq([])
@@ -222,7 +220,7 @@ describe Procedure do
     let(:procedure_path) { ProcedurePath.find(procedure.procedure_path.id) }
 
     it 'is available from a valid path' do
-      expect(procedure.path).to match(/fake_path/)
+      expect(procedure.path).to match(%r{fake_path})
       expect(procedure.published).to be_truthy
     end
 
@@ -254,7 +252,6 @@ describe Procedure do
   end
 
   describe 'total_dossier' do
-
     let(:procedure) { create :procedure }
 
     before do

@@ -22,7 +22,7 @@ ENV['RAILS_ENV'] ||= 'test'
 if ENV['COV']
   require 'simplecov'
   SimpleCov.start 'rails'
-  puts "required simplecov"
+  puts 'required simplecov'
 end
 
 require File.expand_path('../../config/environment', __FILE__)
@@ -95,7 +95,7 @@ RSpec.configure do |config|
 
   config.infer_base_class_for_anonymous_controllers = false
 
-  config.filter_run :show_in_doc => true if ENV['APIPIE_RECORD']
+  config.filter_run show_in_doc: true if ENV['APIPIE_RECORD']
 
   config.order = 'random'
 
@@ -105,26 +105,26 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.before(:each) do
-    allow_any_instance_of(PieceJustificativeUploader).to receive(:generate_secure_token).and_return("3dbb3535-5388-4a37-bc2d-778327b9f997")
-    allow_any_instance_of(ProcedureLogoUploader).to receive(:generate_secure_token).and_return("3dbb3535-5388-4a37-bc2d-778327b9f998")
-    allow_any_instance_of(CerfaUploader).to receive(:generate_secure_token).and_return("3dbb3535-5388-4a37-bc2d-778327b9f999")
+    allow_any_instance_of(PieceJustificativeUploader).to receive(:generate_secure_token).and_return('3dbb3535-5388-4a37-bc2d-778327b9f997')
+    allow_any_instance_of(ProcedureLogoUploader).to receive(:generate_secure_token).and_return('3dbb3535-5388-4a37-bc2d-778327b9f998')
+    allow_any_instance_of(CerfaUploader).to receive(:generate_secure_token).and_return('3dbb3535-5388-4a37-bc2d-778327b9f999')
   end
 
-  config.before(:all) {
+  config.before(:all) do
     Warden.test_mode!
 
     if Features.remote_storage
-      VCR.use_cassette("ovh_storage_init") do
-        CarrierWave.configure do |config|
-          config.fog_credentials = {provider: 'OpenStack'}
+      VCR.use_cassette('ovh_storage_init') do
+        CarrierWave.configure do |c|
+          c.fog_credentials = {provider: 'OpenStack'}
         end
       end
     end
-  }
+  end
 
   RSpec::Matchers.define :have_same_attributes_as do |expected|
     match do |actual|
-      ignored = [:id, :procedure_id, :updated_at, :created_at]
+      ignored = %i[id procedure_id updated_at created_at]
       actual.attributes.with_indifferent_access.except(*ignored) == expected.attributes.with_indifferent_access.except(*ignored)
     end
   end

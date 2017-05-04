@@ -26,12 +26,12 @@ RSpec.describe Users::CarteController, type: :controller do
   context 'when sign in user is the owner' do
     let(:user) { owner_user }
 
-    it_should_behave_like "carte_controller_spec"
+    it_should_behave_like 'carte_controller_spec'
   end
 
   context 'when sign in user is an invite by owner' do
     let(:user) { invite_by_user }
 
-    it_should_behave_like "carte_controller_spec"
+    it_should_behave_like 'carte_controller_spec'
   end
 end

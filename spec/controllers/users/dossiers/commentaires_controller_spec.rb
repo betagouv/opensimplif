@@ -5,11 +5,10 @@ describe Users::Dossiers::CommentairesController, type: :controller do
   let(:texte_commentaire) { 'Commentaire de test' }
 
   describe '#POST create' do
-
-    subject {
-      post :create, params:{dossier_id: dossier.id, texte_commentaire: texte_commentaire}
+    subject do
+      post :create, params: {dossier_id: dossier.id, texte_commentaire: texte_commentaire}
       dossier.reload
-    }
+    end
 
     context 'when invite is connected' do
       let!(:invite) { create(:invite, :with_user, dossier: dossier) }
@@ -24,7 +23,6 @@ describe Users::Dossiers::CommentairesController, type: :controller do
         is_expected.to redirect_to users_dossiers_invite_path(invite.id)
         expect(dossier.state).to eq 'replied'
       end
-
     end
 
     context 'when user is connected' do
@@ -33,10 +31,9 @@ describe Users::Dossiers::CommentairesController, type: :controller do
       end
 
       it 'do not send a mail to notify user' do
-        expect(NotificationMailer).to_not receive(:new_answer)
+        expect(NotificationMailer).not_to receive(:new_answer)
         subject
       end
-
     end
   end
 end

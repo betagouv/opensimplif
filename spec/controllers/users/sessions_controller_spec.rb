@@ -5,7 +5,7 @@ describe Users::SessionsController, type: :controller do
   let(:user) { create(:user, loged_in_with_france_connect: loged_in_with_france_connect) }
 
   before do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
   describe '.demo' do
@@ -13,7 +13,7 @@ describe Users::SessionsController, type: :controller do
 
     context 'when rails env is production' do
       before do
-        allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
+        allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('production'))
       end
 
       it { is_expected.to redirect_to root_path }
@@ -43,7 +43,7 @@ describe Users::SessionsController, type: :controller do
       it { is_expected.to be_falsey }
     end
 
-    context "unified login" do
+    context 'unified login' do
       let(:email) { 'unique@plop.com' }
       let(:password) { 'password' }
 
@@ -68,14 +68,13 @@ describe Users::SessionsController, type: :controller do
         expect(subject.current_administrateur).to eq(administrateur)
       end
 
-      context {
+      context do
         before do
           user
           gestionnaire
         end
 
         it 'signs user + gestionnaire + administrateur in' do
-
           post :create, params: {user: {email: administrateur.email, password: administrateur.password}}
           expect(@response.redirect?).to be(true)
           expect(subject.current_user).to eq(user)
@@ -83,7 +82,7 @@ describe Users::SessionsController, type: :controller do
           expect(subject.current_administrateur).to eq(administrateur)
           expect(user.reload.loged_in_with_france_connect).to be(nil)
         end
-      }
+      end
 
       it 'fails to sign in with bad credentials' do
         post :create, params: {user: {email: user.email, password: 'wrong_password'}}
@@ -101,8 +100,8 @@ describe Users::SessionsController, type: :controller do
           user
         end
 
-        it 'should sync passwords on login' do
-          post :create, params: { user: { email: email, password: password } }
+        it 'syncs passwords on login' do
+          post :create, params: {user: {email: email, password: password}}
           gestionnaire.reload
           administrateur.reload
           expect(user.valid_password?(password)).to be(true)
@@ -128,7 +127,6 @@ describe Users::SessionsController, type: :controller do
       expect(user.loged_in_with_france_connect?).to be_falsey
     end
 
-
     context 'when user is connect with france connect particulier' do
       let(:loged_in_with_france_connect) { 'particulier' }
 
@@ -145,7 +143,7 @@ describe Users::SessionsController, type: :controller do
       end
     end
 
-    context "when associated gestionnaire" do
+    context 'when associated gestionnaire' do
       let(:user) { create(:user, email: 'unique@plop.com', password: 'password') }
       let(:gestionnaire) { Gestionnaire.find_by_email('unique@plop.com') }
 
@@ -176,10 +174,10 @@ describe Users::SessionsController, type: :controller do
         user.update_attributes(loged_in_with_france_connect: 'particulier')
         sign_in user
         delete :destroy
-        expect(@response.headers["Location"]).to eq(FRANCE_CONNECT.particulier_logout_endpoint)
+        expect(@response.headers['Location']).to eq(FRANCE_CONNECT.particulier_logout_endpoint)
       end
 
-      context "when associated administrateur" do
+      context 'when associated administrateur' do
         let(:administrateur) { create(:administrateur, email: 'unique@plop.com', password: 'password') }
 
         it 'signs user + gestionnaire + administrateur out' do
@@ -193,7 +191,6 @@ describe Users::SessionsController, type: :controller do
           expect(subject.current_administrateur).to be(nil)
         end
       end
-
     end
   end
 
@@ -207,7 +204,7 @@ describe Users::SessionsController, type: :controller do
     context 'when procedure_id is present in user_return_to session params' do
       context 'when procedure_id does not exist' do
         before do
-          session["user_return_to"] = '?procedure_id=0'
+          session['user_return_to'] = '?procedure_id=0'
         end
 
         it { expect(subject.status).to eq 302 }
@@ -217,7 +214,7 @@ describe Users::SessionsController, type: :controller do
       context 'when procedure is not published' do
         let(:procedure) { create :procedure, published: false }
         before do
-          session["user_return_to"] = "?procedure_id=#{procedure.id}"
+          session['user_return_to'] = "?procedure_id=#{procedure.id}"
         end
 
         it { expect(subject.status).to eq 302 }
@@ -228,7 +225,7 @@ describe Users::SessionsController, type: :controller do
         let(:procedure) { create :procedure, published: true }
 
         before do
-          session["user_return_to"] = "?procedure_id=#{procedure.id}"
+          session['user_return_to'] = "?procedure_id=#{procedure.id}"
         end
 
         it { expect(subject.status).to eq 200 }

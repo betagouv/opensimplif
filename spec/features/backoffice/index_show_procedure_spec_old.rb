@@ -20,7 +20,6 @@ feature 'As an Accompagnateur I can navigate and use each functionnality around 
   end
 
   context 'On index' do
-
     scenario 'Switching between procedures' do
       page.all('#procedure_list a').first.click
       expect(page).to have_current_path(backoffice_dossiers_procedure_path(id: procedure_1.id.to_s), only_path: true)
@@ -40,28 +39,28 @@ feature 'As an Accompagnateur I can navigate and use each functionnality around 
 
     scenario 'Following dossier' do
       page.all('#procedure_list a').first.click
-      expect(page.all('#follow_dossiers .smart-listing')[0]['data-item-count']).to eq ("0")
+      expect(page.all('#follow_dossiers .smart-listing')[0]['data-item-count']).to eq '0'
       page.find_by_id('all_dossiers').click
       expect(page.all('#dossiers_list a').first.text).to eq('Suivre')
       page.all('#dossiers_list a').first.click
-      expect(page.all('#follow_dossiers .smart-listing')[0]['data-item-count']).to eq ("1")
+      expect(page.all('#follow_dossiers .smart-listing')[0]['data-item-count']).to eq '1'
     end
 
     scenario 'Using sort and pagination', js: true do
       visit "/backoffice/dossiers/procedure/#{procedure_1.id}?all_state_dossiers_smart_listing[sort][id]=asc"
       wait_for_ajax
-      expect(page.all("#all_state_dossiers .dossier-row")[0]['id']).to eq("tr_dossier_#{procedure_1.dossiers.first.id}")
+      expect(page.all('#all_state_dossiers .dossier-row')[0]['id']).to eq("tr_dossier_#{procedure_1.dossiers.first.id}")
       visit "/backoffice/dossiers/procedure/#{procedure_1.id}?all_state_dossiers_smart_listing[sort][id]=desc"
       wait_for_ajax
-      expect(page.all(".dossier-row")[0]['id']).to eq("tr_dossier_#{procedure_1.dossiers.last.id}")
+      expect(page.all('.dossier-row')[0]['id']).to eq("tr_dossier_#{procedure_1.dossiers.last.id}")
       page.find('#all_state_dossiers .next_page a').trigger('click')
       wait_for_ajax
       page.find('#all_state_dossiers .next_page a').trigger('click')
       wait_for_ajax
-      expect(page.all(".dossier-row")[0]['id']).to eq("tr_dossier_#{procedure_1.dossiers.first.id + 9}")
+      expect(page.all('.dossier-row')[0]['id']).to eq("tr_dossier_#{procedure_1.dossiers.first.id + 9}")
       page.find('#all_state_dossiers .prev a').trigger('click')
       wait_for_ajax
-      expect(page.all(".dossier-row")[0]['id']).to eq("tr_dossier_#{procedure_1.dossiers.first.id + 19}")
+      expect(page.all('.dossier-row')[0]['id']).to eq("tr_dossier_#{procedure_1.dossiers.first.id + 19}")
     end
 
     scenario 'Using filter' do

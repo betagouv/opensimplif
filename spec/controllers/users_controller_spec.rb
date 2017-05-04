@@ -15,7 +15,7 @@ describe UsersController, type: :controller do
         sign_in owner_user
       end
 
-      it_should_behave_like "current_user_dossier_spec"
+      it_should_behave_like 'current_user_dossier_spec'
     end
 
     context 'when user is invite by the owner' do
@@ -24,8 +24,7 @@ describe UsersController, type: :controller do
         sign_in invite_user
       end
 
-      it_should_behave_like "current_user_dossier_spec"
+      it_should_behave_like 'current_user_dossier_spec'
     end
   end
 end
-

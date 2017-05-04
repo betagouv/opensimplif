@@ -103,7 +103,6 @@ describe Gestionnaire, type: :model do
     subject { gestionnaire.follow? dossier.id }
 
     context 'when gestionnaire follow a dossier' do
-
       before do
         create :follow, dossier_id: dossier.id, gestionnaire_id: gestionnaire.id
       end
@@ -126,8 +125,9 @@ describe Gestionnaire, type: :model do
     subject { gestionnaire.dossiers_follow }
 
     it { expect(Follow.all.size).to eq 1 }
-    it {
-      expect(subject.first).to eq dossier }
+    it do
+      expect(subject.first).to eq dossier
+    end
   end
 
   describe '#build_default_preferences_list_dossier' do
@@ -212,8 +212,10 @@ describe Gestionnaire, type: :model do
     context 'when gestionnaire follow any dossier' do
       it { is_expected.to eq 0 }
       it { expect(gestionnaire.follows.count).to eq 0 }
-      it { expect_any_instance_of(Dossier::ActiveRecord_AssociationRelation).not_to receive(:inject)
-      subject }
+      it do
+        expect_any_instance_of(Dossier::ActiveRecord_AssociationRelation).not_to receive(:inject)
+        subject
+      end
     end
 
     context 'when gestionnaire follow any dossier into the procedure past in params' do
@@ -223,8 +225,10 @@ describe Gestionnaire, type: :model do
 
       it { is_expected.to eq 0 }
       it { expect(gestionnaire.follows.count).to eq 1 }
-      it { expect_any_instance_of(Dossier::ActiveRecord_AssociationRelation).not_to receive(:inject)
-      subject }
+      it do
+        expect_any_instance_of(Dossier::ActiveRecord_AssociationRelation).not_to receive(:inject)
+        subject
+      end
     end
 
     context 'when gestionnaire follow a dossier with a notification into the procedure past in params' do
@@ -237,8 +241,10 @@ describe Gestionnaire, type: :model do
 
       it { is_expected.to eq 1 }
       it { expect(gestionnaire.follows.count).to eq 1 }
-      it { expect_any_instance_of(Dossier::ActiveRecord_AssociationRelation).to receive(:inject)
-      subject }
+      it do
+        expect_any_instance_of(Dossier::ActiveRecord_AssociationRelation).to receive(:inject)
+        subject
+      end
     end
   end
 
@@ -268,6 +274,5 @@ describe Gestionnaire, type: :model do
         it { is_expected.to be_nil }
       end
     end
-
   end
 end

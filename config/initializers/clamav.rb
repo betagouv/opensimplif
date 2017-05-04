@@ -1,4 +1,1 @@
-CLAMAV = Hashie::Mash.new ({
-                              mock?: true,
-                              response: true
-                          })
+CLAMAV = Hashie::Mash.new(mock?: true, response: true)

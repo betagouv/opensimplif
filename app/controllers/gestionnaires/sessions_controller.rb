@@ -14,7 +14,7 @@ class Gestionnaires::SessionsController < Sessions::SessionsController
     super
   end
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(_resource)
     # stored_location_for(resource) ||
     backoffice_path
   end

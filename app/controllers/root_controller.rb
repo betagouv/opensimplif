@@ -1,6 +1,5 @@
 class RootController < ApplicationController
   def index
-
     begin
       route = Rails.application.routes.recognize_path(request.referrer)
     rescue ActionController::RoutingError
@@ -20,7 +19,7 @@ class RootController < ApplicationController
       return redirect_to admin_procedures_path
     end
 
-    @demo_environment_host = "https://tps-dev.apientreprise.fr" unless Rails.env.development?
+    @demo_environment_host = 'https://tps-dev.apientreprise.fr' unless Rails.env.development?
 
     render 'landing'
   end

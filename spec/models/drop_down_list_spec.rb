@@ -10,23 +10,26 @@ describe DropDownList do
   end
 
   describe '#options' do
-    let(:value) { "Cohésion sociale
+    let(:value) do
+      "Cohésion sociale
 Dév.Eco / Emploi
 Cadre de vie / Urb.
 Pilotage / Ingénierie
-" }
+"
+    end
     let(:dropdownlist) { create :drop_down_list, value: value }
 
-    it { expect(dropdownlist.options).to eq ["Cohésion sociale", "Dév.Eco / Emploi", "Cadre de vie / Urb.", "Pilotage / Ingénierie"] }
+    it { expect(dropdownlist.options).to eq ['Cohésion sociale', 'Dév.Eco / Emploi', 'Cadre de vie / Urb.', 'Pilotage / Ingénierie'] }
 
     context 'when one value is empty' do
-      let(:value) { "Cohésion sociale
-
+      let(:value) do
+        "Cohésion sociale
 Cadre de vie / Urb.
 Pilotage / Ingénierie
-"  }
+"
+      end
 
-      it { expect(dropdownlist.options).to eq ["Cohésion sociale", "Cadre de vie / Urb.", "Pilotage / Ingénierie"] }
+      it { expect(dropdownlist.options).to eq ['Cohésion sociale', 'Cadre de vie / Urb.', 'Pilotage / Ingénierie'] }
     end
   end
 end

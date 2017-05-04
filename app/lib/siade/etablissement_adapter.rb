@@ -23,28 +23,27 @@ class SIADE::EtablissementAdapter
   end
 
   def attr_to_fetch
-    [:siret,
-     :siege_social,
-     :naf,
-     :libelle_naf
-    ]
+    %i[siret
+       siege_social
+       naf
+       libelle_naf]
   end
 
   def adresse
     adresse = ''
-    [:l1, :l2, :l3, :l4, :l5, :l6, :l7].each do |line|
+    %i[l1 l2 l3 l4 l5 l6 l7].each do |line|
       adresse = adresse + data_source[:etablissement][:adresse][line] + "\r\n" unless data_source[:etablissement][:adresse][line].nil?
     end
     adresse
   end
 
   def address_attribut_to_fetch
-    [:numero_voie,
-     :type_voie,
-     :nom_voie,
-     :complement_adresse,
-     :code_postal,
-     :localite,
-     :code_insee_localite]
+    %i[numero_voie
+       type_voie
+       nom_voie
+       complement_adresse
+       code_postal
+       localite
+       code_insee_localite]
   end
 end

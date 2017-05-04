@@ -3,8 +3,7 @@ class SIADE::API
     attr_accessor :token
   end
 
-  def initialize
-  end
+  def initialize; end
 
   def self.entreprise(siren)
     endpoint = "/v2/entreprises/#{siren}"
@@ -27,7 +26,7 @@ class SIADE::API
   end
 
   def self.call(url, params = {})
-    params.merge!(token: SIADETOKEN)
+    params[:token] = SIADETOKEN
 
     verify_ssl_mode = OpenSSL::SSL::VERIFY_NONE
 

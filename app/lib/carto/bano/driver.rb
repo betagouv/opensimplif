@@ -9,7 +9,7 @@ module Carto
       end
 
       def call
-        RestClient.get api_url, params: { q: @address, limit: @limit }
+        RestClient.get api_url, params: {q: @address, limit: @limit}
       rescue RestClient::ServiceUnavailable
         nil
       end

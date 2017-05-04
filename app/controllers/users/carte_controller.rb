@@ -1,12 +1,10 @@
 class Users::CarteController < UsersController
-
   before_action only: [:show] do
     authorized_routes? self.class
   end
 
   def show
     @dossier = current_user_dossier
-
   rescue ActiveRecord::RecordNotFound
     flash.alert = t('errors.messages.dossier_not_found')
     redirect_to url_for(root_path)
@@ -57,8 +55,8 @@ class Users::CarteController < UsersController
 
   def self.route_authorization
     {
-        states: [:draft, :initiated, :replied, :updated],
-        api_carto: true
+      states: %i[draft initiated replied updated],
+      api_carto: true
     }
   end
 end

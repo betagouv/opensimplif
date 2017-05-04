@@ -8,7 +8,7 @@ class Admin::AccompagnateursController < AdminController
     assign_scope = @procedure.gestionnaires
     @accompagnateurs_assign = smart_listing_create :accompagnateurs_assign,
                                                    assign_scope,
-                                                   partial: "admin/accompagnateurs/list_assign",
+                                                   partial: 'admin/accompagnateurs/list_assign',
                                                    array: true
 
     not_assign_scope = current_administrateur.gestionnaires.where.not(id: assign_scope.ids)
@@ -16,7 +16,7 @@ class Admin::AccompagnateursController < AdminController
 
     @accompagnateurs_not_assign = smart_listing_create :accompagnateurs_not_assign,
                                                        not_assign_scope,
-                                                       partial: "admin/accompagnateurs/list_not_assign",
+                                                       partial: 'admin/accompagnateurs/list_not_assign',
                                                        array: true
 
     @gestionnaire ||= Gestionnaire.new
@@ -32,7 +32,7 @@ class Admin::AccompagnateursController < AdminController
     accompagnateur_service.change_assignement!
     accompagnateur_service.build_default_column
 
-    flash.notice = "Assignement effectué"
+    flash.notice = 'Assignement effectué'
     redirect_to admin_procedure_accompagnateurs_path, procedure_id: params[:procedure_id]
   end
 end

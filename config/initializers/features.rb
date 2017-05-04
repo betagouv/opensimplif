@@ -10,16 +10,18 @@ class Features
   class << self
     if File.exist?(File.dirname(__FILE__) + '/features.yml')
       features_map = YAML.load_file(File.dirname(__FILE__) + '/features.yml')
-      if features_map
-        features_map.each do |feature, is_active|
-          define_method("#{feature}") do
-            is_active
-          end
+      features_map&.each do |feature, is_active|
+        define_method(feature.to_s) do
+          is_active
         end
       end
 
-      def method_missing(method, *args)
+      def method_missing(_method, *_args)
         false
+      end
+
+      def respond_to_missing?(method_name, include_private = false)
+        super
       end
     end
   end

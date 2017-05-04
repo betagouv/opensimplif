@@ -3,13 +3,12 @@ require 'spec_helper'
 describe TypeDePieceJustificativeDecorator do
   let(:procedure) { create(:procedure) }
   let(:url) { 'http://localhost' }
-  let(:params) { { url: url, index: index } }
+  let(:params) { {url: url, index: index} }
   let!(:type_de_piece_justificative_0) { create(:type_de_piece_justificative, procedure: procedure, order_place: 0) }
   let!(:type_de_piece_justificative_1) { create(:type_de_piece_justificative, procedure: procedure, order_place: 1) }
   let!(:type_de_piece_justificative_2) { create(:type_de_piece_justificative, procedure: procedure, order_place: 2) }
 
   describe '#button_up' do
-
     describe 'with first piece justificative' do
       let(:index) { 0 }
       subject { type_de_piece_justificative_0.decorate }
@@ -19,7 +18,7 @@ describe TypeDePieceJustificativeDecorator do
         expect(subject.button_up(params)).to be(nil)
       end
       it 'returns a button down' do
-        expect(subject.button_down(params)).to match(/fa-chevron-down/)
+        expect(subject.button_down(params)).to match(%r{fa-chevron-down})
       end
     end
 
@@ -29,10 +28,10 @@ describe TypeDePieceJustificativeDecorator do
       let(:button_up) { type_de_piece_justificative_1.decorate }
 
       it 'returns a button up' do
-        expect(subject.button_up(params)).to match(/fa-chevron-up/)
+        expect(subject.button_up(params)).to match(%r{fa-chevron-up})
       end
       it 'returns a button down' do
-        expect(subject.button_down(params)).to match(/fa-chevron-down/)
+        expect(subject.button_down(params)).to match(%r{fa-chevron-down})
       end
     end
 
@@ -42,13 +41,11 @@ describe TypeDePieceJustificativeDecorator do
       let(:button_up) { type_de_piece_justificative_1.decorate }
 
       it 'returns a button up' do
-        expect(subject.button_up(params)).to match(/fa-chevron-up/)
+        expect(subject.button_up(params)).to match(%r{fa-chevron-up})
       end
       it 'returns a button down' do
         expect(subject.button_down(params)).to be(nil)
       end
     end
   end
-
-
 end

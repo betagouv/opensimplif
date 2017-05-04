@@ -3,7 +3,7 @@
 class CerfaUploader < BaseUploader
   before :cache, :set_original_filename
 
-# Choose what kind of storage to use for this uploader:
+  # Choose what kind of storage to use for this uploader:
   if Features.remote_storage
     storage :fog
   else
@@ -21,7 +21,7 @@ class CerfaUploader < BaseUploader
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w(pdf doc docx xls xlsx ppt pptx odt ods odp jpg jpeg png)
+    %w[pdf doc docx xls xlsx ppt pptx odt ods odp jpg jpeg png]
   end
 
   def filename

@@ -19,8 +19,8 @@ class Procedure < ActiveRecord::Base
 
   delegate :use_api_carto, to: :module_api_carto
 
-  accepts_nested_attributes_for :types_de_champ, :reject_if => proc { |attributes| attributes['libelle'].blank? }, :allow_destroy => true
-  accepts_nested_attributes_for :types_de_piece_justificative, :reject_if => proc { |attributes| attributes['libelle'].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :types_de_champ, reject_if: proc { |attributes| attributes['libelle'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :types_de_piece_justificative, reject_if: proc { |attributes| attributes['libelle'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :module_api_carto
   accepts_nested_attributes_for :types_de_champ_private
 
@@ -29,18 +29,18 @@ class Procedure < ActiveRecord::Base
   validates :libelle, presence: true, allow_blank: false, allow_nil: false
   validates :description, presence: true, allow_blank: false, allow_nil: false
 
-  after_save :build_default_mails, if: Proc.new { id_changed? }
+  after_save :build_default_mails, if: proc { id_changed? }
 
   def build_default_mails
     MailReceived.create(procedure: self)
   end
 
   def path
-    procedure_path.path unless procedure_path.nil?
+    procedure_path&.path
   end
 
   def default_path
-    libelle.downcase.gsub(/[^a-z0-9\-_]/, "_").gsub(/_*$/, '').gsub(/_+/, '_')
+    libelle.downcase.gsub(%r{[^a-z0-9\-_]}, '_').gsub(%r{_*$}, '').gsub(%r{_+}, '_')
   end
 
   def types_de_champ_ordered
@@ -55,28 +55,28 @@ class Procedure < ActiveRecord::Base
     types_de_piece_justificative.order(:order_place)
   end
 
-  def self.not_archived id
+  def self.not_archived(id)
     Procedure.where(archived: false).find(id)
   end
 
-  def self.active id
+  def self.active(id)
     Procedure.where(archived: false, published: true).find(id)
   end
 
-  def switch_types_de_champ index_of_first_element
+  def switch_types_de_champ(index_of_first_element)
     switch_list_order(types_de_champ_ordered, index_of_first_element)
   end
 
-  def switch_types_de_champ_private index_of_first_element
+  def switch_types_de_champ_private(index_of_first_element)
     switch_list_order(types_de_champ_private_ordered, index_of_first_element)
   end
 
-  def switch_types_de_piece_justificative index_of_first_element
+  def switch_types_de_piece_justificative(index_of_first_element)
     switch_list_order(types_de_piece_justificative_ordered, index_of_first_element)
   end
 
   def switch_list_order(list, index_of_first_element)
-    return false if index_of_first_element < 0
+    return false if index_of_first_element.negative?
     return false if index_of_first_element == list.count - 1
     return false if list.count < 1
     list[index_of_first_element].update_attributes(order_place: index_of_first_element + 1)
@@ -89,24 +89,24 @@ class Procedure < ActiveRecord::Base
   end
 
   def clone
-    procedure = self.deep_clone(include: [:types_de_piece_justificative, :types_de_champ, :types_de_champ_private, :module_api_carto, :mail_templates, types_de_champ: [:drop_down_list]])
+    procedure = deep_clone(include: [:types_de_piece_justificative, :types_de_champ, :types_de_champ_private, :module_api_carto, :mail_templates, types_de_champ: [:drop_down_list]])
     procedure.archived = false
     procedure.published = false
     procedure.logo_secure_token = nil
-    procedure.remote_logo_url = self.logo_url
+    procedure.remote_logo_url = logo_url
     return procedure if procedure.save
   end
 
   def publish!(path)
-    self.update_attributes!({published: true, archived: false})
-    ProcedurePath.create!(path: path, procedure: self, administrateur: self.administrateur)
+    update_attributes!(published: true, archived: false)
+    ProcedurePath.create!(path: path, procedure: self, administrateur: administrateur)
   end
 
   def archive
-    self.update_attributes!({archived: true})
+    update_attributes!(archived: true)
   end
 
   def total_dossier
-    self.dossiers.where.not(state: :draft).size
+    dossiers.where.not(state: :draft).size
   end
 end

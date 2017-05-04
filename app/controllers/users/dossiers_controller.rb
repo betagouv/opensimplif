@@ -21,7 +21,7 @@ class Users::DossiersController < UsersController
 
     @dossiers = smart_listing_create :dossiers,
                                      @dossiers_list_facade.dossiers_to_display,
-                                     partial: "users/dossiers/list",
+                                     partial: 'users/dossiers/list',
                                      array: true
   end
 
@@ -30,7 +30,7 @@ class Users::DossiersController < UsersController
       procedure_path = ProcedurePath.where(path: params[:procedure_path]).last
 
       if procedure_path.nil?
-        flash.alert = "Procédure inconnue"
+        flash.alert = 'Procédure inconnue'
         return redirect_to root_path
       else
         procedure = procedure_path.procedure
@@ -72,9 +72,8 @@ class Users::DossiersController < UsersController
       individual.update_column :gender, @facade.dossier.france_connect_information.gender
       individual.update_column :nom, @facade.dossier.france_connect_information.family_name
       individual.update_column :prenom, @facade.dossier.france_connect_information.given_name
-      individual.update_column :birthdate, @facade.dossier.france_connect_information.birthdate.strftime("%d/%m/%Y")
+      individual.update_column :birthdate, @facade.dossier.france_connect_information.birthdate.strftime('%d/%m/%Y')
     end
-
   rescue ActiveRecord::RecordNotFound
     flash.alert = t('errors.messages.dossier_not_found')
     redirect_to url_for users_dossiers_path
@@ -100,7 +99,6 @@ class Users::DossiersController < UsersController
     end
   rescue RestClient::ResourceNotFound, RestClient::BadRequest
     errors_valid_siret
-
   rescue ActiveRecord::RecordNotFound
     flash.alert = t('errors.messages.dossier_not_found')
     redirect_to url_for users_dossiers_path
@@ -141,7 +139,7 @@ class Users::DossiersController < UsersController
 
   def self.route_authorization
     {
-        states: [:draft]
+      states: [:draft]
     }
   end
 
@@ -168,7 +166,7 @@ class Users::DossiersController < UsersController
   end
 
   def update_params
-    params.require(:dossier).permit(:id, :autorisation_donnees, individual_attributes: [:gender, :nom, :prenom, :birthdate])
+    params.require(:dossier).permit(:id, :autorisation_donnees, individual_attributes: %i[gender nom prenom birthdate])
   end
 
   def checked_autorisation_donnees?
@@ -189,11 +187,11 @@ class Users::DossiersController < UsersController
     redirect_to url_for users_dossiers_path
   end
 
-  def update_current_user_siret! siret
+  def update_current_user_siret!(siret)
     current_user.update_attributes(siret: siret)
   end
 
-  def facade id = params[:id]
+  def facade(id = params[:id])
     DossierFacades.new id, current_user.email
   end
 

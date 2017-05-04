@@ -10,9 +10,7 @@ class Administrateur < ActiveRecord::Base
   include CredentialsSyncableConcern
 
   def ensure_api_token
-    if api_token.nil?
-      self.api_token = generate_api_token
-    end
+    self.api_token = generate_api_token if api_token.nil?
   end
 
   def renew_api_token
@@ -27,5 +25,4 @@ class Administrateur < ActiveRecord::Base
       break token unless Administrateur.find_by(api_token: token)
     end
   end
-
 end

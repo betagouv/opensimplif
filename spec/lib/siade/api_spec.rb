@@ -5,7 +5,7 @@ describe SIADE::API do
     subject { described_class.entreprise(siren) }
     before do
       stub_request(:get, "https://api-dev.apientreprise.fr/v2/entreprises/#{siren}?token=#{SIADETOKEN}")
-          .to_return(status: status, body: body)
+        .to_return(status: status, body: body)
     end
     context 'when siren does not exist' do
       let(:siren) { '111111111' }
@@ -31,7 +31,7 @@ describe SIADE::API do
     subject { described_class.etablissement(siret) }
     before do
       stub_request(:get, "https://api-dev.apientreprise.fr/v2/etablissements/#{siret}?token=#{SIADETOKEN}")
-          .to_return(status: status, body: body)
+        .to_return(status: status, body: body)
     end
 
     context 'when siret does not exist' do
@@ -57,8 +57,8 @@ describe SIADE::API do
 
   describe '.exercices' do
     before do
-      stub_request(:get, /https:\/\/api-dev.apientreprise.fr\/v1\/etablissements\/exercices\/.*token=/)
-          .to_return(status: status, body: body)
+      stub_request(:get, %r{https:\/\/api-dev.apientreprise.fr\/v1\/etablissements\/exercices\/.*token=})
+        .to_return(status: status, body: body)
     end
 
     context 'when siret does not exist' do
@@ -88,8 +88,8 @@ describe SIADE::API do
 
   describe '.rna' do
     before do
-      stub_request(:get, /https:\/\/api-dev.apientreprise.fr\/v1\/associations\/.*token=/)
-          .to_return(status: status, body: body)
+      stub_request(:get, %r{https:\/\/api-dev.apientreprise.fr\/v1\/associations\/.*token=})
+        .to_return(status: status, body: body)
     end
 
     subject { described_class.rna(siren) }
@@ -109,7 +109,7 @@ describe SIADE::API do
       let(:status) { 200 }
       let(:body) { File.read('spec/support/files/rna.json') }
 
-      it{ expect(subject).to eq(body) }
+      it { expect(subject).to eq(body) }
     end
   end
 end

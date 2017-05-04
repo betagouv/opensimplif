@@ -4,6 +4,6 @@ class ChangeDateCreationTypeToEntreprise < ActiveRecord::Migration
   end
 
   def down
-    change_column :entreprises, :date_creation, "integer USING extract(epoch from date_creation::timestamp with time zone)::integer"
+    change_column :entreprises, :date_creation, 'integer USING extract(epoch from date_creation::timestamp with time zone)::integer'
   end
 end

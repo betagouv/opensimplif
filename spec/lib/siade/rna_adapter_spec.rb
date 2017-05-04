@@ -8,8 +8,8 @@ describe SIADE::RNAAdapter do
   subject { described_class.new(siret).to_params }
 
   before do
-    stub_request(:get, /https:\/\/api-dev.apientreprise.fr\/v1\/associations\/.*token=/)
-        .to_return(body: body, status: status)
+    stub_request(:get, %r{https:\/\/api-dev.apientreprise.fr\/v1\/associations\/.*token=})
+      .to_return(body: body, status: status)
   end
 
   context 'when siret is not valid' do

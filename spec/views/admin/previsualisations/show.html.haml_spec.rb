@@ -51,7 +51,7 @@ describe 'admin/previsualisations/show.html.haml', type: :view do
     end
 
     it 'le bouton "Terminer" n\'est pas présent' do
-      expect(rendered).to_not have_selector('#suivant')
+      expect(rendered).not_to have_selector('#suivant')
     end
 
     it 'le bouton "Modification terminé" n\'est pas présent' do
@@ -113,8 +113,8 @@ describe 'admin/previsualisations/show.html.haml', type: :view do
       render
     end
 
-    it { expect(rendered).to_not have_css("#cerfa_flag") }
-    it { expect(rendered).to_not have_selector('input[type=file][name=cerfa_pdf][id=cerfa_pdf]') }
+    it { expect(rendered).not_to have_css('#cerfa_flag') }
+    it { expect(rendered).not_to have_selector('input[type=file][name=cerfa_pdf][id=cerfa_pdf]') }
   end
 
   describe 'display title Documents administratifs' do
@@ -142,7 +142,7 @@ describe 'admin/previsualisations/show.html.haml', type: :view do
     end
 
     context 'when procedure have cerfa flag true' do
-      let(:procedure) {create(:procedure, cerfa_flag: true)}
+      let(:procedure) { create(:procedure, cerfa_flag: true) }
 
       it { expect(rendered).to have_content 'Documents administratifs' }
     end

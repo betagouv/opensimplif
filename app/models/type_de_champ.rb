@@ -1,23 +1,23 @@
 class TypeDeChamp < ActiveRecord::Base
   enum type_champs: {
-           text: 'text',
-           textarea: 'textarea',
-           date: 'date',
-           datetime: 'datetime',
-           number: 'number',
-           checkbox: 'checkbox',
-           civilite: 'civilite',
-           email: 'email',
-           phone: 'phone',
-           address: 'address',
-           yes_no: 'yes_no',
-           drop_down_list: 'drop_down_list',
-           pays: 'pays',
-           regions: 'regions',
-           departements: 'departements',
-           engagement: 'engagement',
-           header_section: 'header_section'
-       }
+    text: 'text',
+    textarea: 'textarea',
+    date: 'date',
+    datetime: 'datetime',
+    number: 'number',
+    checkbox: 'checkbox',
+    civilite: 'civilite',
+    email: 'email',
+    phone: 'phone',
+    address: 'address',
+    yes_no: 'yes_no',
+    drop_down_list: 'drop_down_list',
+    pays: 'pays',
+    regions: 'regions',
+    departements: 'departements',
+    engagement: 'engagement',
+    header_section: 'header_section'
+  }
 
   belongs_to :procedure
 
@@ -40,7 +40,7 @@ class TypeDeChamp < ActiveRecord::Base
   end
 
   def change_header_section_mandatory
-    self.mandatory = false if self.type_champ == 'header_section'
+    self.mandatory = false if type_champ == 'header_section'
     true
   end
 end

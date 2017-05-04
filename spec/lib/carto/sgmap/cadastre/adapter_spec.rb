@@ -4,10 +4,10 @@ describe CARTO::SGMAP::Cadastre::Adapter do
   subject { described_class.new(coordinates).to_params }
 
   before do
-    stub_request(:post, "https://apicarto.sgmap.fr/cadastre/geometrie").
-        with(:body => /.*/,
-             :headers => {'Content-Type' => 'application/json'}).
-        to_return(status: status, body: body)
+    stub_request(:post, 'https://apicarto.sgmap.fr/cadastre/geometrie')
+      .with(body: %r{.*},
+            headers: {'Content-Type' => 'application/json'})
+      .to_return(status: status, body: body)
   end
 
   context 'coordinates are filled' do
@@ -23,15 +23,17 @@ describe CARTO::SGMAP::Cadastre::Adapter do
       subject { adapter.filter_properties adapter.data_source }
 
       it { expect(subject.size).to eq 9 }
-      it { expect(subject.keys).to eq [:surface_intersection,
-                                       :surface_parcelle,
-                                       :numero,
-                                       :feuille,
-                                       :section,
-                                       :code_dep,
-                                       :nom_com,
-                                       :code_com,
-                                       :code_arr] }
+      it do
+        expect(subject.keys).to eq %i[surface_intersection
+                                      surface_parcelle
+                                      numero
+                                      feuille
+                                      section
+                                      code_dep
+                                      nom_com
+                                      code_com
+                                      code_arr]
+      end
     end
 
     describe 'Attributes' do
@@ -47,7 +49,7 @@ describe CARTO::SGMAP::Cadastre::Adapter do
       it { expect(subject[:code_com]).to eq('046') }
       it { expect(subject[:code_arr]).to eq('000') }
 
-      it { expect(subject[:geometry]).to eq({type: "MultiPolygon", coordinates: [[[[2.4362443, 48.8092078], [2.436384, 48.8092043], [2.4363802, 48.8091414]]]]}) }
+      it { expect(subject[:geometry]).to eq(type: 'MultiPolygon', coordinates: [[[[2.4362443, 48.8092078], [2.436384, 48.8092043], [2.4363802, 48.8091414]]]]) }
     end
   end
 

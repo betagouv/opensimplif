@@ -2,15 +2,14 @@ class Admin::PiecesJustificativesController < AdminController
   before_action :retrieve_procedure
   before_action :procedure_locked?
 
-  def show
-  end
+  def show; end
 
   def update
-    if @procedure.update_attributes(update_params)
-      flash.now.notice = 'Modifications sauvegardées'
-    else
-      flash.now.notice = 'Une erreur est survenue'
-    end
+    flash.now.notice = if @procedure.update_attributes(update_params)
+                         'Modifications sauvegardées'
+                       else
+                         'Une erreur est survenue'
+                       end
     render 'show', format: :js
   end
 
@@ -19,13 +18,13 @@ class Admin::PiecesJustificativesController < AdminController
 
     render 'show', format: :js
   rescue ActiveRecord::RecordNotFound
-    render json: { message: 'Type de piece justificative not found' }, status: 404
+    render json: {message: 'Type de piece justificative not found'}, status: 404
   end
 
   def update_params
     params
       .require(:procedure)
-      .permit(types_de_piece_justificative_attributes: [:libelle, :description, :id, :order_place, :lien_demarche])
+      .permit(types_de_piece_justificative_attributes: %i[libelle description id order_place lien_demarche])
   end
 
   def move_up

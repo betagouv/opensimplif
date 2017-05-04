@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   after_save :create_and_affect_gestionnaire_account
 
-  def self.find_for_france_connect email, siret
+  def self.find_for_france_connect(email, siret)
     user = User.find_by_email(email)
     if user.nil?
       return User.create(email: email, password: Devise.friendly_token[0, 20], siret: siret)
@@ -34,12 +34,12 @@ class User < ActiveRecord::Base
     !loged_in_with_france_connect.nil?
   end
 
-  def invite? dossier_id
+  def invite?(dossier_id)
     invites.pluck(:dossier_id).include?(dossier_id.to_i)
   end
 
   def create_and_affect_gestionnaire_account
-    gest = Gestionnaire.create email: self.email, password: self.encrypted_password
+    gest = Gestionnaire.create email: email, password: encrypted_password
 
     Procedure.all.each do |procedure|
       AssignTo.create gestionnaire: gest, procedure: procedure

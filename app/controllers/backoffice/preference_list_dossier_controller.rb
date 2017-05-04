@@ -7,15 +7,15 @@ class Backoffice::PreferenceListDossierController < Backoffice::DossiersListCont
 
   def add
     PreferenceListDossier.create(
-        libelle: params[:libelle],
-        table: (params[:table].empty? ? nil : params[:table]),
-        attr: params[:attr],
-        attr_decorate: params[:attr_decorate],
-        bootstrap_lg: params[:bootstrap_lg],
-        order: nil,
-        filter: nil,
-        gestionnaire: current_gestionnaire,
-        procedure_id: params_procedure_id
+      libelle: params[:libelle],
+      table: (params[:table].empty? ? nil : params[:table]),
+      attr: params[:attr],
+      attr_decorate: params[:attr_decorate],
+      bootstrap_lg: params[:bootstrap_lg],
+      order: nil,
+      filter: nil,
+      gestionnaire: current_gestionnaire,
+      procedure_id: params_procedure_id
     )
 
     render partial: path, formats: :js

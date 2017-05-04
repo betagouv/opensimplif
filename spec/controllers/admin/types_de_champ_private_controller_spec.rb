@@ -44,26 +44,24 @@ describe Admin::TypesDeChampPrivateController, type: :controller do
       {types_de_champ_private_attributes:
            {'0' =>
                 {
-                    libelle: libelle,
-                    type_champ: type_champ,
-                    description: description,
-                    order_place: order_place,
-                    id: types_de_champ_id,
-                    mandatory: mandatory,
-                    type: 'TypeDeChampPrivate'
+                  libelle: libelle,
+                  type_champ: type_champ,
+                  description: description,
+                  order_place: order_place,
+                  id: types_de_champ_id,
+                  mandatory: mandatory,
+                  type: 'TypeDeChampPrivate'
                 },
             '1' =>
                 {
-                    libelle: '',
-                    type_champ: 'text',
-                    description: '',
-                    order_place: '1',
-                    id: '',
-                    mandatory: false,
-                    type: 'TypeDeChampPrivate'
-                }
-           }
-      }
+                  libelle: '',
+                  type_champ: 'text',
+                  description: '',
+                  order_place: '1',
+                  id: '',
+                  mandatory: false,
+                  type: 'TypeDeChampPrivate'
+                }}}
     end
 
     let(:request) { put :update, params: {format: :js, procedure_id: procedure.id, procedure: procedure_params} }
@@ -119,7 +117,7 @@ describe Admin::TypesDeChampPrivateController, type: :controller do
     end
 
     context 'when type de champs does not exist' do
-      let(:type_de_champ_id) { 99999999 }
+      let(:type_de_champ_id) { 99_999_999 }
       it { expect(subject.status).to eq(404) }
     end
     context 'when types_de_champ exists' do

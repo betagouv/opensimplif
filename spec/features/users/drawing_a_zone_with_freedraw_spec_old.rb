@@ -25,7 +25,7 @@ feature 'drawing a zone with freedraw' do
       end
 
       context 'when procedure have api carto activated' do
-        scenario 'he is redirected to carte page', vcr: { cassette_name: 'drawing_a_zone_with_freedraw_redirected_to_carte_page' } do
+        scenario 'he is redirected to carte page', vcr: {cassette_name: 'drawing_a_zone_with_freedraw_redirected_to_carte_page'} do
           expect(page).to have_css('.content #map')
         end
       end
@@ -42,14 +42,14 @@ feature 'drawing a zone with freedraw' do
         end
       end
 
-      context 'when draw a zone on #map', js: true, vcr: { cassette_name: 'drawing_a_zone_with_freedraw_when_draw_a_zone_on_map' } do
+      context 'when draw a zone on #map', js: true, vcr: {cassette_name: 'drawing_a_zone_with_freedraw_when_draw_a_zone_on_map'} do
         context 'when module quartiers prioritaires is activated' do
           let(:module_api_carto) { create(:module_api_carto, :with_quartiers_prioritaires) }
 
           before do
-            allow(ModuleApiCartoService).
-                to receive(:generate_qp).
-                       and_return({"QPCODE1234" => {:code => "QPCODE1234", :nom => "Quartier de test", :commune => "Paris", :geometry => {:type => "MultiPolygon", :coordinates => [[[[2.38715792094576, 48.8723062632126], [2.38724851642619, 48.8721392348061]]]]}}})
+            allow(ModuleApiCartoService)
+              .to receive(:generate_qp)
+              .and_return('QPCODE1234' => {code: 'QPCODE1234', nom: 'Quartier de test', commune: 'Paris', geometry: {type: 'MultiPolygon', coordinates: [[[[2.38715792094576, 48.8723062632126], [2.38724851642619, 48.8721392348061]]]]}})
 
             page.execute_script('freeDraw.fire("markers", {latLngs: []});')
             wait_for_ajax

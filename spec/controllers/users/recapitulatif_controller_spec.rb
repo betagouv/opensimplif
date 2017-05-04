@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Users::RecapitulatifController, type: :controller do
   let(:dossier) { create(:dossier, state: 'initiated') }
-  let(:bad_dossier_id) { Dossier.count + 100000 }
+  let(:bad_dossier_id) { Dossier.count + 100_000 }
 
   before do
     sign_in dossier.user
@@ -19,7 +19,7 @@ describe Users::RecapitulatifController, type: :controller do
       expect(response).to redirect_to('/')
     end
 
-    it_behaves_like "not owner of dossier", :show
+    it_behaves_like 'not owner of dossier', :show
 
     describe 'before_action authorized_routes?' do
       context 'when dossier have draft state' do
@@ -33,7 +33,6 @@ describe Users::RecapitulatifController, type: :controller do
         it { is_expected.to redirect_to root_path }
       end
     end
-
   end
 
   describe 'POST #initiate' do

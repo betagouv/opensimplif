@@ -6,7 +6,7 @@ describe FileSizeValidator, lib: true do
   let(:note) { create(:cerfa) }
 
   describe 'options uses an integer' do
-    let(:options) { { maximum: 10, attributes: { content: attachment } } }
+    let(:options) { {maximum: 10, attributes: {content: attachment}} }
 
     it 'attachment exceeds maximum limit' do
       allow(attachment).to receive(:size) { 100 }
@@ -24,8 +24,8 @@ describe FileSizeValidator, lib: true do
   describe 'options uses a symbol' do
     let(:options) do
       {
-          maximum: :test,
-          attributes: { content: attachment }
+        maximum: :test,
+        attributes: {content: attachment}
       }
     end
 

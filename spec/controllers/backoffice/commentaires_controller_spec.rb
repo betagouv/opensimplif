@@ -39,7 +39,7 @@ describe Backoffice::CommentairesController, type: :controller do
     end
 
     context 'when document is upload whith a commentaire', vcr: {cassette_name: 'controllers_backoffice_commentaires_controller_doc_upload_with_comment'} do
-      let(:document_upload) { Rack::Test::UploadedFile.new("./spec/support/files/piece_justificative_0.pdf", 'application/pdf') }
+      let(:document_upload) { Rack::Test::UploadedFile.new('./spec/support/files/piece_justificative_0.pdf', 'application/pdf') }
 
       subject do
         post :create, params: {dossier_id: dossier_id, email_commentaire: email_commentaire, texte_commentaire: texte_commentaire, piece_justificative: {content: document_upload}}

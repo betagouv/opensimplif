@@ -9,17 +9,15 @@ class AdministrationsController < ApplicationController
 
     @admins = smart_listing_create :admins,
                                    Administrateur.all.order(:email),
-                                   partial: "administrations/list",
+                                   partial: 'administrations/list',
                                    array: true
-
-
   end
 
   def create
     admin = Administrateur.new create_administrateur_params
 
     if admin.save
-      flash.notice = "Administrateur créé"
+      flash.notice = 'Administrateur créé'
       # NewAdminMailer.new_admin_email(admin, params[:administrateur][:password]).deliver_now!
     else
       flash.alert = admin.errors.full_messages.join('<br>').html_safe

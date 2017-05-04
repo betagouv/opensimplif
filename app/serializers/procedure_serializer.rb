@@ -10,7 +10,6 @@ class ProcedureSerializer < ActiveModel::Serializer
              :geographic_information,
              :total_dossier
 
-
   has_one :geographic_information, serializer: ModuleApiCartoSerializer
   has_many :types_de_champ, serializer: TypeDeChampSerializer
   has_many :types_de_champ_private, serializer: TypeDeChampSerializer

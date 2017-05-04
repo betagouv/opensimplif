@@ -21,14 +21,14 @@ class PieceJustificativeUploader < BaseUploader
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w(pdf doc docx xls xlsx ppt pptx odt ods odp jpg jpeg png)
+    %w[pdf doc docx xls xlsx ppt pptx odt ods odp jpg jpeg png]
   end
 
   def filename
     if original_filename.present? || model.content_secure_token
       if Features.remote_storage
         filename = "#{model.class.to_s.underscore}-#{secure_token}.#{file.extension.downcase}"
-      else original_filename
+      elsif original_filename
         filename = "#{model.class.to_s.underscore}.#{file.extension.downcase}"
       end
     end

@@ -1,5 +1,5 @@
 class DossiersListUserService
-  def initialize current_devise_profil, liste
+  def initialize(current_devise_profil, liste)
     @current_devise_profil = current_devise_profil
     @liste = liste
   end
@@ -15,7 +15,7 @@ class DossiersListUserService
   end
 
   def self.dossiers_liste_libelle
-    ['brouillon', 'a_traiter', 'valides', 'en_instruction', 'termine', 'invite', 'all_state']
+    %w[brouillon a_traiter valides en_instruction termine invite all_state]
   end
 
   def all_state

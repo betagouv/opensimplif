@@ -13,9 +13,7 @@ class OpensimplifController < Backoffice::Dossiers::ProcedureController
     smartlisting_dossier
   end
 
-  def nothing
-
-  end
+  def nothing; end
 
   def reload_smartlisting
     smartlisting_dossier
@@ -25,7 +23,7 @@ class OpensimplifController < Backoffice::Dossiers::ProcedureController
 
   private
 
-  def smartlisting_dossier dossiers_list=nil, liste='all_state'
+  def smartlisting_dossier(_dossiers_list = nil, liste = 'all_state')
     dossiers_list_facade liste
 
     follow_dossiers_list = dossiers_list_facade.service.suivi
@@ -38,24 +36,24 @@ class OpensimplifController < Backoffice::Dossiers::ProcedureController
 
     smart_listing_create :mes_dossiers,
                          mes_dossiers_list,
-                         partial: "backoffice/dossiers/list",
+                         partial: 'backoffice/dossiers/list',
                          array: true,
                          default_sort: dossiers_list_facade.service.default_sort
 
     smart_listing_create :follow_dossiers,
                          follow_dossiers_list,
-                         partial: "backoffice/dossiers/list",
+                         partial: 'backoffice/dossiers/list',
                          array: true,
                          default_sort: dossiers_list_facade.service.default_sort
 
     smart_listing_create :all_state_dossiers,
                          all_state_dossiers_list,
-                         partial: "backoffice/dossiers/list",
+                         partial: 'backoffice/dossiers/list',
                          array: true,
                          default_sort: dossiers_list_facade.service.default_sort
   end
 
-  def dossiers_list_facade liste='all_state'
+  def dossiers_list_facade(liste = 'all_state')
     @facade_data_view ||= DossiersListFacades.new current_gestionnaire, liste, retrieve_procedure
   end
 end

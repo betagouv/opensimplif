@@ -21,19 +21,19 @@ module TPS
     config.i18n.default_locale = :fr
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
 
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/validators #{config.root}/app/facades)
+    config.autoload_paths += %W[#{config.root}/lib #{config.root}/app/validators #{config.root}/app/facades]
     config.assets.paths << Rails.root.join('app', 'assets', 'javascript')
-    config.assets.precompile += %w( application_split2.css )
+    config.assets.precompile += %w[application_split2.css]
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    if Rails.env.production?
-      URL = "https://tps.apientreprise.fr/"
-    elsif Rails.env.staging?
-      URL = "https://tps-dev.apientreprise.fr/"
-    else
-      URL = "http://localhost:3000/"
-    end
+    URL = if Rails.env.production?
+            'https://tps.apientreprise.fr/'.freeze
+          elsif Rails.env.staging?
+            'https://tps-dev.apientreprise.fr/'.freeze
+          else
+            'http://localhost:3000/'.freeze
+          end
   end
 end

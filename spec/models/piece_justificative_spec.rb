@@ -13,7 +13,6 @@ describe PieceJustificative do
     it { is_expected.to belong_to(:type_de_piece_justificative) }
     it { is_expected.to belong_to(:user) }
     it { is_expected.to have_one(:commentaire) }
-
   end
 
   describe 'validations' do
@@ -28,7 +27,7 @@ describe PieceJustificative do
     it { is_expected.to delegate_method(:api_entreprise).to(:type_de_piece_justificative) }
   end
 
-  describe '#empty?', vcr: { cassette_name: 'model_piece_justificative' } do
+  describe '#empty?', vcr: {cassette_name: 'model_piece_justificative'} do
     let(:piece_justificative) { create(:piece_justificative, content: content) }
     subject { piece_justificative.empty? }
 

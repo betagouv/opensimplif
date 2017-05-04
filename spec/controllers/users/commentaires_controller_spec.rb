@@ -14,7 +14,7 @@ describe Users::CommentairesController, type: :controller do
     context 'création correct d\'un commentaire' do
       subject do
         sign_in dossier.user
-        post :create, params: { dossier_id: dossier_id, texte_commentaire: texte_commentaire }
+        post :create, params: {dossier_id: dossier_id, texte_commentaire: texte_commentaire}
       end
 
       it 'depuis la page récapitulatif' do
@@ -30,16 +30,16 @@ describe Users::CommentairesController, type: :controller do
       end
 
       it 'Notification interne is create' do
-        expect { subject }.to change(Notification, :count).by (1)
+        expect { subject }.to change(Notification, :count).by 1
       end
     end
 
-    context 'when document is upload whith a commentaire', vcr: { cassette_name: 'controllers_sers_commentaires_controller_upload_doc' } do
-      let(:document_upload) { Rack::Test::UploadedFile.new("./spec/support/files/piece_justificative_0.pdf", 'application/pdf') }
+    context 'when document is upload whith a commentaire', vcr: {cassette_name: 'controllers_sers_commentaires_controller_upload_doc'} do
+      let(:document_upload) { Rack::Test::UploadedFile.new('./spec/support/files/piece_justificative_0.pdf', 'application/pdf') }
 
       subject do
         sign_in dossier.user
-        post :create, params: { dossier_id: dossier_id, texte_commentaire: texte_commentaire, piece_justificative: { content: document_upload } }
+        post :create, params: {dossier_id: dossier_id, texte_commentaire: texte_commentaire, piece_justificative: {content: document_upload}}
       end
 
       it 'create a new piece justificative' do
@@ -88,7 +88,7 @@ describe Users::CommentairesController, type: :controller do
             sign_in dossier.user
             dossier.replied!
 
-            post :create, params: { dossier_id: dossier_id, texte_commentaire: texte_commentaire }
+            post :create, params: {dossier_id: dossier_id, texte_commentaire: texte_commentaire}
             dossier.reload
           end
 

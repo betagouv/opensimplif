@@ -41,41 +41,38 @@ describe RootController, type: :controller do
     render_views
 
     before do
-      stub_request(:get, "https://api.github.com/repos/sgmap/tps/releases/latest").
-          to_return(:status => 200, :body => '{"tag_name": "plip", "body": "blabla", "published_at": "2016-02-09T16:46:47Z"}', :headers => {})
+      stub_request(:get, 'https://api.github.com/repos/sgmap/tps/releases/latest')
+        .to_return(status: 200, body: '{"tag_name": "plip", "body": "blabla", "published_at": "2016-02-09T16:46:47Z"}', headers: {})
 
       subject
     end
 
     it { expect(response.body).to have_css('#landing') }
-
   end
 
   context 'environment is not development' do
     render_views
 
     before do
-      Rails.env.stub(:development? => false)
+      Rails.env.stub(development?: false)
       subject
     end
 
-    it { expect(response.body).to have_link('Démonstration', href: "https://tps-dev.apientreprise.fr#{ users_sign_in_demo_path }") }
-
+    it { expect(response.body).to have_link('Démonstration', href: "https://tps-dev.apientreprise.fr#{users_sign_in_demo_path}") }
   end
 
   context 'environment is development' do
     render_views
 
     before do
-      Rails.env.stub(:development? => true)
+      Rails.env.stub(development?: true)
       subject
     end
 
     it { expect(response.body).to have_link('Démonstration', href: users_sign_in_demo_path) }
-
   end
 
-  context "unified login" do
+  context 'unified login' do
     render_views
 
     before do
@@ -86,5 +83,4 @@ describe RootController, type: :controller do
       expect(response.body).to have_css("a[href='#{new_user_session_path}']")
     end
   end
-
 end

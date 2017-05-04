@@ -5,7 +5,7 @@ describe SIADE::EntrepriseAdapter do
 
   before do
     stub_request(:get, "https://api-dev.apientreprise.fr/v2/entreprises/418166096?token=#{SIADETOKEN}")
-        .to_return(body: File.read('spec/support/files/entreprise.json', status: 200))
+      .to_return(body: File.read('spec/support/files/entreprise.json', status: 200))
   end
 
   it '#to_params class est une Hash ?' do
@@ -18,7 +18,7 @@ describe SIADE::EntrepriseAdapter do
     end
 
     it 'L\'entreprise contient bien un capital_social' do
-      expect(subject[:capital_social]).to eq(462308)
+      expect(subject[:capital_social]).to eq(462_308)
     end
 
     it 'L\'entreprise contient bien un numero_tva_intracommunautaire' do
@@ -88,7 +88,7 @@ describe SIADE::EntrepriseAdapter do
       end
 
       it 'Un mandataire social possède bien une date de naissance au format timestamp' do
-        expect(subject[0][:date_naissance_timestamp]).to eq(-155523600)
+        expect(subject[0][:date_naissance_timestamp]).to eq(-155_523_600)
       end
     end
   end

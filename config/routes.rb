@@ -1,24 +1,24 @@
 Rails.application.routes.draw do
   default_url_options protocol: :https
 
-  get "/ping" => "ping#index", :constraints => {:ip => /127.0.0.1/}
+  get '/ping' => 'ping#index', :constraints => {ip: %r{127.0.0.1}}
 
-  devise_for :administrations, skip: [:password, :registrations]
+  devise_for :administrations, skip: %i[password registrations]
 
   devise_for :administrateurs, controllers: {
-                                 sessions: 'administrateurs/sessions'
-                             }, skip: [:password, :registrations]
+    sessions: 'administrateurs/sessions'
+  }, skip: %i[password registrations]
 
   devise_for :gestionnaires, controllers: {
-                               sessions: 'gestionnaires/sessions',
-                               passwords: 'gestionnaires/passwords'
-                           }, skip: [:registrations]
+    sessions: 'gestionnaires/sessions',
+    passwords: 'gestionnaires/passwords'
+  }, skip: [:registrations]
 
   devise_for :users, controllers: {
-                       sessions: 'users/sessions',
-                       registrations: 'users/registrations',
-                       passwords: 'users/passwords'
-                   }
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords'
+  }
 
   devise_scope :user do
     get '/users/sign_in/demo' => 'users/sessions#demo'
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
 
   namespace :users do
     namespace :dossiers do
-      resources :invites, only: [:index, :show]
+      resources :invites, only: %i[index show]
 
       post '/commentaire' => 'commentaires#create'
     end
@@ -110,20 +110,20 @@ Rails.application.routes.draw do
 
     resources :procedures do
       resources :types_de_champ, only: [:destroy]
-      resource :types_de_champ, only: [:show, :update] do
+      resource :types_de_champ, only: %i[show update] do
         post '/:index/move_up' => 'types_de_champ#move_up', as: :move_up
         post '/:index/move_down' => 'types_de_champ#move_down', as: :move_down
       end
 
       resources :types_de_champ_private, only: [:destroy]
-      resource :types_de_champ_private, only: [:show, :update] do
+      resource :types_de_champ_private, only: %i[show update] do
         post '/:index/move_up' => 'types_de_champ_private#move_up', as: :move_up
         post '/:index/move_down' => 'types_de_champ_private#move_down', as: :move_down
       end
 
-      resource :pieces_justificatives, only: [:show, :update]
+      resource :pieces_justificatives, only: %i[show update]
       resources :pieces_justificatives, only: :destroy
-      resource :pieces_justificatives, only: [:show, :update] do
+      resource :pieces_justificatives, only: %i[show update] do
         post '/:index/move_up' => 'pieces_justificatives#move_up', as: :move_up
         post '/:index/move_down' => 'pieces_justificatives#move_down', as: :move_down
       end
@@ -135,17 +135,16 @@ Rails.application.routes.draw do
       post 'transfer' => 'procedures#transfer', as: :transfer
       put 'clone' => 'procedures#clone', as: :clone
 
-      resource :accompagnateurs, only: [:show, :update]
+      resource :accompagnateurs, only: %i[show update]
 
       resource :previsualisation, only: [:show]
-
     end
 
     namespace :accompagnateurs do
-      get 'show' #delete after fixed tests admin/accompagnateurs/show_spec without this line
+      get 'show' # delete after fixed tests admin/accompagnateurs/show_spec without this line
     end
 
-    resources :gestionnaires, only: [:index, :create, :destroy]
+    resources :gestionnaires, only: %i[index create destroy]
   end
 
   namespace :ban do
@@ -176,7 +175,6 @@ Rails.application.routes.draw do
       resources :commentaires, only: [:index]
     end
 
-
     namespace :dossiers do
       post 'filter'
 
@@ -197,8 +195,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :procedures, only: [:index, :show] do
-        resources :dossiers, only: [:index, :show]
+      resources :procedures, only: %i[index show] do
+        resources :dossiers, only: %i[index show]
       end
     end
 

@@ -28,7 +28,7 @@ class Gestionnaire < ActiveRecord::Base
     self[:procedure_filter]
   end
 
-  def toggle_follow_dossier dossier_id
+  def toggle_follow_dossier(dossier_id)
     dossier = dossier_id
     dossier = Dossier.find(dossier_id) unless dossier_id.class == Dossier
 
@@ -39,30 +39,27 @@ class Gestionnaire < ActiveRecord::Base
     nil
   end
 
-  def follow? dossier_id
+  def follow?(dossier_id)
     dossier_id = dossier_id.id if dossier_id.class == Dossier
 
     Follow.where(gestionnaire_id: id, dossier_id: dossier_id).any?
   end
 
-  def build_default_preferences_list_dossier procedure_id=nil
-
+  def build_default_preferences_list_dossier(procedure_id = nil)
     PreferenceListDossier.available_columns_for(procedure_id).each do |table|
       table.second.each do |column|
-
-        if valid_couple_table_attr? table.first, column.first
-          PreferenceListDossier.create(
-              libelle: column.second[:libelle],
-              table: column.second[:table],
-              attr: column.second[:attr],
-              attr_decorate: column.second[:attr_decorate],
-              bootstrap_lg: column.second[:bootstrap_lg],
-              order: nil,
-              filter: nil,
-              procedure_id: procedure_id,
-              gestionnaire: self
-          )
-        end
+        next unless valid_couple_table_attr? table.first, column.first
+        PreferenceListDossier.create(
+          libelle: column.second[:libelle],
+          table: column.second[:table],
+          attr: column.second[:attr],
+          attr_decorate: column.second[:attr_decorate],
+          bootstrap_lg: column.second[:bootstrap_lg],
+          order: nil,
+          filter: nil,
+          procedure_id: procedure_id,
+          gestionnaire: self
+        )
       end
     end
   end
@@ -72,50 +69,46 @@ class Gestionnaire < ActiveRecord::Base
   end
 
   def notifications
-    Notification.where(already_read: false, dossier_id: follows.pluck(:dossier_id)).order("updated_at DESC")
+    Notification.where(already_read: false, dossier_id: follows.pluck(:dossier_id)).order('updated_at DESC')
   end
 
-  def notifications_for procedure
+  def notifications_for(procedure)
     procedure_ids = dossiers_follow.pluck(:procedure_id)
 
     if procedure_ids.include?(procedure.id)
       return dossiers_follow.where(procedure_id: procedure.id)
-                 .inject(0) do |acc, dossier|
-        acc += dossier.notifications.where(already_read: false).count
-      end
+          .inject(0) { |_acc, dossier| dossier.notifications.where(already_read: false).count }
     end
     0
   end
 
-  def dossier_with_notification_for procedure
+  def dossier_with_notification_for(procedure)
     procedure_ids = dossiers_follow.pluck(:procedure_id)
 
     if procedure_ids.include?(procedure.id)
       return dossiers_follow.where(procedure_id: procedure.id)
-                 .inject(0) do |acc, dossier|
-        acc += ((dossier.notifications.where(already_read: false).count) > 0 ? 1 : 0)
-      end
+          .inject(0) { |_acc, dossier| (dossier.notifications.where(already_read: false).count.positive? ? 1 : 0) }
     end
     0
   end
 
   private
 
-  def valid_couple_table_attr? table, column
+  def valid_couple_table_attr?(table, column)
     couples = [{
-                   table: :dossier,
-                   column: :dossier_id
-               }, {
-                   table: :user,
-                   column: :email
-               }, {
-                   table: :dossier,
-                   column: :created_at
-               }, {
-                   table: :dossier,
-                   column: :updated_at
-               }]
+      table: :dossier,
+      column: :dossier_id
+    }, {
+      table: :user,
+      column: :email
+    }, {
+      table: :dossier,
+      column: :created_at
+    }, {
+      table: :dossier,
+      column: :updated_at
+    }]
 
-    couples.include?({table: table, column: column})
+    couples.include?(table: table, column: column)
   end
 end

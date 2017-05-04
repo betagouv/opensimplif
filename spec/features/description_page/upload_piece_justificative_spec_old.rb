@@ -32,17 +32,17 @@ feature 'user is on description page' do
         end
       end
     end
-    context 'he adds cerfa', vcr: { cassette_name: 'description_page_upload_piece_justificative_adds_cerfa' } do
+    context 'he adds cerfa', vcr: {cassette_name: 'description_page_upload_piece_justificative_adds_cerfa'} do
       before do
         attach_file('cerfa_pdf', File.path('spec/support/files/dossierPDF.pdf'))
-        click_on("Valider")
+        click_on('Valider')
         dossier.reload
       end
       it 'fills dossier cerfa' do
         expect(dossier.cerfa).not_to be_empty
       end
     end
-    context 'when he adds a piece_justificative and submit form', vcr: { cassette_name: 'description_page_upload_piece_justificative_adds_cerfa_and_submit' } do
+    context 'when he adds a piece_justificative and submit form', vcr: {cassette_name: 'description_page_upload_piece_justificative_adds_cerfa_and_submit'} do
       before do
         file_input_id = 'piece_justificative_' + dossier.types_de_piece_justificative.first.id.to_s
         attach_file(file_input_id, File.path('spec/support/files/dossierPDF.pdf'))

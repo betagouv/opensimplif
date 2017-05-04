@@ -1,23 +1,26 @@
 require 'spec_helper'
 
 describe DossiersListFacades do
-
   let(:gestionnaire) { create :gestionnaire }
   let(:procedure) { create :procedure, published: true }
   let(:procedure_2) { create :procedure, libelle: 'plop', published: true }
 
-  let!(:preference) { create :preference_list_dossier,
-                             gestionnaire: gestionnaire,
-                             table: nil,
-                             attr: 'state',
-                             attr_decorate: 'display_state' }
+  let!(:preference) do
+    create :preference_list_dossier,
+           gestionnaire: gestionnaire,
+           table: nil,
+           attr: 'state',
+           attr_decorate: 'display_state'
+  end
 
-  let!(:preference_2) { create :preference_list_dossier,
-                               gestionnaire: gestionnaire,
-                               table: 'champs',
-                               attr: 'state',
-                               attr_decorate: 'display_state',
-                               procedure_id: procedure.id }
+  let!(:preference_2) do
+    create :preference_list_dossier,
+           gestionnaire: gestionnaire,
+           table: 'champs',
+           attr: 'state',
+           attr_decorate: 'display_state',
+           procedure_id: procedure.id
+  end
 
   before do
     create :assign_to, procedure: procedure, gestionnaire: gestionnaire
@@ -25,7 +28,6 @@ describe DossiersListFacades do
   end
 
   describe '#preference_list_dossiers_filter' do
-
     subject { facade.preference_list_dossiers_filter }
 
     context 'when procedure is not pasted at the facade' do
@@ -52,7 +54,6 @@ describe DossiersListFacades do
     it { expect(subject.first[:libelle]).to eq procedure.libelle }
     it { expect(subject.first[:unread_notifications]).to eq 0 }
 
-
     it { expect(subject.last[:id]).to eq procedure_2.id }
     it { expect(subject.last[:libelle]).to eq procedure_2.libelle }
     it { expect(subject.last[:unread_notifications]).to eq 0 }
@@ -63,13 +64,15 @@ describe DossiersListFacades do
     let(:filter) { nil }
     let(:facade) { described_class.new gestionnaire, 'nouveaux', procedure_2 }
 
-    let!(:preference) { create :preference_list_dossier,
-                               gestionnaire: gestionnaire,
-                               table: table,
-                               attr: 'state',
-                               attr_decorate: 'display_state',
-                               filter: filter,
-                               procedure_id: procedure_id }
+    let!(:preference) do
+      create :preference_list_dossier,
+             gestionnaire: gestionnaire,
+             table: table,
+             attr: 'state',
+             attr_decorate: 'display_state',
+             filter: filter,
+             procedure_id: procedure_id
+    end
 
     subject { facade.active_filter? preference }
 

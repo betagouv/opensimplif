@@ -12,7 +12,6 @@ class SIADE::RNAAdapter
 
     data_source[:association].each do |k, v|
       params[k] = v if attr_to_fetch.include?(k)
-
     end
 
     params[:association_id] = params[:id]
@@ -24,12 +23,11 @@ class SIADE::RNAAdapter
   end
 
   def attr_to_fetch
-    [:id,
-     :titre,
-     :objet,
-     :date_creation,
-     :date_declaration,
-     :date_publication
-    ]
+    %i[id
+       titre
+       objet
+       date_creation
+       date_declaration
+       date_publication]
   end
 end

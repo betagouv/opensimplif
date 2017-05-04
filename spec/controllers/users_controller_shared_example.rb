@@ -6,7 +6,7 @@ shared_examples 'current_user_dossier_spec' do
   context 'when dossier_id is given as a param' do
     context 'when dossier id is valid' do
       it 'returns current user dossier' do
-        expect(subject.current_user_dossier dossier.id).to eq(dossier)
+        expect(subject.current_user_dossier(dossier.id)).to eq(dossier)
       end
     end
 
@@ -36,7 +36,7 @@ shared_examples 'current_user_dossier_spec' do
       end
 
       it 'returns dossier with the id on params past' do
-        expect(subject.current_user_dossier dossier.id).to eq(dossier)
+        expect(subject.current_user_dossier(dossier.id)).to eq(dossier)
       end
     end
   end

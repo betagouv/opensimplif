@@ -3,15 +3,14 @@ class Dossier < ActiveRecord::Base
 
   enum state: {draft: 'draft',
                initiated: 'initiated',
-               replied: 'replied', #action utilisateur demandé
-               updated: 'updated', #etude par l'administration en cours
+               replied: 'replied', # action utilisateur demandé
+               updated: 'updated', # etude par l'administration en cours
                validated: 'validated',
                submitted: 'submitted',
                received: 'received',
                closed: 'closed',
                refused: 'refused',
-               without_continuation: 'without_continuation'
-       }
+               without_continuation: 'without_continuation'}
 
   has_one :etablissement, dependent: :destroy
   has_one :entreprise, dependent: :destroy
@@ -41,31 +40,31 @@ class Dossier < ActiveRecord::Base
   delegate :types_de_champ, to: :procedure
   delegate :france_connect_information, to: :user
 
-  after_save :build_default_champs, if: Proc.new { procedure_id_changed? }
-  after_save :build_default_individual, if: Proc.new { procedure.for_individual? }
+  after_save :build_default_champs, if: proc { procedure_id_changed? }
+  after_save :build_default_individual, if: proc { procedure.for_individual? }
   after_save :internal_notification
 
   validates :user, presence: true
 
-  BROUILLON = %w(draft)
-  NOUVEAUX = %w(initiated)
-  OUVERT = %w(updated replied)
-  WAITING_FOR_GESTIONNAIRE = %w(updated)
-  WAITING_FOR_USER = %w(replied validated)
-  EN_CONSTRUCTION = %w(initiated updated replied)
-  VALIDES = %w(validated)
-  DEPOSES = %w(submitted)
-  EN_INSTRUCTION = %w(submitted received)
-  A_INSTRUIRE = %w(received)
-  TERMINE = %w(closed refused without_continuation)
-  ALL_STATE = %w(initiated updated replied validated submitted received closed refused without_continuation)
+  BROUILLON = %w[draft].freeze
+  NOUVEAUX = %w[initiated].freeze
+  OUVERT = %w[updated replied].freeze
+  WAITING_FOR_GESTIONNAIRE = %w[updated].freeze
+  WAITING_FOR_USER = %w[replied validated].freeze
+  EN_CONSTRUCTION = %w[initiated updated replied].freeze
+  VALIDES = %w[validated].freeze
+  DEPOSES = %w[submitted].freeze
+  EN_INSTRUCTION = %w[submitted received].freeze
+  A_INSTRUIRE = %w[received].freeze
+  TERMINE = %w[closed refused without_continuation].freeze
+  ALL_STATE = %w[initiated updated replied validated submitted received closed refused without_continuation].freeze
 
   def unreaded_notifications
     @unreaded_notif ||= notifications.where(already_read: false)
   end
 
   def first_unread_notification
-    unreaded_notifications.order("created_at ASC").first
+    unreaded_notifications.order('created_at ASC').first
   end
 
   def retrieve_last_piece_justificative_by_type(type)
@@ -87,7 +86,7 @@ class Dossier < ActiveRecord::Base
   end
 
   def build_default_individual
-    if Individual.where(dossier_id: self.id).count == 0
+    if Individual.where(dossier_id: id).count.zero?
       Individual.create(dossier: self)
     end
   end
@@ -108,70 +107,50 @@ class Dossier < ActiveRecord::Base
     commentaires.order(created_at: :desc)
   end
 
-  def next_step! role, action
-    unless %w(initiate follow update comment valid submit receive refuse without_continuation close).include?(action)
-      fail 'action is not valid'
+  def next_step!(role, action)
+    unless %w[initiate follow update comment valid submit receive refuse without_continuation close].include?(action)
+      raise 'action is not valid'
     end
 
-    unless %w(user gestionnaire).include?(role)
-      fail 'role is not valid'
-    end
+    raise 'role is not valid' unless %w[user gestionnaire].include?(role)
 
     if role == 'user'
       case action
-        when 'initiate'
-          if draft?
-            initiated!
-          end
-        when 'submit'
-          if validated?
-            submitted!
-          end
-        when 'update'
-          if replied?
-            updated!
-          end
-        when 'comment'
-          if replied?
-            updated!
-          end
+      when 'initiate'
+        initiated! if draft?
+      when 'submit'
+        submitted! if validated?
+      when 'update'
+        updated! if replied?
+      when 'comment'
+        updated! if replied?
       end
     elsif role == 'gestionnaire'
       case action
-        when 'comment'
-          if updated?
-            replied!
-          elsif initiated?
-            replied!
-          end
-        when 'follow'
-          if initiated?
-            updated!
-          end
-        when 'valid'
-          if updated?
-            validated!
-          elsif replied?
-            validated!
-          elsif initiated?
-            validated!
-          end
-        when 'receive'
-          if submitted?
-            received!
-          end
-        when 'close'
-          if received?
-            closed!
-          end
-        when 'refuse'
-          if received?
-            refused!
-          end
-        when 'without_continuation'
-          if received?
-            without_continuation!
-          end
+      when 'comment'
+        if updated?
+          replied!
+        elsif initiated?
+          replied!
+        end
+      when 'follow'
+        updated! if initiated?
+      when 'valid'
+        if updated?
+          validated!
+        elsif replied?
+          validated!
+        elsif initiated?
+          validated!
+        end
+      when 'receive'
+        received! if submitted?
+      when 'close'
+        closed! if received?
+      when 'refuse'
+        refused! if received?
+      when 'without_continuation'
+        without_continuation! if received?
       end
     end
     state
@@ -181,116 +160,116 @@ class Dossier < ActiveRecord::Base
     BROUILLON.include?(state)
   end
 
-  def self.all_state order = 'ASC'
+  def self.all_state(order = 'ASC')
     where(state: ALL_STATE, archived: false).order("updated_at #{order}")
   end
 
-  def self.brouillon order = 'ASC'
+  def self.brouillon(order = 'ASC')
     where(state: BROUILLON, archived: false).order("updated_at #{order}")
   end
 
-  def self.nouveaux order = 'ASC'
+  def self.nouveaux(order = 'ASC')
     where(state: NOUVEAUX, archived: false).order("updated_at #{order}")
   end
 
-  def self.waiting_for_gestionnaire order = 'ASC'
+  def self.waiting_for_gestionnaire(order = 'ASC')
     where(state: WAITING_FOR_GESTIONNAIRE, archived: false).order("updated_at #{order}")
   end
 
-  def self.waiting_for_user order = 'ASC'
+  def self.waiting_for_user(order = 'ASC')
     where(state: WAITING_FOR_USER, archived: false).order("updated_at #{order}")
   end
 
-  def self.en_construction order = 'ASC'
+  def self.en_construction(order = 'ASC')
     where(state: EN_CONSTRUCTION, archived: false).order("updated_at #{order}")
   end
 
-  def self.ouvert order = 'ASC'
+  def self.ouvert(order = 'ASC')
     where(state: OUVERT, archived: false).order("updated_at #{order}")
   end
 
-  def self.valides order = 'ASC'
+  def self.valides(order = 'ASC')
     where(state: VALIDES, archived: false).order("updated_at #{order}")
   end
 
-  def self.fige order = 'ASC'
+  def self.fige(order = 'ASC')
     where(state: VALIDES, archived: false).order("updated_at #{order}")
   end
 
-  def self.deposes order = 'ASC'
+  def self.deposes(order = 'ASC')
     where(state: DEPOSES, archived: false).order("updated_at #{order}")
   end
 
-  def self.a_instruire order = 'ASC'
+  def self.a_instruire(order = 'ASC')
     where(state: A_INSTRUIRE, archived: false).order("updated_at #{order}")
   end
 
-  def self.en_instruction order = 'ASC'
+  def self.en_instruction(order = 'ASC')
     where(state: EN_INSTRUCTION, archived: false).order("updated_at #{order}")
   end
 
-  def self.termine order = 'ASC'
+  def self.termine(order = 'ASC')
     where(state: TERMINE, archived: false).order("updated_at #{order}")
   end
 
   def cerfa_available?
-    procedure.cerfa_flag? && cerfa.size != 0
+    procedure.cerfa_flag? && !cerfa.empty?
   end
 
   def convert_specific_hash_values_to_string(hash_to_convert)
     hash = {}
     hash_to_convert.each do |key, value|
-      value = value.to_s if !value.kind_of?(Time) && !value.nil?
+      value = value.to_s if !value.is_a?(Time) && !value.nil?
       hash.store(key, value)
     end
-    return hash
+    hash
   end
 
   def convert_specific_array_values_to_string(array_to_convert)
     array = []
     array_to_convert.each do |value|
-      value = value.to_s if !value.kind_of?(Time) && !value.nil?
+      value = value.to_s if !value.is_a?(Time) && !value.nil?
       array << value
     end
-    return array
+    array
   end
 
   def export_entreprise_data
-    unless entreprise.nil?
-      etablissement_attr = EtablissementCsvSerializer.new(self.etablissement).attributes.map { |k, v| ["etablissement.#{k}".parameterize.underscore.to_sym, v] }.to_h
-      entreprise_attr = EntrepriseSerializer.new(self.entreprise).attributes.map { |k, v| ["entreprise.#{k}".parameterize.underscore.to_sym, v] }.to_h
-    else
+    if entreprise.nil?
       etablissement_attr = EtablissementSerializer.new(Etablissement.new).attributes.map { |k, v| ["etablissement.#{k}".parameterize.underscore.to_sym, v] }.to_h
       entreprise_attr = EntrepriseSerializer.new(Entreprise.new).attributes.map { |k, v| ["entreprise.#{k}".parameterize.underscore.to_sym, v] }.to_h
+    else
+      etablissement_attr = EtablissementCsvSerializer.new(etablissement).attributes.map { |k, v| ["etablissement.#{k}".parameterize.underscore.to_sym, v] }.to_h
+      entreprise_attr = EntrepriseSerializer.new(entreprise).attributes.map { |k, v| ["entreprise.#{k}".parameterize.underscore.to_sym, v] }.to_h
     end
-    return convert_specific_hash_values_to_string(etablissement_attr.merge(entreprise_attr))
+    convert_specific_hash_values_to_string(etablissement_attr.merge(entreprise_attr))
   end
 
   def export_default_columns
     dossier_attr = DossierSerializer.new(self).attributes
     dossier_attr = convert_specific_hash_values_to_string(dossier_attr)
-    dossier_attr = dossier_attr.merge(self.export_entreprise_data)
-    return dossier_attr
+    dossier_attr = dossier_attr.merge(export_entreprise_data)
+    dossier_attr
   end
 
   def spreadsheet_columns
-    self.export_default_columns.to_a
+    export_default_columns.to_a
   end
 
   def data_with_champs
     serialized_dossier = DossierProcedureSerializer.new(self)
     data = serialized_dossier.attributes.values
-    data += self.champs.order('type_de_champ_id ASC').map(&:value)
-    data += self.export_entreprise_data.values
-    return data
+    data += champs.order('type_de_champ_id ASC').map(&:value)
+    data += export_entreprise_data.values
+    data
   end
 
   def export_headers
     serialized_dossier = DossierProcedureSerializer.new(self)
     headers = serialized_dossier.attributes.keys
-    headers += self.procedure.types_de_champ.order('id ASC').map { |types_de_champ| types_de_champ.libelle.parameterize.underscore.to_sym }
-    headers += self.export_entreprise_data.keys
-    return headers
+    headers += procedure.types_de_champ.order('id ASC').map { |types_de_champ| types_de_champ.libelle.parameterize.underscore.to_sym }
+    headers += export_entreprise_data.keys
+    headers
   end
 
   def self.export_full_generation(dossiers, format)
@@ -300,18 +279,18 @@ class Dossier < ActiveRecord::Base
       dossiers.each do |dossier|
         data << dossier.convert_specific_array_values_to_string(dossier.data_with_champs)
       end
-      if ["csv"].include?(format)
+      if ['csv'].include?(format)
         return SpreadsheetArchitect.to_csv(data: data, headers: headers)
-      elsif ["xlsx"].include?(format)
+      elsif ['xlsx'].include?(format)
         return SpreadsheetArchitect.to_xlsx(data: data, headers: headers)
-      elsif ["ods"].include?(format)
+      elsif ['ods'].include?(format)
         return SpreadsheetArchitect.to_ods(data: data, headers: headers)
       end
     end
   end
 
   def followers_gestionnaires_emails
-    follows.includes(:gestionnaire).map { |f| f.gestionnaire }.pluck(:email).join(' ')
+    follows.includes(:gestionnaire).map(&:gestionnaire).pluck(:email).join(' ')
   end
 
   def reset!
@@ -326,21 +305,21 @@ class Dossier < ActiveRecord::Base
   end
 
   def submit!
-    self.deposit_datetime= DateTime.now
+    self.deposit_datetime = DateTime.now
 
     next_step! 'user', 'submit'
-    #NotificationMailer.dossier_submitted(self).deliver_now!
+    # NotificationMailer.dossier_submitted(self).deliver_now!
   end
 
   def read_only?
     validated? || received? || submitted? || closed? || refused? || without_continuation?
   end
 
-  def owner? email
+  def owner?(email)
     user.email == email
   end
 
-  def invite_by_user? email
+  def invite_by_user?(email)
     (invites_user.pluck :email).include? email
   end
 
@@ -348,7 +327,7 @@ class Dossier < ActiveRecord::Base
 
   def internal_notification
     if state_changed? && state == 'submitted'
-      NotificationService.new('submitted', self.id).notify
+      NotificationService.new('submitted', id).notify
     end
   end
 end

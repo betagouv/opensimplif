@@ -1,7 +1,6 @@
 class DossierFacades
-
-  #TODO rechercher en fonction de la personne/email
-  def initialize(dossier_id, email, champ_id = nil)
+  # TODO: rechercher en fonction de la personne/email
+  def initialize(dossier_id, _email, champ_id = nil)
     @dossier = Dossier.where(archived: false).find(dossier_id)
     @champ_id = champ_id
   end
@@ -11,7 +10,7 @@ class DossierFacades
   end
 
   def last_notifications
-    @dossier.notifications.order("updated_at DESC")
+    @dossier.notifications.order('updated_at DESC')
   end
 
   def champs
@@ -34,12 +33,12 @@ class DossierFacades
     @dossier.types_de_piece_justificative.order('order_place ASC')
   end
 
-  def champ_id
-    @champ_id
-  end
+  attr_reader :champ_id
 
   def champ
-    Champ.find(champ_id) rescue nil
+    Champ.find(champ_id)
+  rescue
+    nil
   end
 
   def commentaires

@@ -1,9 +1,7 @@
 class Admin::MailsController < AdminController
   before_action :retrieve_procedure
 
-  def index
-
-  end
+  def index; end
 
   def update
     mail = current_administrateur.procedures.find(params[:procedure_id]).mail_templates.find(params[:id])

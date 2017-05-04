@@ -1,13 +1,12 @@
 class FranceConnectSaltService
-
   attr_reader :model
 
-  def initialize france_connect_information
+  def initialize(france_connect_information)
     raise 'Not a FranceConnectInformation class' unless france_connect_information.class == FranceConnectInformation
     @model = france_connect_information
   end
 
-  def valid? test_salt
+  def valid?(test_salt)
     salt == test_salt
   end
 

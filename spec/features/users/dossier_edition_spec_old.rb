@@ -1,20 +1,18 @@
 require 'spec_helper'
 
 feature 'As a User I want to edit a dossier I own' do
-
   let(:user)                     { create(:user) }
   let(:procedure_for_individual) { create(:procedure, :published, :for_individual, :with_type_de_champ, :with_two_type_de_piece_justificative) }
   let!(:dossier)                 { create(:dossier, :with_entreprise, :for_individual, procedure: procedure_for_individual, user: user, autorisation_donnees: true, state: 'initiated') }
 
-  before "Create dossier and visit root path" do
+  before 'Create dossier and visit root path' do
     login_as user, scope: :user
     visit root_path
   end
 
   context 'After sign_in, I can navigate through dossiers indexes and edit a dossier' do
-
     scenario 'After sign_in, I can see dossiers "à traiter" (default), and other indexes' do
-      expect(page.find('#a_traiter')['class'] ).to eq('active procedure_list_element')
+      expect(page.find('#a_traiter')['class']).to eq('active procedure_list_element')
       page.find_by_id('brouillon').click
       page.find_by_id('a_traiter').click
       page.find_by_id('valides').click
@@ -37,7 +35,7 @@ feature 'As a User I want to edit a dossier I own' do
       expect(page).to have_current_path(users_dossier_recapitulatif_path(dossier.id.to_s), only_path: true)
       page.find_by_id('maj_infos').trigger('click')
       expect(page).to have_current_path(users_dossier_description_path(dossier.id.to_s), only_path: true)
-      fill_in "champs_#{dossier.champs.first.id.to_s}", with: 'Contenu du champ 1'
+      fill_in "champs_#{dossier.champs.first.id}", with: 'Contenu du champ 1'
       page.find_by_id('modification_terminee').click
       expect(page).to have_current_path(users_dossier_recapitulatif_path(dossier.id.to_s), only_path: true)
       expect(page.find("#champ-#{dossier.champs.first.id}-value").text).to eq('Contenu du champ 1')

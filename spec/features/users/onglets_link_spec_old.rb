@@ -78,14 +78,14 @@ feature 'on click on tabs button' do
     end
   end
 
-  context "OpenSimplif" do
+  context 'OpenSimplif' do
     before do
       allow(Features).to receive(:opensimplif).and_return(true)
       visit users_dossiers_url
     end
 
-    scenario "it hides the tabs" do
-      expect(page).to_not have_css('#onglets')
+    scenario 'it hides the tabs' do
+      expect(page).not_to have_css('#onglets')
     end
   end
 end

@@ -37,13 +37,13 @@ describe FranceConnect::ParticulierController, type: :controller do
         context 'when france_connect_particulier_id exist in database' do
           let!(:france_connect_information) { create(:france_connect_information, france_connect_particulier_id: france_connect_particulier_id, given_name: given_name, family_name: family_name, birthdate: birthdate, gender: gender, birthplace: birthplace) }
 
-          context {
+          context do
             subject { get :callback, params: {code: code} }
 
             it 'does not create a new france_connect_information in database' do
-              expect { subject }.not_to change { FranceConnectInformation.count }
+              expect { subject }.not_to(change { FranceConnectInformation.count })
             end
-          }
+          end
 
           context 'when france_connect_particulier_id have an associate user' do
             before do
@@ -163,8 +163,8 @@ describe FranceConnect::ParticulierController, type: :controller do
         context 'when email is not valid' do
           let(:email) { 'kdjizjflk' }
 
-          it { expect { subject }.not_to change { User.count } }
-          it { is_expected.to redirect_to(france_connect_particulier_new_path fci_id: france_connect_information.id, salt: salt, user: {email_france_connect: email}) }
+          it { expect { subject }.not_to(change { User.count }) }
+          it { is_expected.to redirect_to(france_connect_particulier_new_path(fci_id: france_connect_information.id, salt: salt, user: {email_france_connect: email})) }
         end
       end
 
@@ -180,7 +180,7 @@ describe FranceConnect::ParticulierController, type: :controller do
         subject { post :check_email, params: {fci_id: france_connect_information_id, salt: salt, user: {email_france_connect: email, password: password}} }
 
         context 'when email and password couple is valid' do
-          it { expect { subject }.not_to change { User.count } }
+          it { expect { subject }.not_to(change { User.count }) }
 
           describe 'Update user attributs' do
             before do
@@ -217,7 +217,7 @@ describe FranceConnect::ParticulierController, type: :controller do
     context 'when email is incorrect' do
       let(:email) { '' }
 
-      it { expect { subject }.not_to change { User.count } }
+      it { expect { subject }.not_to(change { User.count }) }
       it { expect(subject).to redirect_to(france_connect_particulier_new_path(fci_id: france_connect_information_id, salt: salt, user: {email_france_connect: france_connect_information.email_france_connect})) }
     end
   end

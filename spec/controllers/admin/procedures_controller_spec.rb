@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Admin::ProceduresController, type: :controller do
   let(:admin) { create(:administrateur) }
 
-  let(:bad_procedure_id) { 100000 }
+  let(:bad_procedure_id) { 100_000 }
 
   let(:libelle) { 'Procédure de test' }
   let(:description) { 'Description de test' }
@@ -14,21 +14,20 @@ describe Admin::ProceduresController, type: :controller do
   let(:quartiers_prioritaires) { '0' }
   let(:cadastre) { '0' }
 
-  let(:procedure_params) {
+  let(:procedure_params) do
     {
-        libelle: libelle,
-        description: description,
-        organisation: organisation,
-        direction: direction,
-        lien_demarche: lien_demarche,
-        module_api_carto_attributes: {
-            use_api_carto: use_api_carto,
-            quartiers_prioritaires: quartiers_prioritaires,
-            cadastre: cadastre
-        }
+      libelle: libelle,
+      description: description,
+      organisation: organisation,
+      direction: direction,
+      lien_demarche: lien_demarche,
+      module_api_carto_attributes: {
+        use_api_carto: use_api_carto,
+        quartiers_prioritaires: quartiers_prioritaires,
+        cadastre: cadastre
+      }
     }
-  }
-
+  end
 
   before do
     sign_in admin
@@ -53,7 +52,6 @@ describe Admin::ProceduresController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-
     let(:procedure_draft) { create :procedure, published: false, archived: false }
     let(:procedure_published) { create :procedure, published: true, archived: false }
     let(:procedure_archived) { create :procedure, published: false, archived: true }
@@ -149,7 +147,6 @@ describe Admin::ProceduresController, type: :controller do
           it { expect(subject.direction).to eq(direction) }
           it { expect(subject.lien_demarche).to eq(lien_demarche) }
           it { expect(subject.administrateur_id).to eq(admin.id) }
-
         end
 
         describe 'procedure module api carto attributs in database' do
@@ -230,7 +227,7 @@ describe Admin::ProceduresController, type: :controller do
           it { expect(subject.lien_demarche).to eq(lien_demarche) }
         end
 
-        it { expect(subject).to redirect_to(edit_admin_procedure_path id: procedure.id) }
+        it { expect(subject).to redirect_to(edit_admin_procedure_path(id: procedure.id)) }
         it { expect(flash[:notice]).to be_present }
       end
 
@@ -305,7 +302,7 @@ describe Admin::ProceduresController, type: :controller do
         it 'previous procedure remains published' do
           expect(procedure2.published).to be_truthy
           expect(procedure2.archived).to be_falsey
-          expect(procedure2.path).to match(/fake_path/)
+          expect(procedure2.path).to match(%r{fake_path})
         end
       end
 
@@ -434,7 +431,6 @@ describe Admin::ProceduresController, type: :controller do
       it { expect(body.first['mine']).to be_truthy }
       it { expect(body.second['label']).to eq(procedure2.path) }
       it { expect(body.second['mine']).to be_falsy }
-
     end
 
     context 'filtered' do
@@ -451,7 +447,6 @@ describe Admin::ProceduresController, type: :controller do
     end
 
     context 'when procedure is archived' do
-
       before do
         procedure3.update_attribute :archived, true
         subject
@@ -481,13 +476,13 @@ describe Admin::ProceduresController, type: :controller do
       it { expect(subject.status).to eq 200 }
       it { expect { subject }.to change(Procedure, :count).by(1) }
 
-      context {
+      context do
         before do
           subject
         end
 
         it { expect(Procedure.last.administrateur).to eq new_admin }
-      }
+      end
     end
   end
 end
