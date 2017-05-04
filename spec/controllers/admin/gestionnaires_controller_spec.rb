@@ -119,35 +119,6 @@ describe Admin::GestionnairesController, type: :controller do
       it { expect(gestionnaire.administrateurs.size).to eq 2 }
     end
 
-    context 'Email notification' do
-      it 'Notification email is sent when accompagnateur is create' do
-        expect(GestionnaireMailer).to receive(:new_gestionnaire).and_return(GestionnaireMailer)
-        expect(GestionnaireMailer).to receive(:deliver_now!)
-        subject
-      end
-
-      it 'Notification email is sent when accompagnateur is assign' do
-        expect(GestionnaireMailer).to receive(:new_assignement).and_return(GestionnaireMailer)
-        expect(GestionnaireMailer).to receive(:deliver_now!)
-        subject
-      end
-
-      context 'when accompagnateur is assign at a new admin' do
-        before do
-          create :gestionnaire, email: email, administrateurs: [admin]
-
-          sign_out admin
-          sign_in admin_2
-        end
-
-        it {
-          expect(GestionnaireMailer).to receive(:new_assignement).and_return(GestionnaireMailer)
-          expect(GestionnaireMailer).to receive(:deliver_now!)
-          subject
-        }
-      end
-    end
-
     context 'unified login' do
       before do
         subject
