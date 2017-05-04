@@ -73,7 +73,7 @@ class Users::DescriptionController < UsersController
         @dossier.initiated!
       end
 
-      flash.notice = 'Votre simplification a été enregistré '
+      flash.notice = 'Votre simplification a été enregistrée.'
       redirect_to url_for(controller: :'backoffice/dossiers', action: :show, id: @dossier.id)
     else
       flash.notice = 'Votre brouillon a bien été sauvegardé.'
