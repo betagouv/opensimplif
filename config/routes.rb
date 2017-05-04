@@ -43,12 +43,10 @@ Rails.application.routes.draw do
   get 'admin' => 'admin#index'
   get 'backoffice' => 'backoffice#index'
 
-  if Features.opensimplif
-    get 'simplifications' => 'opensimplif#index'
-    get 'simplifications/reload_smartlisting' => 'opensimplif#reload_smartlisting'
-    get 'simplifications/nothing' => 'opensimplif#nothing'
-    get 'simplifications/:id' => 'opensimplif#index', as: :simplification
-  end
+  get 'simplifications' => 'opensimplif#index'
+  get 'simplifications/reload_smartlisting' => 'opensimplif#reload_smartlisting'
+  get 'simplifications/nothing' => 'opensimplif#nothing'
+  get 'simplifications/:id' => 'opensimplif#index', as: :simplification
 
   resources :administrations
 

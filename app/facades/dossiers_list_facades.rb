@@ -6,7 +6,7 @@ class DossiersListFacades
   def initialize current_devise_profil, liste, procedure = nil
     @current_devise_profil = current_devise_profil
     @liste = liste
-    @liste = 'all_state' if Features.opensimplif
+    @liste = 'all_state'
     @procedure = procedure
   end
 
