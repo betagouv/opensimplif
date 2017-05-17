@@ -25,13 +25,10 @@ module TPS
     config.assets.paths << Rails.root.join('app', 'assets', 'javascript')
     config.assets.precompile += %w[application_split2.css]
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
-
     URL = if Rails.env.production?
-            'https://tps.apientreprise.fr/'.freeze
+            'https://opensimplif.modernisation.gouv.fr/'.freeze
           elsif Rails.env.staging?
-            'https://tps-dev.apientreprise.fr/'.freeze
+            'https://tps-dev.apientreprise.fr/'.freeze # TODO: Change
           else
             'http://localhost:3000/'.freeze
           end
