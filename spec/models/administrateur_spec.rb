@@ -17,7 +17,7 @@ describe Administrateur, type: :model do
     it { is_expected.to have_db_column(:api_token) }
   end
 
-  describe 'assocations' do
+  describe 'associations' do
     it { is_expected.to have_and_belong_to_many(:gestionnaires) }
     it { is_expected.to have_many(:procedures) }
   end

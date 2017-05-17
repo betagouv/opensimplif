@@ -35,7 +35,7 @@ describe 'admin/procedures/show.html.haml', type: :view do
       end
 
       describe 'procedure link is not present' do
-        it { expect(rendered).to have_content('Cette procédure n\'a pas encore été publiée et n\'est donc pas accessible par le public.') }
+        it { expect(rendered).to have_content('Cette procédure n\'a pas encore été publiée et n\'est donc pas accessible au public.') }
       end
     end
   end
