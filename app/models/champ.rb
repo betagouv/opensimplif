@@ -51,7 +51,7 @@ class Champ < ActiveRecord::Base
 
   def internal_notification
     unless dossier.state == 'draft'
-      NotificationService.new('champs', dossier.id, libelle).notify
+      NotificationService.new('champs', libelle, dossier.id).notify
     end
   end
 end

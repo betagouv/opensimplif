@@ -6,13 +6,13 @@ class Notification < ActiveRecord::Base
 
   after_save :deliver_unread
 
-  enum type_notif: {commentaire: 'commentaire', commentaire_champ: 'commentaire_champ', commentaire_piece: 'commentaire_piece', cerfa: 'cerfa', piece_justificative: 'piece_justificative', champs: 'champs', submitted: 'submitted'}
+  enum type_notif: {commentaire: 'commentaire', cerfa: 'cerfa', piece_justificative: 'piece_justificative', champs: 'champs', submitted: 'submitted'}
 
   def deliver_unread
-    self.dossier.follows.each do |follow|
-      Unread.create gestionnaire: follow.gestionnaire, notification: self, dossier_id: self.dossier.id
+    dossier.follows.each do |follow|
+      Unread.create gestionnaire: follow.gestionnaire, notification: self, dossier_id: dossier.id
     end
 
-    Unread.create gestionnaire: Gestionnaire.find_by_email(self.dossier.user.email), notification: self, dossier_id: self.dossier.id
+    Unread.create gestionnaire: Gestionnaire.find_by_email(dossier.user.email), notification: self, dossier_id: dossier.id
   end
 end

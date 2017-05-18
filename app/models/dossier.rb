@@ -327,7 +327,7 @@ class Dossier < ActiveRecord::Base
 
   def internal_notification
     if state_changed? && state == 'submitted'
-      NotificationService.new('submitted', id).notify
+      NotificationService.new('submitted', "Le dossier n°#{id} a été déposé.", id).notify
     end
   end
 end

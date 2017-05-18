@@ -25,7 +25,7 @@ class Cerfa < ActiveRecord::Base
 
   def internal_notification
     unless dossier.state == 'draft'
-      NotificationService.new('cerfa', dossier.id).notify
+      NotificationService.new('cerfa', 'Un nouveau formulaire a été déposé.', dossier.id).notify
     end
   end
 end
