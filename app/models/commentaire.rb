@@ -18,11 +18,11 @@ class Commentaire < ActiveRecord::Base
 
   def notification_text
     if champ
-      "Un nouveau commentaire sur le champ #{champ.type_de_champ.libelle} > #{champ.value}."
+      "Nouveau commentaire sur le champ #{champ.type_de_champ.libelle} par #{email}."
     elsif piece_justificative
-      "Un nouveau commentaire sur la pièce #{piece_justificative.content}."
+      "Nouveau commentaire sur la pièce #{piece_justificative.content} par #{email}."
     else
-      'Un nouveau commentaire sur la simplification.'
+      "Nouveau commentaire sur la simplification par #{email}."
     end
   end
 end
