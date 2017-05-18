@@ -40,8 +40,8 @@ class DossierService
 
       mandataires_list.each do |mandataire|
         return true if mandataire[:nom].casecmp(@france_connect_information.family_name.upcase).zero? &&
-            mandataire[:prenom].casecmp(@france_connect_information.given_name.upcase).zero? &&
-            mandataire[:date_naissance_timestamp] == @france_connect_information.birthdate.to_time.to_i
+                       mandataire[:prenom].casecmp(@france_connect_information.given_name.upcase).zero? &&
+                       mandataire[:date_naissance_timestamp] == @france_connect_information.birthdate.to_time.to_i
       end
     end
 

@@ -68,8 +68,8 @@ class DossiersListGestionnaireService
 
   def default_sort
     sort_preference = @current_devise_profil.preference_list_dossiers
-      .where(procedure: @procedure)
-      .where.not(order: nil).first
+                                            .where(procedure: @procedure)
+                                            .where.not(order: nil).first
 
     return {'nil' => 'nil'} if sort_preference.nil?
 
@@ -120,16 +120,16 @@ class DossiersListGestionnaireService
     reset_sort!
 
     preference = @current_devise_profil.preference_list_dossiers
-      .find_by(table: table, attr: attr, procedure: @procedure)
+                                       .find_by(table: table, attr: attr, procedure: @procedure)
 
     preference&.update order: order
   end
 
   def reset_sort!
     @current_devise_profil.preference_list_dossiers
-      .where(procedure: @procedure)
-      .where.not(order: nil)
-      .update_all order: nil
+                          .where(procedure: @procedure)
+                          .where.not(order: nil)
+                          .update_all order: nil
   end
 
   def joins_filter
@@ -150,18 +150,10 @@ class DossiersListGestionnaireService
         if preference.table_attr.include?('champs')
           value = 'champs.value'
 
-          acc += (acc.to_s.empty? ? ''.to_s : ' AND ') +
-            'champs.type_de_champ_id = ' + preference.attr
+          acc += (acc.to_s.empty? ? ''.to_s : ' AND ') + "champs.type_de_champ_id = #{preference.attr}"
         end
 
-        acc += (acc.to_s.empty? ? ''.to_s : ' AND ') +
-          'CAST(' +
-          value +
-          ' as TEXT)' \
-          ' LIKE ' \
-          "'" +
-          filter +
-          "'"
+        acc += (acc.to_s.empty? ? ''.to_s : ' AND ') + "CAST(#{value} as TEXT) LIKE '#{filter}'"
       end
       acc
     end
@@ -175,17 +167,17 @@ class DossiersListGestionnaireService
     attr = (raw_table_attr.size == 2 ? raw_table_attr.second : raw_table_attr.first)
 
     @current_devise_profil.preference_list_dossiers
-      .find_by(table: table, attr: attr, procedure: @procedure)
-      .update filter: filter.strip
+                          .find_by(table: table, attr: attr, procedure: @procedure)
+                          .update filter: filter.strip
   end
 
   private
 
   def filter_preference_list
     @filter_preference ||= @current_devise_profil.preference_list_dossiers
-      .where(procedure: @procedure)
-      .where.not(filter: nil)
-      .order(:id)
+                                                 .where(procedure: @procedure)
+                                                 .where.not(filter: nil)
+                                                 .order(:id)
   end
 
   def current_preference_smart_listing_page

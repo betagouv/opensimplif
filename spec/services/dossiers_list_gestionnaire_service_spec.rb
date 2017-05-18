@@ -49,7 +49,7 @@ describe DossiersListGestionnaireService do
 
     let(:select_preference_list_dossier) do
       gestionnaire.preference_list_dossiers
-        .find_by(table: table, attr: attr, procedure: nil)
+                  .find_by(table: table, attr: attr, procedure: nil)
     end
 
     subject { DossiersListGestionnaireService.new(gestionnaire, liste).change_sort! param_sort }
@@ -100,7 +100,7 @@ describe DossiersListGestionnaireService do
 
     let(:select_preference_list_dossier) do
       gestionnaire.preference_list_dossiers
-        .find_by(table: table, attr: attr, procedure: nil)
+                  .find_by(table: table, attr: attr, procedure: nil)
     end
 
     subject { described_class.new(gestionnaire, liste).add_filter new_filter }
@@ -135,8 +135,8 @@ describe DossiersListGestionnaireService do
     context 'when a filter is fielded' do
       before do
         gestionnaire.preference_list_dossiers
-          .find_by(table: 'user', attr: 'email', procedure: nil)
-          .update_column :filter, 'plop'
+                    .find_by(table: 'user', attr: 'email', procedure: nil)
+                    .update_column :filter, 'plop'
       end
 
       it { is_expected.to eq [:user] }
@@ -145,8 +145,8 @@ describe DossiersListGestionnaireService do
     context 'when a filter is empty' do
       before do
         gestionnaire.preference_list_dossiers
-          .find_by(table: 'user', attr: 'email', procedure: nil)
-          .update_column :filter, ''
+                    .find_by(table: 'user', attr: 'email', procedure: nil)
+                    .update_column :filter, ''
       end
 
       it { is_expected.to eq [] }
@@ -155,8 +155,8 @@ describe DossiersListGestionnaireService do
     context 'when a filter is nil' do
       before do
         gestionnaire.preference_list_dossiers
-          .find_by(table: 'user', attr: 'email', procedure: nil)
-          .update_column :filter, nil
+                    .find_by(table: 'user', attr: 'email', procedure: nil)
+                    .update_column :filter, nil
       end
 
       it { is_expected.to eq [] }
@@ -166,12 +166,12 @@ describe DossiersListGestionnaireService do
   describe '#where_filter' do
     before do
       gestionnaire.preference_list_dossiers
-        .find_by(table: 'user', attr: 'email', procedure: nil)
-        .update_column :filter, 'plop'
+                  .find_by(table: 'user', attr: 'email', procedure: nil)
+                  .update_column :filter, 'plop'
 
       gestionnaire.preference_list_dossiers
-        .find_by(table: nil, attr: 'id', procedure: nil)
-        .update_column :filter, '23'
+                  .find_by(table: nil, attr: 'id', procedure: nil)
+                  .update_column :filter, '23'
     end
 
     subject { DossiersListGestionnaireService.new(gestionnaire, liste, nil).where_filter }
@@ -181,8 +181,8 @@ describe DossiersListGestionnaireService do
     context 'when last filter caractere is *' do
       before do
         gestionnaire.preference_list_dossiers
-          .find_by(table: 'user', attr: 'email', procedure: nil)
-          .update_column :filter, 'plop*'
+                    .find_by(table: 'user', attr: 'email', procedure: nil)
+                    .update_column :filter, 'plop*'
       end
 
       it { is_expected.to eq "CAST(dossiers.id as TEXT) LIKE '%23%' AND CAST(users.email as TEXT) LIKE 'plop%'" }
@@ -191,8 +191,8 @@ describe DossiersListGestionnaireService do
     context 'when first filter caractere is *' do
       before do
         gestionnaire.preference_list_dossiers
-          .find_by(table: nil, attr: 'id', procedure: nil)
-          .update_column :filter, '*23'
+                    .find_by(table: nil, attr: 'id', procedure: nil)
+                    .update_column :filter, '*23'
       end
 
       it { is_expected.to eq "CAST(dossiers.id as TEXT) LIKE '%23' AND CAST(users.email as TEXT) LIKE '%plop%'" }
@@ -201,8 +201,8 @@ describe DossiersListGestionnaireService do
     context 'when * caractere is presente' do
       before do
         gestionnaire.preference_list_dossiers
-          .find_by(table: 'user', attr: 'email', procedure: nil)
-          .update_column :filter, 'plop*plip'
+                    .find_by(table: 'user', attr: 'email', procedure: nil)
+                    .update_column :filter, 'plop*plip'
       end
 
       it { is_expected.to eq "CAST(dossiers.id as TEXT) LIKE '%23%' AND CAST(users.email as TEXT) LIKE 'plop%plip'" }
@@ -211,8 +211,8 @@ describe DossiersListGestionnaireService do
     context "when filter containe the character <'> " do
       before do
         gestionnaire.preference_list_dossiers
-          .find_by(table: 'user', attr: 'email', procedure: nil)
-          .update_column :filter, "MCDONALD'S FRANCE"
+                    .find_by(table: 'user', attr: 'email', procedure: nil)
+                    .update_column :filter, "MCDONALD'S FRANCE"
       end
 
       it { is_expected.to eq "CAST(dossiers.id as TEXT) LIKE '%23%' AND CAST(users.email as TEXT) LIKE '%MCDONALD''S FRANCE%'" }
@@ -221,8 +221,8 @@ describe DossiersListGestionnaireService do
     context 'when filter is empty ' do
       before do
         gestionnaire.preference_list_dossiers
-          .find_by(table: 'user', attr: 'email', procedure: nil)
-          .update_column :filter, ''
+                    .find_by(table: 'user', attr: 'email', procedure: nil)
+                    .update_column :filter, ''
       end
 
       it { is_expected.to eq "CAST(dossiers.id as TEXT) LIKE '%23%'" }

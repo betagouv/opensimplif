@@ -23,23 +23,11 @@ class SIADE::EntrepriseAdapter
   end
 
   def attr_to_fetch
-    %i[siren
-       capital_social
-       numero_tva_intracommunautaire
-       forme_juridique
-       forme_juridique_code
-       nom_commercial
-       raison_sociale
-       siret_siege_social
-       code_effectif_entreprise
-       date_creation
-       nom
-       prenom]
+    %i[siren capital_social numero_tva_intracommunautaire forme_juridique forme_juridique_code
+       nom_commercial raison_sociale siret_siege_social code_effectif_entreprise date_creation nom prenom]
   end
 
   def mandataires_sociaux
-    data_source[:entreprise][:mandataires_sociaux]
-  rescue
-    nil
+    data_source[:entreprise][:mandataires_sociaux] if data_source[:entreprise]
   end
 end

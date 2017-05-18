@@ -7,10 +7,10 @@ class ChampsService
 
       if champ.type_champ == 'datetime'
         champ.value = params[:champs]["'#{champ.id}'"] +
-          ' ' +
-          params[:time_hour]["'#{champ.id}'"] +
-          ':' +
-          params[:time_minute]["'#{champ.id}'"]
+                      ' ' +
+                      params[:time_hour]["'#{champ.id}'"] +
+                      ':' +
+                      params[:time_minute]["'#{champ.id}'"]
       end
 
       if check_mandatory

@@ -16,7 +16,7 @@ class CommentairesController < ApplicationController
     @commentaire.dossier = Dossier.find(params['dossier_id'])
     @commentaire.champ = @commentaire.dossier.champs.find(params[:champ_id]) if params[:champ_id]
 
-    if is_gestionnaire?
+    if gestionnaire?
       @commentaire.email = current_gestionnaire.email
       @commentaire.dossier.next_step! 'gestionnaire', 'comment'
     else
@@ -44,7 +44,7 @@ class CommentairesController < ApplicationController
 
     notify_user_with_mail(@commentaire) if saved
 
-    if is_gestionnaire?
+    if gestionnaire?
       unless current_gestionnaire.follow? @commentaire.dossier
         current_gestionnaire.toggle_follow_dossier @commentaire.dossier
       end
@@ -58,7 +58,7 @@ class CommentairesController < ApplicationController
     end
   end
 
-  def is_gestionnaire?
+  def gestionnaire?
     false
   end
 

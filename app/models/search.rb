@@ -47,18 +47,18 @@ class Search < ActiveRecord::Base
     search_term = Search.connection.quote(to_tsquery)
 
     dossier_ids = Dossier.all
-      .select(:id)
-      .where(archived: false)
-      .where.not(state: 'draft')
+                         .select(:id)
+                         .where(archived: false)
+                         .where.not(state: 'draft')
 
     q = Search
-      .select('DISTINCT(searches.dossier_id)')
-      .select("COALESCE(ts_rank(to_tsvector('french', searches.term::text), to_tsquery('french', #{search_term})), 0) AS rank")
-      .joins(:dossier)
-      .where(dossier_id: dossier_ids)
-      .where("to_tsvector('french', searches.term::text) @@ to_tsquery('french', #{search_term})")
-      .order('rank DESC')
-      .preload(:dossier)
+        .select('DISTINCT(searches.dossier_id)')
+        .select("COALESCE(ts_rank(to_tsvector('french', searches.term::text), to_tsquery('french', #{search_term})), 0) AS rank")
+        .joins(:dossier)
+        .where(dossier_id: dossier_ids)
+        .where("to_tsvector('french', searches.term::text) @@ to_tsquery('french', #{search_term})")
+        .order('rank DESC')
+        .preload(:dossier)
 
     q = q.paginate(page: @page) if @page.present?
 
@@ -75,8 +75,8 @@ class Search < ActiveRecord::Base
 
   def to_tsquery
     @query.gsub(%r{['?\\:&|!]}, '') # drop disallowed characters
-      .split(%r{\s+})               # split words
-      .map { |x| "#{x}:*" } # enable prefix matching
-      .join(' & ')
+          .split(%r{\s+}) # split words
+          .map { |x| "#{x}:*" } # enable prefix matching
+          .join(' & ')
   end
 end

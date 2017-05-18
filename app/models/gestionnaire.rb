@@ -77,7 +77,7 @@ class Gestionnaire < ActiveRecord::Base
 
     if procedure_ids.include?(procedure.id)
       return dossiers_follow.where(procedure_id: procedure.id)
-          .inject(0) { |_acc, dossier| dossier.notifications.where(already_read: false).count }
+                            .inject(0) { |_acc, dossier| dossier.notifications.where(already_read: false).count }
     end
     0
   end
@@ -87,7 +87,7 @@ class Gestionnaire < ActiveRecord::Base
 
     if procedure_ids.include?(procedure.id)
       return dossiers_follow.where(procedure_id: procedure.id)
-          .inject(0) { |_acc, dossier| (dossier.notifications.where(already_read: false).count.positive? ? 1 : 0) }
+                            .inject(0) { |_acc, dossier| (dossier.notifications.where(already_read: false).count.positive? ? 1 : 0) }
     end
     0
   end

@@ -23,11 +23,6 @@ class SIADE::RNAAdapter
   end
 
   def attr_to_fetch
-    %i[id
-       titre
-       objet
-       date_creation
-       date_declaration
-       date_publication]
+    %i[id titre objet date_creation date_declaration date_publication]
   end
 end

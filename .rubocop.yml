@@ -9,31 +9,16 @@ AllCops:
     - 'lib/tasks/dev.rake'
     - 'tmp/**/*'
 
-Style/TrailingBlankLines:
-  Enabled: false
-
 Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/Documentation:
   Enabled: false
 
-Style/NumericLiterals:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
 Style/ConditionalAssignment:
   Enabled: false
 
-Style/PredicateName:
-  Enabled: false
-
 Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/DoubleNegation:
   Enabled: false
 
 Style/GuardClause:
@@ -45,33 +30,18 @@ Style/AsciiComments:
 Style/AccessorMethodName:
   Enabled: false
 
-Style/MultilineOperationIndentation:
-  EnforcedStyle: indented
-
 Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
-
-Style/Lambda:
-  EnforcedStyle: literal
 
 Style/RegexpLiteral:
   EnforcedStyle: percent_r
 
-Style/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
-
-Lint/RescueException:
-  Enabled: false
-
 Lint/HandleExceptions:
   Enabled: false
 
-Lint/Void:
-  Exclude:
-    - 'lib/tasks/utils/benchmark.rake'
-
 Metrics/LineLength:
   Enabled: false
+# TODO: Max: 150
 
 Metrics/MethodLength:
   Enabled: false
@@ -91,19 +61,10 @@ Metrics/ModuleLength:
 Metrics/ClassLength:
   Enabled: false
 
-Metrics/ParameterLists:
-  Enabled: false
-
 Metrics/BlockNesting:
   Max: 4
 
 Metrics/BlockLength:
-  Enabled: false
-
-Rails/FindBy:
-  Enabled: false
-
-Rails/HasAndBelongsToMany:
   Enabled: false
 
 Rails/OutputSafety:
@@ -123,9 +84,6 @@ RSpec/ExampleLength:
   Enabled: false
 
 RSpec/MultipleDescribes:
-  Enabled: false
-
-RSpec/FilePath:
   Enabled: false
 
 RSpec/InstanceVariable:

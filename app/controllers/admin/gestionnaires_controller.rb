@@ -36,7 +36,7 @@ class Admin::GestionnairesController < AdminController
 
   def new_gestionnaire!
     attributes = params.require(:gestionnaire).permit(:email)
-      .merge(password: SecureRandom.hex(5))
+                       .merge(password: SecureRandom.hex(5))
 
     @gestionnaire = Gestionnaire.create(attributes.merge(
                                           administrateurs: [current_administrateur]
