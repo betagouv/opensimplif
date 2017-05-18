@@ -8,4 +8,5 @@ describe Notification do
   it { is_expected.to have_db_column(:updated_at) }
 
   it { is_expected.to belong_to(:dossier) }
+  it { is_expected.to have_many(:unreads) }
 end
