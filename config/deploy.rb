@@ -15,7 +15,7 @@ raise "Bad to=#{+ENV['to']}" unless ['opensimplif'].include?(ENV['to'])
 raise "missing domain, run with 'rake deploy domain=IP_SERVER'" if ENV['domain'].nil?
 
 set :domain, ENV['domain']
-set :repository, 'https://github.com/XjulI1/opensimplif.git'
+set :repository, 'https://github.com/sgmap/opensimplif.git'
 set :port, 2200
 
 if ENV['branch'].nil?
