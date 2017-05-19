@@ -66,6 +66,7 @@ Rails.application.routes.draw do
       post '/commentaire' => 'commentaires#create'
     end
 
+    resource :dossiers
     resources :dossiers do
       get '/add_siret' => 'dossiers/add_siret#show'
 
@@ -94,7 +95,6 @@ Rails.application.routes.draw do
       post '/siret_informations' => 'dossiers#siret_informations'
       put '/change_siret' => 'dossiers#change_siret'
     end
-    resource :dossiers
   end
 
   namespace :admin do
