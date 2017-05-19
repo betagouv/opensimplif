@@ -5,9 +5,6 @@
 %div#menu-block
 
 %div#infos-block
-  - unless Features.opensimplif
-    %div.split-hr-left
-    %div.dossier-state= @facade.dossier.display_state
   %div.split-hr-left
   %div.notifications
     - if @facade.dossier.notifications.empty?
