@@ -1,8 +1,5 @@
 shared_examples 'description_controller_spec' do
   describe 'GET #show' do
-    before do
-      dossier.update_column :autorisation_donnees, true
-    end
     context 'user is not connected' do
       before do
         sign_out dossier.user
@@ -44,26 +41,6 @@ shared_examples 'description_controller_spec' do
         end
 
         it { is_expected.to redirect_to root_path }
-      end
-    end
-
-    describe 'before action check_autorisation_donnees' do
-      subject { get :show, params: {dossier_id: dossier_id} }
-
-      context 'when dossier does not have a valid autorisations_donness (nil)' do
-        before do
-          dossier.update_column :autorisation_donnees, nil
-        end
-
-        it { expect(subject).to redirect_to "/users/dossiers/#{dossier.id}" }
-      end
-
-      context 'when dossier does not have a valid autorisations_donness (false)' do
-        before do
-          dossier.update_column :autorisation_donnees, false
-        end
-
-        it { expect(subject).to redirect_to "/users/dossiers/#{dossier.id}" }
       end
     end
 

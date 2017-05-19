@@ -7,6 +7,6 @@ class Users::Dossiers::AddSiretController < ApplicationController
     @siret = current_user.siret unless current_user.siret.nil?
   rescue ActiveRecord::RecordNotFound
     flash.alert = t('errors.messages.dossier_not_found')
-    redirect_to url_for users_dossiers_path
+    redirect_to users_dossiers_path
   end
 end

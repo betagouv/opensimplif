@@ -30,8 +30,7 @@ class Users::DossiersController < UsersController
       procedure_path = ProcedurePath.where(path: params[:procedure_path]).last
 
       if procedure_path.nil?
-        flash.alert = 'Procédure inconnue'
-        return redirect_to root_path
+        return redirect_to root_path, alert: 'Procédure inconnue'
       else
         procedure = procedure_path.procedure
       end
@@ -75,8 +74,7 @@ class Users::DossiersController < UsersController
       individual.update_column :birthdate, @facade.dossier.france_connect_information.birthdate.strftime('%d/%m/%Y')
     end
   rescue ActiveRecord::RecordNotFound
-    flash.alert = t('errors.messages.dossier_not_found')
-    redirect_to url_for users_dossiers_path
+    redirect_to users_dossiers_path, alert: t('errors.messages.dossier_not_found')
   end
 
   def siret_informations
@@ -100,8 +98,7 @@ class Users::DossiersController < UsersController
   rescue RestClient::ResourceNotFound, RestClient::BadRequest
     errors_valid_siret
   rescue ActiveRecord::RecordNotFound
-    flash.alert = t('errors.messages.dossier_not_found')
-    redirect_to url_for users_dossiers_path
+    redirect_to users_dossiers_path, alert: t('errors.messages.dossier_not_found')
   end
 
   def change_siret
@@ -119,21 +116,16 @@ class Users::DossiersController < UsersController
   def update
     @facade = facade params[:dossier][:id]
 
-    if checked_autorisation_donnees?
-      unless Dossier.find(@facade.dossier.id).update_attributes update_params
-        flash.alert = @facade.dossier.errors.full_messages.join('<br />').html_safe
+    unless Dossier.find(@facade.dossier.id).update_attributes update_params
+      flash.alert = @facade.dossier.errors.full_messages.join('<br />').html_safe
 
-        return redirect_to users_dossier_path(id: @facade.dossier.id)
-      end
+      return redirect_to users_dossier_path(id: @facade.dossier.id)
+    end
 
-      if @facade.dossier.procedure.module_api_carto.use_api_carto
-        redirect_to url_for(controller: :carte, action: :show, dossier_id: @facade.dossier.id)
-      else
-        redirect_to url_for(controller: :description, action: :show, dossier_id: @facade.dossier.id)
-      end
+    if @facade.dossier.procedure.module_api_carto.use_api_carto
+      redirect_to url_for(controller: :carte, action: :show, dossier_id: @facade.dossier.id)
     else
-      flash.alert = 'Les conditions sont obligatoires.'
-      redirect_to users_dossier_path(id: @facade.dossier.id)
+      redirect_to url_for(controller: :description, action: :show, dossier_id: @facade.dossier.id)
     end
   end
 
@@ -149,7 +141,7 @@ class Users::DossiersController < UsersController
       dossier.destroy
       flash.notice = 'Brouillon supprimé'
     end
-    redirect_to url_for users_dossiers_path
+    redirect_to users_dossiers_path
   end
 
   private
@@ -166,11 +158,7 @@ class Users::DossiersController < UsersController
   end
 
   def update_params
-    params.require(:dossier).permit(:id, :autorisation_donnees, individual_attributes: %i[gender nom prenom birthdate])
-  end
-
-  def checked_autorisation_donnees?
-    update_params[:autorisation_donnees] == '1'
+    params.require(:dossier).permit(:id, individual_attributes: %i[gender nom prenom])
   end
 
   def siret
@@ -182,9 +170,7 @@ class Users::DossiersController < UsersController
   end
 
   def error_procedure
-    flash.alert = t('errors.messages.procedure_not_found')
-
-    redirect_to url_for users_dossiers_path
+    redirect_to users_dossiers_path, alert: t('errors.messages.procedure_not_found')
   end
 
   def update_current_user_siret!(siret)

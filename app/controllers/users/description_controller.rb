@@ -3,7 +3,6 @@ class Users::DescriptionController < UsersController
     authorized_routes? self.class
   end
 
-  before_action :check_autorisation_donnees, only: [:show]
   before_action :check_starter_dossier_informations, only: [:show]
 
   def show
@@ -18,7 +17,7 @@ class Users::DescriptionController < UsersController
     end
   rescue ActiveRecord::RecordNotFound
     flash.alert = t('errors.messages.dossier_not_found')
-    redirect_to url_for(root_path)
+    redirect_to root_path
   end
 
   # def error
@@ -116,12 +115,6 @@ class Users::DescriptionController < UsersController
   end
 
   private
-
-  def check_autorisation_donnees
-    @dossier = current_user_dossier
-
-    redirect_to url_for(users_dossier_path(@dossier.id)) if @dossier.autorisation_donnees.nil? || !@dossier.autorisation_donnees
-  end
 
   def check_starter_dossier_informations
     @dossier ||= current_user_dossier

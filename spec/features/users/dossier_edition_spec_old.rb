@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'As a User I want to edit a dossier I own' do
   let(:user)                     { create(:user) }
   let(:procedure_for_individual) { create(:procedure, :published, :for_individual, :with_type_de_champ, :with_two_type_de_piece_justificative) }
-  let!(:dossier)                 { create(:dossier, :with_entreprise, :for_individual, procedure: procedure_for_individual, user: user, autorisation_donnees: true, state: 'initiated') }
+  let!(:dossier)                 { create(:dossier, :with_entreprise, :for_individual, procedure: procedure_for_individual, user: user, state: 'initiated') }
 
   before 'Create dossier and visit root path' do
     login_as user, scope: :user

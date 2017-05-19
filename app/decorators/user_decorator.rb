@@ -5,8 +5,4 @@ class UserDecorator < Draper::Decorator
     return 'Mr' if gender == 'male'
     return 'Mme' if gender == 'female'
   end
-
-  def birthdate_fr
-    birthdate.strftime('%d/%m/%Y')
-  end
 end

@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222135141) do
+ActiveRecord::Schema.define(version: 20170518235454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "administrateurs", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -117,15 +118,14 @@ ActiveRecord::Schema.define(version: 20170222135141) do
   end
 
   create_table "dossiers", force: :cascade do |t|
-    t.boolean  "autorisation_donnees"
     t.integer  "procedure_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state"
     t.integer  "user_id"
     t.text     "json_latlngs"
-    t.boolean  "archived",             default: false
-    t.boolean  "mandataire_social",    default: false
+    t.boolean  "archived",          default: false
+    t.boolean  "mandataire_social", default: false
     t.datetime "deposit_datetime"
     t.index ["procedure_id"], name: "index_dossiers_on_procedure_id", using: :btree
     t.index ["user_id"], name: "index_dossiers_on_user_id", using: :btree
@@ -219,7 +219,6 @@ ActiveRecord::Schema.define(version: 20170222135141) do
   create_table "individuals", force: :cascade do |t|
     t.string  "nom"
     t.string  "prenom"
-    t.string  "birthdate"
     t.integer "dossier_id"
     t.string  "gender"
     t.index ["dossier_id"], name: "index_individuals_on_dossier_id", using: :btree

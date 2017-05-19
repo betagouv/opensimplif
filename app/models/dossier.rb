@@ -296,8 +296,6 @@ class Dossier < ActiveRecord::Base
   def reset!
     etablissement.destroy
     entreprise.destroy
-
-    update_attributes(autorisation_donnees: false)
   end
 
   def total_follow

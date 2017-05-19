@@ -37,6 +37,6 @@ class Users::RecapitulatifController < UsersController
     @facade = DossierFacades.new current_user_dossier.id, current_user.email
   rescue ActiveRecord::RecordNotFound
     flash.alert = t('errors.messages.dossier_not_found')
-    redirect_to url_for(root_path)
+    redirect_to root_path
   end
 end

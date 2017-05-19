@@ -9,14 +9,11 @@ feature 'As a User I want to sort and paginate dossiers', js: true do
     visit commencer_path(procedure_path: procedure_for_individual.path)
     fill_in 'dossier_individual_attributes_nom',       with: 'Nom'
     fill_in 'dossier_individual_attributes_prenom',    with: 'Prenom'
-    fill_in 'dossier_individual_attributes_birthdate', with: '14/10/1987'
-    find(:css, "#dossier_autorisation_donnees[value='1']").set(true)
     page.find_by_id('etape_suivante').trigger('click')
     page.find_by_id('suivant').trigger('click')
     50.times do
-      Dossier.create(procedure_id: procedure_for_individual.id, user_id: user.id, state: 'initiated')
+      create :dossier, procedure_id: procedure_for_individual.id, user_id: user.id, state: 'initiated'
     end
-    visit root_path
   end
 
   context 'After sign_in, I can see my 51 dossiers on the index' do

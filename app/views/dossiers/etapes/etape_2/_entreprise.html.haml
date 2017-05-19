@@ -1,10 +1,9 @@
 .etape.etapes_menu.col-md-3.col-sm-3.col-xs-3.col-lg-3
-  %h3
-    Mes informations
+  %h3= 'Mes informations'
   %br
   - unless @facade.entreprise.nil?
     .center{style:'margin-left: -5%'}
-      Vous êtes authentifié avec le SIRET
+      = 'Vous êtes authentifié avec le SIRET'
 
       %h3.text-success
         = @facade.etablissement.siret
@@ -27,14 +26,9 @@
         = render partial: '/dossiers/infos_entreprise'
 
         %p#insee_infogreffe{style:'color:grey; float:right'}
-          %i
-            Informations récupérées auprès de l'INSEE et d'INFOGREFFE
+          %i= "Informations récupérées auprès de l'INSEE et d'INFOGREFFE"
 
         %br
         = form_for @facade.dossier, url: { controller: '/users/dossiers', action: :update } do |f|
           = f.hidden_field :id
-          %label{ style:'font-weight:normal' }
-            = f.check_box :autorisation_donnees
-            J'autorise les décideurs publics à vérifier les informations de mon organisation auprès des administrations concernées. Ces informations resteront strictement confidentielles.
-          %br
           = f.submit 'Etape suivante', class: "btn btn btn-info", style: 'float:right', id: 'etape_suivante', disabled: :disabled

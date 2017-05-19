@@ -14,8 +14,6 @@ feature 'As a User I wanna create a dossier' do
       visit commencer_path(procedure_path: procedure_for_individual.path)
       fill_in 'dossier_individual_attributes_nom',       with: 'Nom'
       fill_in 'dossier_individual_attributes_prenom',    with: 'Prenom'
-      fill_in 'dossier_individual_attributes_birthdate', with: '14/10/1987'
-      find(:css, "#dossier_autorisation_donnees[value='1']").set(true)
       page.find_by_id('etape_suivante').click
       expect(page).to have_current_path(users_dossier_carte_path(procedure_for_individual.dossiers.last.id.to_s), only_path: true)
       page.find_by_id('etape_suivante').click
@@ -40,7 +38,6 @@ feature 'As a User I wanna create a dossier' do
       page.find_by_id('dossier_siret').set siret
       page.find_by_id('submit-siret').trigger('click')
       expect(page).to have_css('#recap_info_entreprise')
-      find(:css, "#dossier_autorisation_donnees[value='1']").set(true)
       page.find_by_id('etape_suivante').trigger('click')
       expect(page).to have_current_path(users_dossier_carte_path(procedure_with_siret.dossiers.last.id.to_s), only_path: true)
       page.find_by_id('etape_suivante').trigger('click')

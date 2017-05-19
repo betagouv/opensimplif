@@ -1,5 +1,3 @@
-$(document).on('page:load', the_terms);
-$(document).ready(the_terms);
 $(document).on('page:load', pannel_switch);
 $(document).ready(pannel_switch);
 
@@ -16,27 +14,6 @@ function pannel_switch() {
     $(this).addClass('active');
     $('#switch-notifications').removeClass('active');
   })
-}
-
-function the_terms() {
-    var the_terms = $("#dossier_autorisation_donnees");
-
-    if (the_terms.size() == 0)
-        return;
-
-    check_value(the_terms);
-
-    the_terms.click(function () {
-        check_value(the_terms);
-    });
-
-    function check_value(the_terms) {
-        if (the_terms.is(":checked")) {
-            $("#etape_suivante").removeAttr("disabled");
-        } else {
-            $("#etape_suivante").attr("disabled", "disabled");
-        }
-    }
 }
 
 function error_form_siret(invalid_siret) {

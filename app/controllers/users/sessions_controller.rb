@@ -88,7 +88,7 @@ class Users::SessionsController < Sessions::SessionsController
 
   def error_procedure
     flash.alert = t('errors.messages.procedure_not_found')
-    redirect_to url_for root_path
+    redirect_to root_path
   end
 
   def user_return_to_procedure_id
