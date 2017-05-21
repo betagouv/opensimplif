@@ -2,26 +2,20 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.0.1'
+gem 'rails', '~> 5.0.3'
 
-gem 'actioncable', '5.0.0.1'
 gem 'redis'
 
-# Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
-# Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks', '~> 2.5'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -34,19 +28,9 @@ gem 'deep_cloneable', '~> 2.2.1'
 # Use Unicorn as the app server
 gem 'unicorn'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-# serializer
 gem 'active_model_serializers'
-
-# haml
 gem 'haml-rails'
-
-# bootstrap saas
 gem 'bootstrap-sass', '~> 3.3.5'
-
-# Pagination
 gem 'will_paginate-bootstrap'
 
 # Decorators
@@ -61,7 +45,7 @@ gem 'rest-client'
 
 gem 'clamav-client', require: 'clamav/client'
 
-gem 'carrierwave'
+gem 'carrierwave', '~> 0.11.2'
 gem 'fog'
 gem 'fog-openstack'
 
@@ -103,7 +87,6 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl'
-  gem 'guard'
   gem 'launchy'
   gem 'poltergeist'
   gem 'selenium-webdriver'
@@ -111,6 +94,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'timecop'
   gem 'webmock'
+  gem 'guard'
   # gem 'guard-rspec', require: false
   gem 'guard-livereload', '~> 2.4', require: false
   gem 'rails-controller-testing'
@@ -121,9 +105,7 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
 
   gem 'web-console'
-
   gem 'rack-handlers'
-
   gem 'xray-rails'
 end
 
