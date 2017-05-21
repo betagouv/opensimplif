@@ -15,7 +15,6 @@ module OpenSimplif
 
     config.autoload_paths += %W[#{config.root}/lib #{config.root}/app/validators #{config.root}/app/facades]
     config.assets.paths << Rails.root.join('app', 'assets', 'javascript')
-    config.assets.precompile += %w[application_split2.css]
 
     URL = if Rails.env.production?
             'https://opensimplif.modernisation.gouv.fr/'.freeze
