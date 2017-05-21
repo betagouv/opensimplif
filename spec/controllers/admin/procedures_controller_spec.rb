@@ -109,11 +109,13 @@ describe Admin::ProceduresController, type: :controller do
     context 'when user is connected' do
       context 'when procedure exist' do
         let(:procedure_id) { procedure.id }
+
         it { expect(subject).to have_http_status(:success) }
       end
 
       context 'when procedure is published' do
         let(:published) { true }
+
         it { is_expected.to redirect_to admin_procedure_path id: procedure_id }
       end
 
@@ -381,6 +383,7 @@ describe Admin::ProceduresController, type: :controller do
 
   describe 'PUT #clone' do
     let!(:procedure) { create(:procedure, administrateur: admin) }
+
     subject { put :clone, params: {procedure_id: procedure.id} }
 
     it { expect { subject }.to change(Procedure, :count).by(1) }

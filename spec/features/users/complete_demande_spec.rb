@@ -8,6 +8,7 @@ feature 'user path for dossier creation' do
 
   context 'user cannot access non-published procedures' do
     let(:procedure) { create(:procedure) }
+
     before do
       visit new_users_dossiers_path(procedure_id: procedure.id)
     end

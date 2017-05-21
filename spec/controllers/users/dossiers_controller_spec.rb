@@ -12,8 +12,6 @@ describe Users::DossiersController, type: :controller do
   let(:rna_status) { 404 }
   let(:rna_body) { '' }
 
-  let(:user) { create :user }
-
   let(:exercices_status) { 200 }
   let(:exercices_body) { File.read('spec/support/files/exercices.json') }
 
@@ -192,6 +190,7 @@ describe Users::DossiersController, type: :controller do
 
     describe 'dossier attributs' do
       let(:status_entreprise_call) { 200 }
+
       shared_examples 'with valid siret' do
         before do
           sign_in user
@@ -306,12 +305,14 @@ describe Users::DossiersController, type: :controller do
 
       describe 'with siret without whitespaces' do
         let(:example_siret) { siret }
-        it_should_behave_like 'with valid siret'
+
+        it_behaves_like 'with valid siret'
       end
 
       describe 'with siret with whitespaces' do
         let(:example_siret) { siret_with_whitespaces }
-        it_should_behave_like 'with valid siret'
+
+        it_behaves_like 'with valid siret'
       end
 
       context 'with non existant siret' do
@@ -321,6 +322,7 @@ describe Users::DossiersController, type: :controller do
         end
 
         let(:siret_not_found) { '11111111111111' }
+
         subject { post :siret_informations, params: {dossier_id: dossier.id, dossier: {siret: siret_not_found}} }
 
         it 'does not create new dossier' do
@@ -349,6 +351,7 @@ describe Users::DossiersController, type: :controller do
 
   describe 'PUT #update' do
     let(:params) { {id: dossier_id, dossier: {id: dossier_id}} }
+
     subject { put :update, params: params }
 
     before do

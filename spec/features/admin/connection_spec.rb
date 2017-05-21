@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature 'Administrator connection' do
   let(:admin) { create(:administrateur) }
+
   before do
     visit new_administrateur_session_path
   end

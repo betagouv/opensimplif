@@ -25,6 +25,7 @@ describe Ban::SearchController, type: :controller do
 
   describe '#GET get_address_point' do
     let(:dossier_id) { '1' }
+
     subject { get :get_address_point, params: {request: request, dossier_id: dossier_id} }
 
     before do

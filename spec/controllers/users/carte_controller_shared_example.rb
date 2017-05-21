@@ -68,6 +68,7 @@ shared_examples 'carte_controller_spec' do
 
     context 'En train de modifier la localisation' do
       let(:dossier) { create(:dossier, state: 'initiated') }
+
       before do
         post :save, params: {dossier_id: dossier.id, json_latlngs: ''}
       end
@@ -98,11 +99,13 @@ shared_examples 'carte_controller_spec' do
 
           context 'when value is empty' do
             let(:json_latlngs) { '' }
+
             it { expect(dossier.quartier_prioritaires.size).to eq(0) }
           end
 
           context 'when value is empty array' do
             let(:json_latlngs) { '[]' }
+
             it { expect(dossier.quartier_prioritaires.size).to eq(0) }
           end
         end
@@ -145,11 +148,13 @@ shared_examples 'carte_controller_spec' do
 
           context 'when value is empty' do
             let(:json_latlngs) { '' }
+
             it { expect(dossier.cadastres.size).to eq(0) }
           end
 
           context 'when value is empty array' do
             let(:json_latlngs) { '[]' }
+
             it { expect(dossier.cadastres.size).to eq(0) }
           end
         end
@@ -264,6 +269,7 @@ shared_examples 'carte_controller_spec' do
       let(:coordinates) { '[[{"lat":48.87442541960633,"lng":2.3859214782714844},{"lat":48.87273183590832,"lng":2.3850631713867183},{"lat":48.87081237174292,"lng":2.3809432983398438},{"lat":48.8712640169951,"lng":2.377510070800781},{"lat":48.87510283703279,"lng":2.3778533935546875},{"lat":48.87544154230615,"lng":2.382831573486328},{"lat":48.87442541960633,"lng":2.3859214782714844}]]' }
 
       subject { JSON.parse(response.body)['quartier_prioritaires'] }
+
       it { expect(subject).not_to be_nil }
       it { expect(subject['QPCODE1234']['code']).to eq('QPCODE1234') }
       it { expect(subject['QPCODE1234']['geometry']['type']).to eq('MultiPolygon') }

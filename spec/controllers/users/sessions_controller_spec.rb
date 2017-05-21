@@ -213,6 +213,7 @@ describe Users::SessionsController, type: :controller do
 
       context 'when procedure is not published' do
         let(:procedure) { create :procedure, published: false }
+
         before do
           session['user_return_to'] = "?procedure_id=#{procedure.id}"
         end

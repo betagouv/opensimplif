@@ -13,6 +13,7 @@ describe 'layouts/left_panels/_left_panel_users_recapitulatifcontroller_show.htm
   context 'buttons to change dossier state' do
     context 'when dossier state is initiated' do
       let(:state) { 'initiated' }
+
       before do
         render
       end

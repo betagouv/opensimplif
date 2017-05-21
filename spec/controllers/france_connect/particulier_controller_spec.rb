@@ -84,6 +84,7 @@ describe FranceConnect::ParticulierController, type: :controller do
         context 'when france_connect_particulier_id does not exist in database' do
           let(:last_france_connect_information) { FranceConnectInformation.last }
           let(:salt) { FranceConnectSaltService.new(last_france_connect_information).salt }
+
           subject { get :callback, params: {code: code} }
 
           it { expect { subject }.to change { FranceConnectInformation.count }.by(1) }

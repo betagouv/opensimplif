@@ -11,12 +11,14 @@ describe Admin::GestionnairesController, type: :controller do
 
   describe 'GET #index' do
     subject { get :index }
+
     it { expect(subject.status).to eq(200) }
   end
 
   describe 'POST #create' do
     let(:email) { 'test@plop.com' }
     let(:procedure_id) { nil }
+
     subject { post :create, params: {gestionnaire: {email: email}, procedure_id: procedure_id} }
 
     context 'When email is valid' do
@@ -52,6 +54,7 @@ describe Admin::GestionnairesController, type: :controller do
         subject
       end
       let(:email) { 'piou' }
+
       it { expect(response.status).to eq(302) }
       it { expect { response }.not_to change(Gestionnaire, :count) }
       it { expect(flash[:alert]).to be_present }
@@ -70,6 +73,7 @@ describe Admin::GestionnairesController, type: :controller do
         subject
       end
       let(:email) { '' }
+
       it { expect(response.status).to eq(302) }
       it { expect { response }.not_to change(Gestionnaire, :count) }
 

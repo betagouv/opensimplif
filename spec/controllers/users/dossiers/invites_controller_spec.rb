@@ -65,6 +65,7 @@ describe Users::Dossiers::InvitesController, type: :controller do
 
     context 'when invitation ID is attach at the user email account' do
       let(:email) { user.email }
+
       it { expect(subject.status).to eq 200 }
     end
 

@@ -25,9 +25,12 @@ describe User, type: :model do
   end
   describe '#find_for_france_connect' do
     let(:siret) { '00000000000000' }
+
     context 'when user exist' do
       let!(:user) { create(:user) }
+
       subject { described_class.find_for_france_connect(user.email, siret) }
+
       it 'retrieves user' do
         expect(subject).to eq(user)
       end
@@ -40,7 +43,9 @@ describe User, type: :model do
     end
     context 'when user does not exist' do
       let(:email) { 'super-m@n.com' }
+
       subject { described_class.find_for_france_connect(email, siret) }
+
       it 'returns user' do
         expect(subject).to be_an_instance_of(User)
       end

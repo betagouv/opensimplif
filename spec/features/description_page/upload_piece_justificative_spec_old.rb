@@ -27,9 +27,7 @@ feature 'user is on description page' do
         expect(dossier.cerfa).to be_empty
       end
       it 'pieces_justificatives are empty' do
-        dossier.pieces_justificatives.each do |piece_justificative|
-          expect(piece_justificative).to be_empty
-        end
+        expect(dossier.pieces_justificatives).to all(be_empty)
       end
     end
     context 'he adds cerfa', vcr: {cassette_name: 'description_page_upload_piece_justificative_adds_cerfa'} do

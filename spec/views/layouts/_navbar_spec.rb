@@ -12,6 +12,7 @@ describe 'layouts/_navbar.html.haml', type: :view do
         render
       end
       subject { rendered }
+
       it { is_expected.to match(%r{Connexion}) }
     end
 
@@ -24,6 +25,7 @@ describe 'layouts/_navbar.html.haml', type: :view do
       end
 
       subject { rendered }
+
       it { is_expected.to match(%r{Déconnexion}) }
     end
 
@@ -36,6 +38,7 @@ describe 'layouts/_navbar.html.haml', type: :view do
       end
 
       subject { rendered }
+
       it { is_expected.to match(%r{Déconnexion}) }
     end
   end

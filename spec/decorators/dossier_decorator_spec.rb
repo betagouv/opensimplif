@@ -2,15 +2,18 @@ require 'spec_helper'
 
 describe DossierDecorator do
   let(:dossier) { create(:dossier, created_at: Time.new(2015, 12, 24, 14, 10), updated_at: Time.new(2015, 12, 24, 14, 10)) }
+
   subject { dossier.decorate }
 
   describe 'first_creation' do
     subject { super().first_creation }
+
     it { is_expected.to eq('24/12/2015 14:10') }
   end
 
   describe 'last_update' do
     subject { super().last_update }
+
     it { is_expected.to eq('24/12/2015 14:10') }
   end
 

@@ -3,7 +3,9 @@ require 'spec_helper'
 describe WelcomeMailer, type: :mailer do
   describe '.welcome_email' do
     let(:user) { create(:user) }
+
     subject(:subject) { described_class.welcome_email(user) }
+
     it { expect(subject.body).to match(root_url) }
     it { expect(subject.body).to match(new_user_password_url) }
     it { expect(subject.body).to match(user.email) }

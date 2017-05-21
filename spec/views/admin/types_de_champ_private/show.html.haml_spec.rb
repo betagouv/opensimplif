@@ -8,6 +8,7 @@ describe 'admin/types_de_champ/show.html.haml', type: :view do
     let(:last_libelle) { 'je suis bien sur la page' }
     let!(:type_de_champ_1) { create(:type_de_champ_private, procedure: procedure, order_place: 1, libelle: last_libelle) }
     let!(:type_de_champ_0) { create(:type_de_champ_private, procedure: procedure, order_place: 0, libelle: first_libelle) }
+
     before do
       procedure.reload
       assign(:procedure, procedure)
@@ -41,6 +42,7 @@ describe 'admin/types_de_champ/show.html.haml', type: :view do
       end
       context 'when there is only one field in database' do
         let!(:type_de_champ_0) { create(:type_de_champ_private, procedure: procedure, order_place: 0) }
+
         it { expect(subject).not_to have_css('#btn_down_0') }
         it { expect(subject).not_to have_css('#btn_up_0')   }
         it { expect(subject).not_to have_css('#btn_up_1')   }
@@ -49,6 +51,7 @@ describe 'admin/types_de_champ/show.html.haml', type: :view do
       context 'when there are 2 fields in database' do
         let!(:type_de_champ_0) { create(:type_de_champ_private, procedure: procedure, order_place: 0) }
         let!(:type_de_champ_1) { create(:type_de_champ_private, procedure: procedure, order_place: 1) }
+
         it { expect(subject).to have_css('#btn_down_0') }
         it { expect(subject).not_to have_css('#btn_up_0') }
         it { expect(subject).to have_css('#btn_up_1') }

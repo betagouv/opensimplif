@@ -18,18 +18,22 @@ describe ProcedurePath do
 
       context 'when path is nil' do
         let(:path) { nil }
+
         it { expect { procedure_path }.to raise_error ActiveRecord::RecordInvalid }
       end
       context 'when path is empty' do
         let(:path) { '' }
+
         it { expect { procedure_path }.to raise_error ActiveRecord::RecordInvalid }
       end
       context 'when path is invalid' do
         let(:path) { 'Demande de subvention' }
+
         it { expect { procedure_path }.to raise_error ActiveRecord::RecordInvalid }
       end
       context 'when path is valid' do
         let(:path) { 'ma_super_procedure' }
+
         it { expect { procedure_path }.not_to raise_error }
       end
     end

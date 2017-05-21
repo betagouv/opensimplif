@@ -16,17 +16,22 @@ describe EntrepriseDecorator do
     }
   end
   let(:entreprise) { create(:entreprise, entreprise_params) }
+
   subject { entreprise.decorate }
+
   describe '#raison_sociale_or_name' do
     subject { super().raison_sociale_or_name }
+
     context 'when raison_sociale exist' do
       let(:raison_sociale) { 'ma super raison_sociale' }
+
       it 'display raison_sociale' do
         expect(subject).to eq(raison_sociale)
       end
     end
     context 'when raison_sociale is nil' do
       let(:raison_sociale) { nil }
+
       it 'display nom and prenom' do
         expect(subject).to eq(nom + ' ' + prenom)
       end
@@ -35,12 +40,15 @@ describe EntrepriseDecorator do
 
   describe '#effectif' do
     subject { super().effectif }
+
     context 'when code_effectif is 00' do
       let(:code_effectif) { '01' }
+
       it { is_expected.to eq('1 ou 2 salariés') }
     end
     context 'when code_effectif is 32' do
       let(:code_effectif) { '32' }
+
       it { is_expected.to eq('250 à 499 salariés') }
     end
   end

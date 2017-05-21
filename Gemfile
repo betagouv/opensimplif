@@ -12,9 +12,9 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
+gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 2.5'
-gem 'jbuilder', '~> 2.0'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
@@ -29,8 +29,8 @@ gem 'deep_cloneable', '~> 2.2.1'
 gem 'unicorn'
 
 gem 'active_model_serializers'
-gem 'haml-rails'
 gem 'bootstrap-sass', '~> 3.3.5'
+gem 'haml-rails'
 gem 'will_paginate-bootstrap'
 
 # Decorators
@@ -87,6 +87,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl'
+  gem 'guard'
   gem 'launchy'
   gem 'poltergeist'
   gem 'selenium-webdriver'
@@ -94,7 +95,6 @@ group :test do
   gem 'simplecov', require: false
   gem 'timecop'
   gem 'webmock'
-  gem 'guard'
   # gem 'guard-rspec', require: false
   gem 'guard-livereload', '~> 2.4', require: false
   gem 'rails-controller-testing'
@@ -104,8 +104,8 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
 
-  gem 'web-console'
   gem 'rack-handlers'
+  gem 'web-console'
   gem 'xray-rails'
 end
 

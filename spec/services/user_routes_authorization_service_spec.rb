@@ -15,36 +15,43 @@ describe UserRoutesAuthorizationService do
 
       describe 'draft' do
         let(:state) { 'draft' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'initiated' do
         let(:state) { 'initiated' }
+
         it { is_expected.to be_falsey }
       end
 
       describe 'replied' do
         let(:state) { 'replied' }
+
         it { is_expected.to be_falsey }
       end
 
       describe 'updated' do
         let(:state) { 'updated' }
+
         it { is_expected.to be_falsey }
       end
 
       describe 'validated' do
         let(:state) { 'validated' }
+
         it { is_expected.to be_falsey }
       end
 
       describe 'submitted' do
         let(:state) { 'submitted' }
+
         it { is_expected.to be_falsey }
       end
 
       describe 'closed' do
         let(:state) { 'closed' }
+
         it { is_expected.to be_falsey }
       end
     end
@@ -55,36 +62,43 @@ describe UserRoutesAuthorizationService do
       context 'when use_api_carto is false' do
         describe 'draft' do
           let(:state) { 'draft' }
+
           it { is_expected.to be_falsey }
         end
 
         describe 'initiated' do
           let(:state) { 'initiated' }
+
           it { is_expected.to be_falsey }
         end
 
         describe 'replied' do
           let(:state) { 'replied' }
+
           it { is_expected.to be_falsey }
         end
 
         describe 'updated' do
           let(:state) { 'updated' }
+
           it { is_expected.to be_falsey }
         end
 
         describe 'validated' do
           let(:state) { 'validated' }
+
           it { is_expected.to be_falsey }
         end
 
         describe 'submitted' do
           let(:state) { 'submitted' }
+
           it { is_expected.to be_falsey }
         end
 
         describe 'closed' do
           let(:state) { 'closed' }
+
           it { is_expected.to be_falsey }
         end
       end
@@ -94,36 +108,43 @@ describe UserRoutesAuthorizationService do
 
         describe 'draft' do
           let(:state) { 'draft' }
+
           it { is_expected.to be_truthy }
         end
 
         describe 'initiated' do
           let(:state) { 'initiated' }
+
           it { is_expected.to be_truthy }
         end
 
         describe 'replied' do
           let(:state) { 'replied' }
+
           it { is_expected.to be_truthy }
         end
 
         describe 'updated' do
           let(:state) { 'updated' }
+
           it { is_expected.to be_truthy }
         end
 
         describe 'validated' do
           let(:state) { 'validated' }
+
           it { is_expected.to be_falsey }
         end
 
         describe 'submitted' do
           let(:state) { 'submitted' }
+
           it { is_expected.to be_falsey }
         end
 
         describe 'closed' do
           let(:state) { 'closed' }
+
           it { is_expected.to be_falsey }
         end
       end
@@ -134,36 +155,43 @@ describe UserRoutesAuthorizationService do
 
       describe 'draft' do
         let(:state) { 'draft' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'initiated' do
         let(:state) { 'initiated' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'replied' do
         let(:state) { 'replied' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'updated' do
         let(:state) { 'updated' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'validated' do
         let(:state) { 'validated' }
+
         it { is_expected.to be_falsey }
       end
 
       describe 'submitted' do
         let(:state) { 'submitted' }
+
         it { is_expected.to be_falsey }
       end
 
       describe 'closed' do
         let(:state) { 'closed' }
+
         it { is_expected.to be_falsey }
       end
     end
@@ -173,36 +201,43 @@ describe UserRoutesAuthorizationService do
 
       describe 'draft' do
         let(:state) { 'draft' }
+
         it { is_expected.to be_falsey }
       end
 
       describe 'initiated' do
         let(:state) { 'initiated' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'replied' do
         let(:state) { 'replied' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'updated' do
         let(:state) { 'updated' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'validated' do
         let(:state) { 'validated' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'submitted' do
         let(:state) { 'submitted' }
+
         it { is_expected.to be_truthy }
       end
 
       describe 'closed' do
         let(:state) { 'closed' }
+
         it { is_expected.to be_truthy }
       end
     end

@@ -8,6 +8,7 @@ describe FranceConnectInformationDecorator do
 
   context 'when france connect user is a male' do
     let(:gender) { 'male' }
+
     it { is_expected.to eq 'Mr' }
   end
 

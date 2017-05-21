@@ -13,6 +13,7 @@ describe TypeDeChampDecorator do
     describe 'with first piece justificative' do
       let(:index) { 0 }
       subject { type_de_champ_0.decorate }
+
       let(:button_up) { type_de_champ_.decorate }
 
       it 'returns a button up' do
@@ -26,6 +27,7 @@ describe TypeDeChampDecorator do
     describe 'with second out of three piece justificative' do
       let(:index) { 1 }
       subject { type_de_champ_1.decorate }
+
       let(:button_up) { type_de_champ_1.decorate }
 
       it 'returns a button up' do
@@ -39,6 +41,7 @@ describe TypeDeChampDecorator do
     describe 'with last piece justificative' do
       let(:index) { 2 }
       subject { type_de_champ_2.decorate }
+
       let(:button_up) { type_de_champ_1.decorate }
 
       it 'returns a button up' do

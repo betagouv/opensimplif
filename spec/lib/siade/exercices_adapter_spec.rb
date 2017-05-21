@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe SIADE::ExercicesAdapter do
   let(:siret) { '41816609600051' }
+
   subject { described_class.new(siret).to_params }
 
   before do

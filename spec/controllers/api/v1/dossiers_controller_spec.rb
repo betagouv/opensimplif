@@ -14,11 +14,13 @@ describe API::V1::DossiersController do
 
     context 'when procedure is not found' do
       let(:procedure_id) { 99_999_999 }
+
       it { expect(subject.code).to eq('404') }
     end
 
     context 'when procedure does not belong to admin' do
       let(:procedure_id) { wrong_procedure.id }
+
       it { expect(subject.code).to eq('404') }
     end
 
@@ -38,6 +40,7 @@ describe API::V1::DossiersController do
 
       describe 'pagination' do
         subject { body[:pagination] }
+
         it { is_expected.to have_key(:page) }
         it { expect(subject[:page]).to eq(1) }
         it { is_expected.to have_key(:resultats_par_page) }
@@ -48,9 +51,11 @@ describe API::V1::DossiersController do
 
       describe 'dossiers' do
         subject { body[:dossiers] }
+
         it { expect(subject).to be_an(Array) }
         describe 'dossier' do
           subject { super().first }
+
           it { expect(subject[:id]).to eq(dossier.id) }
           it { expect(subject[:updated_at]).to eq('2008-09-01T08:05:00.000Z') }
           it { expect(subject.keys.size).to eq(2) }
@@ -80,17 +85,20 @@ describe API::V1::DossiersController do
 
   describe 'GET show' do
     let(:retour) { get :show, params: {token: admin.api_token, procedure_id: procedure_id, id: dossier_id} }
+
     subject { retour }
 
     context 'when procedure is not found' do
       let(:procedure_id) { 99_999_999 }
       let(:dossier_id) { 1 }
+
       it { expect(subject.code).to eq('404') }
     end
 
     context 'when procedure exists and does not belong to current admin' do
       let(:procedure_id) { wrong_procedure.id }
       let(:dossier_id) { 1 }
+
       it { expect(subject.code).to eq('404') }
     end
 
@@ -98,6 +106,7 @@ describe API::V1::DossiersController do
       context 'when dossier does not exist' do
         let(:procedure_id) { procedure.id }
         let(:dossier_id) { 99_999 }
+
         it { expect(subject.code).to eq('404') }
       end
 
@@ -105,6 +114,7 @@ describe API::V1::DossiersController do
         let(:procedure_id) { procedure.id }
         let(:dossier) { create(:dossier, :with_entreprise, procedure: wrong_procedure) }
         let(:dossier_id) { dossier.id }
+
         it { expect(subject.code).to eq('404') }
       end
 
@@ -115,6 +125,7 @@ describe API::V1::DossiersController do
         let(:dossier_id) { dossier.id }
         let(:body) { JSON.parse(retour.body, symbolize_names: true) }
         let(:field_list) { %i[id created_at updated_at archived mandataire_social entreprise etablissement cerfa types_de_piece_justificative pieces_justificatives champs champs_private commentaires state] }
+
         subject { body[:dossier] }
 
         it 'return REST code 200', :show_in_doc do
@@ -147,6 +158,7 @@ describe API::V1::DossiersController do
               prenom
             ]
           end
+
           subject { super()[:entreprise] }
 
           it { expect(subject[:siren]).to eq('440117620') }
@@ -170,6 +182,7 @@ describe API::V1::DossiersController do
               description
             ]
           end
+
           subject { super()[:types_de_piece_justificative] }
 
           it { expect(subject.length).to eq 2 }
@@ -193,6 +206,7 @@ describe API::V1::DossiersController do
               url created_at type_de_piece_justificative_id
             ]
           end
+
           subject do
             super()[:pieces_justificatives].first
           end
@@ -216,6 +230,7 @@ describe API::V1::DossiersController do
               :url
             ]
           end
+
           subject { super()[:champs] }
 
           it { expect(subject.length).to eq 1 }
@@ -236,6 +251,7 @@ describe API::V1::DossiersController do
                   type
                 ]
               end
+
               subject { super()[:type_de_champ] }
 
               it { expect(subject.keys.include?(:id)).to be_truthy }
@@ -253,6 +269,7 @@ describe API::V1::DossiersController do
               :url
             ]
           end
+
           subject { super()[:champs_private] }
 
           it { expect(subject.length).to eq 1 }
@@ -273,6 +290,7 @@ describe API::V1::DossiersController do
                   type
                 ]
               end
+
               subject { super()[:type_de_champ] }
 
               it { expect(subject.keys.include?(:id)).to be_truthy }
@@ -323,6 +341,7 @@ describe API::V1::DossiersController do
                 url created_at type_de_piece_justificative_id
               ]
             end
+
             subject do
               super()[:user]
             end
@@ -348,6 +367,7 @@ describe API::V1::DossiersController do
               code_insee_localite
             ]
           end
+
           subject { super()[:etablissement] }
 
           it { expect(subject[:siret]).to eq('44011762001530') }

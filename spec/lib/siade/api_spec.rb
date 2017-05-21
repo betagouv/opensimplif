@@ -3,6 +3,7 @@ require 'spec_helper'
 describe SIADE::API do
   describe '.entreprise' do
     subject { described_class.entreprise(siren) }
+
     before do
       stub_request(:get, "https://api-dev.apientreprise.fr/v2/entreprises/#{siren}?token=#{SIADETOKEN}")
         .to_return(status: status, body: body)
@@ -29,6 +30,7 @@ describe SIADE::API do
 
   describe '.etablissement' do
     subject { described_class.etablissement(siret) }
+
     before do
       stub_request(:get, "https://api-dev.apientreprise.fr/v2/etablissements/#{siret}?token=#{SIADETOKEN}")
         .to_return(status: status, body: body)

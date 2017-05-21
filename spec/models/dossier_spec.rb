@@ -46,6 +46,7 @@ describe Dossier do
 
     describe '#types_de_piece_justificative' do
       subject { dossier.types_de_piece_justificative }
+
       it 'returns list of required piece justificative' do
         expect(subject.size).to eq(2)
         expect(subject).to include(TypeDePieceJustificative.find(TypeDePieceJustificative.first.id))
@@ -56,6 +57,7 @@ describe Dossier do
       describe 'Procedure accepts cerfa upload' do
         let(:procedure) { create(:procedure, cerfa_flag: true) }
         let(:dossier) { create(:dossier, :with_entreprise, procedure: procedure, user: user) }
+
         it 'create default cerfa' do
           expect { subject.to change(Cerfa.count).by(1) }
           expect { subject.cerfa_available.to be_truthy }
@@ -69,6 +71,7 @@ describe Dossier do
       describe 'Procedure does not accept cerfa upload' do
         let(:procedure) { create(:procedure, cerfa_flag: false) }
         let(:dossier) { create(:dossier, :with_entreprise, user: user) }
+
         it 'default cerfa is not created' do
           expect { subject.to change(Cerfa.count).by(0) }
           expect { subject.cerfa.to eq(nil) }
@@ -125,6 +128,7 @@ describe Dossier do
 
     describe '#save' do
       subject { build(:dossier, procedure: procedure, user: user) }
+
       let!(:procedure) { create(:procedure) }
 
       context 'when is linked to a procedure' do
@@ -152,11 +156,13 @@ describe Dossier do
 
       context 'when action is not valid' do
         let(:action) { 'test' }
+
         it { expect { subject }.to raise_error('action is not valid') }
       end
 
       context 'when role is not valid' do
         let(:role) { 'test' }
+
         it { expect { subject }.to raise_error('role is not valid') }
       end
 
@@ -324,6 +330,7 @@ describe Dossier do
 
           context 'when is post a comment' do
             let(:action) { 'comment' }
+
             it { is_expected.to eq('validated') }
           end
 
@@ -495,16 +502,19 @@ describe Dossier do
 
     context 'Procedure accepts CERFA' do
       let(:cerfa_flag) { true }
+
       context 'when cerfa is not uploaded' do
         it { expect(dossier.cerfa_available?).to be_falsey }
       end
       context 'when cerfa is uploaded' do
         let(:dossier) { create :dossier, :with_cerfa_upload, procedure: procedure }
+
         it { expect(dossier.cerfa_available?).to be_truthy }
       end
     end
     context 'Procedure does not accept CERFA' do
       let(:cerfa_flag) { false }
+
       it { expect(dossier.cerfa_available?).to be_falsey }
     end
   end
@@ -576,6 +586,7 @@ describe Dossier do
   describe '#export_default_columns' do
     let(:procedure) { create(:procedure) }
     let(:dossier) { create(:dossier, :with_entreprise, user: user, procedure: procedure) }
+
     subject { dossier.export_default_columns }
 
     it { expect(subject[:archived]).to eq('false') }
@@ -606,6 +617,7 @@ describe Dossier do
 
     context 'when dossier does not have enterprise' do
       let(:dossier) { create(:dossier, user: user, procedure: procedure) }
+
       subject { dossier.export_default_columns }
 
       it { expect(subject[:archived]).to eq('false') }

@@ -20,6 +20,7 @@ feature 'add a new type de champs', js: true do
     let(:libelle) { 'mon libelle' }
     let(:type_champ) { 'text' }
     let(:description) { 'ma super histoire' }
+
     before do
       page.find_by_id('procedure_types_de_champ_attributes_0_libelle').set libelle
       page.find_by_id('procedure_types_de_champ_attributes_0_type_champ').set type_champ
@@ -29,6 +30,7 @@ feature 'add a new type de champs', js: true do
       procedure.reload
     end
     subject { procedure.types_de_champ.first }
+
     scenario 'creates the type de champ', js: true do
       expect(page).to have_css('#procedure_types_de_champ_attributes_1_libelle')
       expect(subject.libelle).to eq(libelle)
@@ -42,6 +44,7 @@ feature 'add a new type de champs', js: true do
       let(:type_champ_value) { 'textarea' }
       let(:type_champ_label) { 'Zone de texte' }
       let(:description) { 'to be or not to be' }
+
       before do
         page.find_by_id('procedure_types_de_champ_attributes_1_libelle').set libelle
         select(type_champ_label, from: 'procedure_types_de_champ_attributes_1_type_champ')
@@ -51,6 +54,7 @@ feature 'add a new type de champs', js: true do
         procedure.reload
       end
       subject { procedure.types_de_champ.last }
+
       scenario 'creates another types_de_champ' do
         expect(page).to have_css('#procedure_types_de_champ_attributes_2_libelle')
         expect(subject.libelle).to eq(libelle)
@@ -62,6 +66,7 @@ feature 'add a new type de champs', js: true do
 
       context 'user delete the first one' do
         let(:type_de_champ) { procedure.types_de_champ.first }
+
         before do
           page.find_by_id("delete_type_de_champ_#{type_de_champ.id}").click
           wait_for_ajax
@@ -73,6 +78,7 @@ feature 'add a new type de champs', js: true do
       end
       context 'user modifies the first one' do
         let(:new_libelle) { 'my new field' }
+
         before do
           page.find_by_id('procedure_types_de_champ_attributes_0_libelle').set(new_libelle)
           page.find_by_id('save').click

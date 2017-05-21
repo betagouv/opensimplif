@@ -24,6 +24,7 @@ describe Administrateur, type: :model do
 
   describe 'after_save' do
     subject { described_class.new(email: 'toto@tps.com', password: 'password') }
+
     before do
       subject.save
     end
@@ -34,6 +35,7 @@ describe Administrateur, type: :model do
     let(:token) { 'bullshit' }
     let(:new_token) { 'pocket_master' }
     let!(:admin_1) { create(:administrateur, email: 'toto@tps.com', password: 'password', api_token: token) }
+
     before do
       allow(SecureRandom).to receive(:hex).and_return(token, new_token)
       admin_1.renew_api_token

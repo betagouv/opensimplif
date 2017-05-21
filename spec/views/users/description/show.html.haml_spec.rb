@@ -73,11 +73,13 @@ describe 'users/description/show.html.haml', type: :view do
 
     describe 'first champs' do
       subject { dossier.champs.first }
+
       it { expect(rendered).to have_css("#champs_#{subject.id}") }
     end
 
     describe 'last champs' do
       subject { dossier.champs.last }
+
       it { expect(rendered).to have_css("#champs_#{subject.id}") }
     end
 

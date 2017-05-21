@@ -3,6 +3,7 @@ require 'spec_helper'
 describe SIADE::EtablissementAdapter do
   context 'SIRET valide' do
     let(:siret) { 41_816_609_600_051 }
+
     subject { described_class.new(siret).to_params }
 
     before do
@@ -70,6 +71,7 @@ describe SIADE::EtablissementAdapter do
 
   context 'when siret is not found' do
     let(:bad_siret) { 11_111_111_111_111 }
+
     subject { described_class.new(bad_siret).to_params }
 
     before do

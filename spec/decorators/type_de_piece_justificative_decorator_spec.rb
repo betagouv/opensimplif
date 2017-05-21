@@ -12,6 +12,7 @@ describe TypeDePieceJustificativeDecorator do
     describe 'with first piece justificative' do
       let(:index) { 0 }
       subject { type_de_piece_justificative_0.decorate }
+
       let(:button_up) { type_de_piece_justificative_.decorate }
 
       it 'returns a button up' do
@@ -25,6 +26,7 @@ describe TypeDePieceJustificativeDecorator do
     describe 'with second out of three piece justificative' do
       let(:index) { 1 }
       subject { type_de_piece_justificative_1.decorate }
+
       let(:button_up) { type_de_piece_justificative_1.decorate }
 
       it 'returns a button up' do
@@ -38,6 +40,7 @@ describe TypeDePieceJustificativeDecorator do
     describe 'with last piece justificative' do
       let(:index) { 2 }
       subject { type_de_piece_justificative_2.decorate }
+
       let(:button_up) { type_de_piece_justificative_1.decorate }
 
       it 'returns a button up' do

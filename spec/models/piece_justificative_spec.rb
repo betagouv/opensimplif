@@ -29,10 +29,12 @@ describe PieceJustificative do
 
   describe '#empty?', vcr: {cassette_name: 'model_piece_justificative'} do
     let(:piece_justificative) { create(:piece_justificative, content: content) }
+
     subject { piece_justificative.empty? }
 
     context 'when content exist' do
       let(:content) { File.open('./spec/support/files/piece_justificative_388.pdf') }
+
       it { is_expected.to be_falsey }
     end
   end

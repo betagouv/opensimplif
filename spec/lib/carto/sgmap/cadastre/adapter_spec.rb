@@ -20,6 +20,7 @@ describe CARTO::SGMAP::Cadastre::Adapter do
 
     describe 'Attribut filter' do
       let(:adapter) { described_class.new(coordinates) }
+
       subject { adapter.filter_properties adapter.data_source }
 
       it { expect(subject.size).to eq 9 }

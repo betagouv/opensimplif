@@ -32,14 +32,14 @@ describe Users::DescriptionController, type: :controller, vcr: {cassette_name: '
     let(:user) { owner_user }
     let(:recapitulatif_path) { users_dossier_recapitulatif_path }
 
-    it_should_behave_like 'description_controller_spec'
-    it_should_behave_like 'description_controller_spec_POST_piece_justificatives_for_owner'
+    it_behaves_like 'description_controller_spec'
+    it_behaves_like 'description_controller_spec_POST_piece_justificatives_for_owner'
   end
 
   context 'when sign in user is an invite by owner' do
     let(:user) { invite_by_user }
     let(:recapitulatif_path) { users_dossiers_invite_path(id: dossier_id) }
 
-    it_should_behave_like 'description_controller_spec'
+    it_behaves_like 'description_controller_spec'
   end
 end

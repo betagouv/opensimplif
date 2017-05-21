@@ -172,6 +172,7 @@ shared_examples 'description_controller_spec' do
     context 'Quand la procédure n\'accepte pas les CERFA' do
       context 'Sauvegarde du CERFA PDF' do
         let!(:procedure) { create(:procedure) }
+
         before do
           post :create, params: {dossier_id: dossier_id,
                                  cerfa_pdf: cerfa_pdf}
@@ -230,6 +231,7 @@ shared_examples 'description_controller_spec' do
 
     context 'Sauvegarde des pièces justificatives', vcr: {cassette_name: 'controllers_users_description_controller_sauvegarde_pj'} do
       let(:all_pj_type) { dossier.procedure.type_de_piece_justificative_ids }
+
       before do
         post :create, params: {dossier_id: dossier_id,
                                'piece_justificative_' + all_pj_type[0].to_s => piece_justificative_0,
@@ -249,11 +251,13 @@ shared_examples 'description_controller_spec' do
 
       context 'for piece 0' do
         subject { dossier.retrieve_last_piece_justificative_by_type all_pj_type[0].to_s }
+
         it { expect(subject.content).not_to be_nil }
         it { expect(subject.user).to eq user }
       end
       context 'for piece 1' do
         subject { dossier.retrieve_last_piece_justificative_by_type all_pj_type[1].to_s }
+
         it { expect(subject.content).not_to be_nil }
         it { expect(subject.user).to eq user }
       end
