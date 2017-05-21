@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   def authorized_routes?(controller)
     unless UserRoutesAuthorizationService.authorized_route? controller, current_user_dossier
-      redirect_to root_path, alert: 'Le status de votre dossier n\'autorise pas cette URL'
+      redirect_to root_path, alert: 'Le statut de votre dossier n\'autorise pas cette URL'
     end
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path, alert: 'Vous n\'avez pas accès à ce dossier.'
