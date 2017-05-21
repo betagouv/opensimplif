@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Backoffice::DossiersController, type: :controller do
   before do
-    @request.env['HTTP_REFERER'] = TPS::Application::URL
+    @request.env['HTTP_REFERER'] = OpenSimplif::Application::URL
   end
   let(:procedure) { create :procedure }
 
