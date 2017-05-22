@@ -1,3 +1,3 @@
-test:
+database:
   pre:
-    - rake dev:init
+    - bundle exec rake dev:init
