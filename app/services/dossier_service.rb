@@ -17,9 +17,6 @@ class DossierService
     @dossier.create_entreprise(@entreprise_adapter.to_params)
     @dossier.create_etablissement(@etablissement_adapter.to_params)
 
-    @exercices_adapter = SIADE::ExercicesAdapter.new(@siret)
-    @dossier.etablissement.exercices.create(@exercices_adapter.to_params)
-
     @dossier.update_attributes(mandataire_social: mandataire_social?(@entreprise_adapter.mandataires_sociaux))
     @dossier.etablissement.update_attributes(entreprise: @dossier.entreprise)
 

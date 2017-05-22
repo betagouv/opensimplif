@@ -44,15 +44,6 @@
       %div.col-md-4.col-sm-4.col-xs-4.col-lg-4.entreprise-label Capital social :
       %div.col-md-8.col-sm-8.col-xs-8.col-lg-8.entreprise-info= @facade.entreprise.pretty_capital_social
 
-    .row
-      %div.col-md-4.col-sm-4.col-xs-4.col-lg-4.entreprise-label Exercices :
-      %div.col-md-8.col-sm-8.col-xs-8.col-lg-8.entreprise-info
-        - @facade.etablissement.exercices.each_with_index do |exercice, index|
-          %strong
-            = "#{exercice.dateFinExercice.year} : "
-            = number_to_currency(exercice.ca)
-          %br
-
     .row.split-row
       %div.col-md-12.col-sm-12.col-xs-12.col-lg-12.split-hr
 

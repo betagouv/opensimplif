@@ -9,12 +9,6 @@ describe Users::DossiersController, type: :controller do
   let(:dossier_id) { dossier.id }
   let(:siret_not_found) { 999_999_999_999 }
 
-  let(:rna_status) { 404 }
-  let(:rna_body) { '' }
-
-  let(:exercices_status) { 200 }
-  let(:exercices_body) { File.read('spec/support/files/exercices.json') }
-
   let(:siren) { '440117620' }
   let(:siret) { '44011762001530' }
   let(:siret_with_whitespaces) { '440 1176 2001 530' }
@@ -179,12 +173,6 @@ describe Users::DossiersController, type: :controller do
       stub_request(:get, "https://api-dev.apientreprise.fr/v2/entreprises/#{siren}?token=#{SIADETOKEN}")
         .to_return(status: status_entreprise_call, body: File.read('spec/support/files/entreprise.json'))
 
-      stub_request(:get, "https://api-dev.apientreprise.fr/v1/etablissements/exercices/#{siret}?token=#{SIADETOKEN}")
-        .to_return(status: exercices_status, body: exercices_body)
-
-      stub_request(:get, "https://api-dev.apientreprise.fr/v1/associations/#{siret}?token=#{SIADETOKEN}")
-        .to_return(status: rna_status, body: rna_body)
-
       dossier
     end
 
@@ -228,18 +216,6 @@ describe Users::DossiersController, type: :controller do
         it 'links etablissement to entreprise' do
           subject
           expect(Etablissement.last.entreprise).to eq(Entreprise.last)
-        end
-
-        it 'creates exercices for dossier' do
-          expect { subject }.to change { Exercice.count }.by(3)
-          expect(Exercice.last.etablissement).to eq(Dossier.last.etablissement)
-        end
-
-        context 'when siret have no exercices' do
-          let(:exercices_status) { 404 }
-          let(:exercices_body) { '' }
-
-          it { expect { subject }.not_to(change { Exercice.count }) }
         end
 
         it 'links procedure to dossier' do
