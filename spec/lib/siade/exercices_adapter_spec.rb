@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SIADE::ExercicesAdapter do
   let(:siret) { '41816609600051' }

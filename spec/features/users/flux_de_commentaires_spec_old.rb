@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'users: flux de commentaires' do
   let(:user) { create(:user) }

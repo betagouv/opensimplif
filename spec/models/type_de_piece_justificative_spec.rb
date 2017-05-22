@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe TypeDePieceJustificative do
   let!(:procedure) { create(:procedure) }

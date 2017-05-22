@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'add commentaire on backoffice' do
   let(:dossier) { create(:dossier, :with_entreprise) }

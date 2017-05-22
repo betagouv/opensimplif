@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'backoffice/dossiers/show.html.haml', type: :view do
   let!(:dossier) { create(:dossier, :with_entreprise, state: state) }

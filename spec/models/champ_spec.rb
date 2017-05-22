@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Champ do
   require 'models/champ_shared_example.rb'

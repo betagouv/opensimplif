@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::ProceduresController, type: :controller do
   let(:admin) { create(:administrateur) }

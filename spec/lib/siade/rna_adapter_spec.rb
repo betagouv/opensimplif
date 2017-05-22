@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SIADE::RNAAdapter do
   let(:siret) { '50480511000013' }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FranceConnectInformation, type: :model do
   describe 'database columns' do

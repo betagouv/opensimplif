@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'admin/types_de_champ/show.html.haml', type: :view do
   let(:procedure) { create(:procedure) }

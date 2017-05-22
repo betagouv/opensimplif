@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CARTO::SGMAP::API do
   describe '.search_qp' do

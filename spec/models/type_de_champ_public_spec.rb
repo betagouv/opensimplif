@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe TypeDeChampPublic do
   require 'models/type_de_champ_shared_example'

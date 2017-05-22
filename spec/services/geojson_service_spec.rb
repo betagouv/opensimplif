@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe GeojsonService do
   let(:good_coordinates) do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ChampDecorator do
   let(:champ) { create :champ, type_de_champ: (create :type_de_champ, type_champ: :checkbox) }

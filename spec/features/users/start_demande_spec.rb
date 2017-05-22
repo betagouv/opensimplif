@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'user arrive on siret page' do
   let(:procedure) { create(:procedure, :published) }

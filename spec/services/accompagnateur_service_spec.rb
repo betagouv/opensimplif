@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe AccompagnateurService do
   let(:procedure) { create :procedure, published: true }

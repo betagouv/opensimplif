@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::TypesDeChampController, type: :controller do
   let(:admin) { create(:administrateur) }

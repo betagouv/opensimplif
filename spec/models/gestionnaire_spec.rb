@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Gestionnaire, type: :model do
   let(:admin) { create :administrateur }

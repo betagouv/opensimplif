@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SIADE::EntrepriseAdapter do
   subject { described_class.new('418166096').to_params }

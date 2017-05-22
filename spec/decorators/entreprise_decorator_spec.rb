@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe EntrepriseDecorator do
   let(:code_effectif) { '00' }

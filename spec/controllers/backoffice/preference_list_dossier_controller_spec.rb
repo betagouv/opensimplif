@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Backoffice::PreferenceListDossierController, type: :controller do
   let(:gestionnaire) { create :gestionnaire }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'layouts/left_panels/_left_panel_backoffice_dossierscontroller_show.html.haml', type: :view do
   let!(:dossier) { create(:dossier, :with_entreprise,  state: state) }

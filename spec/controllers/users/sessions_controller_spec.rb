@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Users::SessionsController, type: :controller do
   let(:loged_in_with_france_connect) { 'particulier' }

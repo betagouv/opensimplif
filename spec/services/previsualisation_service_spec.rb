@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PrevisualisationService do
   describe '.destroy_all_champs' do

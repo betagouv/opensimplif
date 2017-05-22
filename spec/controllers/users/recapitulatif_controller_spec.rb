@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Users::RecapitulatifController, type: :controller do
   let(:dossier) { create(:dossier, state: 'initiated') }

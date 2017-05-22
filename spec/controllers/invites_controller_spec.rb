@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe InvitesController, type: :controller do
   let(:dossier) { create(:dossier) }

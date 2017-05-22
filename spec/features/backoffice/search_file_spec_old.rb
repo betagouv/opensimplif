@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'search file on gestionnaire backoffice' do
   let(:administrateur) { create(:administrateur) }

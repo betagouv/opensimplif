@@ -1,5 +1,5 @@
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe TypeDeChampDecorator do
   let(:procedure) { create(:procedure) }

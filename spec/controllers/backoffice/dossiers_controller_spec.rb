@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Backoffice::DossiersController, type: :controller do
   before do

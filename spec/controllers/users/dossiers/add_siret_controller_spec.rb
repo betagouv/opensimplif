@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Users::Dossiers::AddSiretController, type: :controller do
   describe '#GET show' do

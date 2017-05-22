@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe RenderPartialService do
   let(:service) { RenderPartialService.new(controller, method) }

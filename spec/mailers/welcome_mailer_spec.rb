@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe WelcomeMailer, type: :mailer do
   describe '.welcome_email' do

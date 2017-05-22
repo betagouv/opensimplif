@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'dossiers/_infos_dossier.html.haml', type: :view do
   let(:dossier) { create(:dossier, :with_entreprise, procedure: create(:procedure, :with_api_carto, :with_type_de_champ)) }

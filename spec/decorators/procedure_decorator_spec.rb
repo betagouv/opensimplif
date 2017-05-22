@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ProcedureDecorator do
   let(:procedure) { create(:procedure, :published, created_at: Time.new(2015, 12, 24, 14, 10)) }

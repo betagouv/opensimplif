@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'admin/procedures/show.html.haml', type: :view do
   let(:archived) { false }

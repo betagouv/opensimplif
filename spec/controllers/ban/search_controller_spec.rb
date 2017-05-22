@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Ban::SearchController, type: :controller do
   describe '#GET get' do

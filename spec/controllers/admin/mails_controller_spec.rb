@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::MailsController, type: :controller do
   let(:procedure) { create :procedure }

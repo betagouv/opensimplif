@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CommentaireDecorator do
   let(:commentaire) { Timecop.freeze(Time.local(2008, 9, 1, 10, 5, 0)) { create :commentaire } }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Siret, type: :model do
   let(:valid_siret) { '41816609600051' }

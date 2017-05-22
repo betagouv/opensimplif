@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe AdministrationsController, type: :controller do
   let(:administration) { create :administration }

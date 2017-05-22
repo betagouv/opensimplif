@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'move down button type de champs', js: true do
   let(:administrateur) { create(:administrateur) }

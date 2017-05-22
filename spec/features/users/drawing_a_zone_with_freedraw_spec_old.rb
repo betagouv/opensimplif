@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'drawing a zone with freedraw' do
   let(:user) { create(:user) }

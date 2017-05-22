@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'users/description/show.html.haml', type: :view do
   let(:user) { create(:user) }

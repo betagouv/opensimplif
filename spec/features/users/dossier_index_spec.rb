@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'As a User I want to sort and paginate dossiers', js: true do
   let(:user) { create(:user) }

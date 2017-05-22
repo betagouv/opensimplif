@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'admin/accompagnateurs/show.html.haml', type: :view do
   let(:admin) { create(:administrateur) }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Carto::Geocodeur do
   let(:address) { '50 av des champs elysees' }

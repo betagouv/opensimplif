@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'As an Accompagnateur I can navigate and use each functionnality around procedures and their dossiers' do
   let(:user)           { create(:user) }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FranceConnect::ParticulierController, type: :controller do
   let(:code) { 'plop' }

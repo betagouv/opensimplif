@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'usage of pref list dossier lateral panel', js: true do
   let(:administrateur) { create(:administrateur) }

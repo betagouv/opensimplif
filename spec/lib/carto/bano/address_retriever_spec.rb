@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Carto::Bano::AddressRetriever do
   describe '#list' do

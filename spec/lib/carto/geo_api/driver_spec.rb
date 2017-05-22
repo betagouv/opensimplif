@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Carto::GeoAPI::Driver do
   describe '.regions', vcr: {cassette_name: 'geoapi_regions'} do

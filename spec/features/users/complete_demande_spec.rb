@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'user path for dossier creation' do
   let(:user) { create(:user) }

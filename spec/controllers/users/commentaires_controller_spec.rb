@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Users::CommentairesController, type: :controller do
   let(:dossier) { create(:dossier) }

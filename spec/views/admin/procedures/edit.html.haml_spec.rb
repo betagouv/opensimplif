@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'admin/procedures/edit.html.haml', type: :view, vcr: {cassette_name: 'admin_procedure_edit'} do
   let(:logo) { Rack::Test::UploadedFile.new('./spec/support/files/logo_test_procedure.png', 'image/png') }

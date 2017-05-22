@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CARTO::SGMAP::Cadastre::Adapter do
   subject { described_class.new(coordinates).to_params }

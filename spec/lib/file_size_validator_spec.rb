@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FileSizeValidator, lib: true do
   let(:validator) { FileSizeValidator.new(options) }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'user access to the list of his dossier' do
   let(:user) { create(:user) }

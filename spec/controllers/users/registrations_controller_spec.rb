@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Users::RegistrationsController, type: :controller do
   let(:email) { 'test@octo.com' }

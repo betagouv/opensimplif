@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'controllers/users/carte_controller_shared_example'
 
 RSpec.describe Users::CarteController, type: :controller do

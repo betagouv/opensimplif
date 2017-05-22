@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'users/siret/index.html.haml', type: :view do
   let(:procedure) { create(:procedure, libelle: 'Demande de subvention') }

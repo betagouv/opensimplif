@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe RemoteDownloader do
   let(:filename) { 'file_name.pdf' }

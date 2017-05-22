@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe DossiersListGestionnaireService do
   let(:gestionnaire) { create :gestionnaire }

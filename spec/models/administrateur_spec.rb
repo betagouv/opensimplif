@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Administrateur, type: :model do
   describe 'database column' do

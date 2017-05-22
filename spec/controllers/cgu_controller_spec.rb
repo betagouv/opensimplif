@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CguController, type: :controller do
   describe 'GET #index' do

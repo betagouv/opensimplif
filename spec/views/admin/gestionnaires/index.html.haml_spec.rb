@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'admin/gestionnaires/index.html.haml', type: :view do
   let(:token) { 'super_token' }

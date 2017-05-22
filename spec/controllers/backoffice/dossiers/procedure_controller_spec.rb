@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Backoffice::Dossiers::ProcedureController, type: :controller do
   let(:gestionnaire) { create :gestionnaire }

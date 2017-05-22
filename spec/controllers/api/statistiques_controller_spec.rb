@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe API::StatistiquesController, type: :controller do
   describe '#GET dossiers_stats' do

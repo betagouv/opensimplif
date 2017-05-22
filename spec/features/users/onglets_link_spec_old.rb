@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'on click on tabs button' do
   let(:user) { create :user }

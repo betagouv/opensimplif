@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::PrevisualisationsController, type: :controller do
   let(:admin) { create(:administrateur) }

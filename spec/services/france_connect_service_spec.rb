@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FranceConnectService do
   describe '.retrieve_user_informations_particulier' do
