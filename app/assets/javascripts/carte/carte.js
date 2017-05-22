@@ -26,9 +26,6 @@ function initCarto() {
         //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
-    if (qp_active())
-        display_qp(JSON.parse($("#quartier_prioritaires").val()));
-
     if (cadastre_active())
         display_cadastre(JSON.parse($("#cadastres").val()));
 

@@ -13,7 +13,6 @@ class Users::CarteController < UsersController
   def save
     dossier = current_user_dossier
 
-    dossier.quartier_prioritaires.map(&:destroy)
     dossier.cadastres.map(&:destroy)
 
     unless params[:json_latlngs].blank?
@@ -43,10 +42,6 @@ class Users::CarteController < UsersController
     end
 
     render json: {lon: lon, lat: lat, zoom: zoom, dossier_id: params[:dossier_id]}
-  end
-
-  def get_qp
-    render json: {quartier_prioritaires: ModuleApiCartoService.generate_qp(JSON.parse(params[:coordinates]))}
   end
 
   def get_cadastre

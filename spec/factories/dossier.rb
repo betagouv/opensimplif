@@ -26,13 +26,6 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_two_quartier_prioritaires do
-      after(:build) do |dossier, _evaluator|
-        dossier.quartier_prioritaires << create(:quartier_prioritaire)
-        dossier.quartier_prioritaires << create(:quartier_prioritaire)
-      end
-    end
-
     trait :with_two_cadastres do
       after(:build) do |dossier, _evaluator|
         dossier.cadastres << create(:cadastre)

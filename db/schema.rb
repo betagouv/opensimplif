@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522083835) do
+ActiveRecord::Schema.define(version: 20170522203332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -314,14 +314,6 @@ ActiveRecord::Schema.define(version: 20170522083835) do
     t.string   "lien_notice"
     t.boolean  "for_individual",        default: false
     t.boolean  "individual_with_siret", default: false
-  end
-
-  create_table "quartier_prioritaires", force: :cascade do |t|
-    t.string  "code"
-    t.string  "nom"
-    t.string  "commune"
-    t.text    "geometry"
-    t.integer "dossier_id"
   end
 
   create_table "rna_informations", force: :cascade do |t|
