@@ -276,31 +276,6 @@ describe Users::DossiersController, type: :controller do
             it { expect(Dossier.last.mandataire_social).to be_falsey }
           end
         end
-
-        describe 'get rna informations' do
-          context 'when siren have not rna informations' do
-            let(:rna_status) { 404 }
-            let(:rna_body) { '' }
-
-            it 'not creates rna information for entreprise' do
-              expect { subject }.to change { RNAInformation.count }.by(0)
-            end
-          end
-
-          context 'when siren have rna informations' do
-            let(:rna_status) { 200 }
-            let(:rna_body) { File.read('spec/support/files/rna.json') }
-
-            it 'creates rna information for entreprise' do
-              expect { subject }.to change { RNAInformation.count }.by(1)
-            end
-
-            it 'links rna informations to entreprise' do
-              subject
-              expect(RNAInformation.last.entreprise).to eq(Entreprise.last)
-            end
-          end
-        end
       end
 
       describe 'with siret without whitespaces' do

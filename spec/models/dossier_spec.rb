@@ -708,7 +708,6 @@ describe Dossier do
 
   describe '#reset!' do
     let!(:dossier) { create :dossier, :with_entreprise }
-    let!(:rna_information) { create :rna_information, entreprise: dossier.entreprise }
     let!(:exercice) { create :exercice, etablissement: dossier.etablissement }
 
     subject { dossier.reset! }
@@ -717,9 +716,7 @@ describe Dossier do
     it { expect(dossier.etablissement).not_to be_nil }
     it { expect(dossier.etablissement.exercices).not_to be_empty }
     it { expect(dossier.etablissement.exercices.size).to eq 1 }
-    it { expect(dossier.entreprise.rna_information).not_to be_nil }
 
-    it { expect { subject }.to change(RNAInformation, :count).by(-1) }
     it { expect { subject }.to change(Exercice, :count).by(-1) }
 
     it { expect { subject }.to change(Entreprise, :count).by(-1) }

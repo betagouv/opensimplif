@@ -17,9 +17,6 @@ class DossierService
     @dossier.create_entreprise(@entreprise_adapter.to_params)
     @dossier.create_etablissement(@etablissement_adapter.to_params)
 
-    @rna_adapter = SIADE::RNAAdapter.new(@siret)
-    @dossier.entreprise.create_rna_information(@rna_adapter.to_params)
-
     @exercices_adapter = SIADE::ExercicesAdapter.new(@siret)
     @dossier.etablissement.exercices.create(@exercices_adapter.to_params)
 
