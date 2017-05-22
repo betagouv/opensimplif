@@ -43,6 +43,6 @@ class Admin::TypesDeChampController < AdminController
   private
 
   def create_facade
-    @types_de_champ_facade = AdminTypesDeChampFacades.new false, @procedure
+    @types_de_champ_facade = AdminTypesDeChampFacades.new @procedure
   end
 end

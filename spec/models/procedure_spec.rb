@@ -74,8 +74,8 @@ describe Procedure do
 
   describe '#types_de_champ_ordered' do
     let(:procedure) { create(:procedure) }
-    let!(:type_de_champ_0) { create(:type_de_champ_public, procedure: procedure, order_place: 1) }
-    let!(:type_de_champ_1) { create(:type_de_champ_public, procedure: procedure, order_place: 0) }
+    let!(:type_de_champ_0) { create(:type_de_champ, procedure: procedure, order_place: 1) }
+    let!(:type_de_champ_1) { create(:type_de_champ, procedure: procedure, order_place: 0) }
 
     subject { procedure.types_de_champ_ordered }
 
@@ -93,8 +93,8 @@ describe Procedure do
       it { expect(subject).to eq(false) }
     end
     context 'when procedure have 2 types de champ' do
-      let!(:type_de_champ_0) { create(:type_de_champ_public, procedure: procedure, order_place: 0) }
-      let!(:type_de_champ_1) { create(:type_de_champ_public, procedure: procedure, order_place: 1) }
+      let!(:type_de_champ_0) { create(:type_de_champ, procedure: procedure, order_place: 0) }
+      let!(:type_de_champ_1) { create(:type_de_champ, procedure: procedure, order_place: 1) }
 
       context 'when index is not the last element' do
         it { expect(subject).to eq(true) }
@@ -170,10 +170,8 @@ describe Procedure do
     let(:archived) { false }
     let(:published) { false }
     let(:procedure) { create(:procedure, archived: archived, published: published) }
-    let!(:type_de_champ_0) { create(:type_de_champ_public, procedure: procedure, order_place: 0) }
-    let!(:type_de_champ_1) { create(:type_de_champ_public, procedure: procedure, order_place: 1) }
-    let!(:type_de_champ_private_0) { create(:type_de_champ_private, procedure: procedure, order_place: 0) }
-    let!(:type_de_champ_private_1) { create(:type_de_champ_private, procedure: procedure, order_place: 1) }
+    let!(:type_de_champ_0) { create(:type_de_champ, procedure: procedure, order_place: 0) }
+    let!(:type_de_champ_1) { create(:type_de_champ, procedure: procedure, order_place: 1) }
     let!(:piece_justificative_0) { create(:type_de_piece_justificative, procedure: procedure, order_place: 0) }
     let!(:piece_justificative_1) { create(:type_de_piece_justificative, procedure: procedure, order_place: 1) }
 
@@ -190,14 +188,9 @@ describe Procedure do
 
       expect(subject.types_de_piece_justificative.size).to eq procedure.types_de_piece_justificative.size
       expect(subject.types_de_champ.size).to eq procedure.types_de_champ.size
-      expect(subject.types_de_champ_private.size).to eq procedure.types_de_champ_private.size
       expect(subject.mail_templates.size).to eq procedure.mail_templates.size
 
       subject.types_de_champ.zip(procedure.types_de_champ).each do |stc, ptc|
-        expect(stc).to have_same_attributes_as(ptc)
-      end
-
-      subject.types_de_champ_private.zip(procedure.types_de_champ_private).each do |stc, ptc|
         expect(stc).to have_same_attributes_as(ptc)
       end
 

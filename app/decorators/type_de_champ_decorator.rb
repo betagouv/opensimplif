@@ -2,11 +2,11 @@ class TypeDeChampDecorator < Draper::Decorator
   delegate_all
 
   def button_up(params)
-    h.link_to '', params[:url], class: up_classes, id: "btn_up_#{params[:index]}", remote: true, method: :post if display_up_button?(params[:index], params[:private])
+    h.link_to '', params[:url], class: up_classes, id: "btn_up_#{params[:index]}", remote: true, method: :post if display_up_button?(params[:index])
   end
 
   def button_down(params)
-    h.link_to '', params[:url], class: down_classes, id: "btn_down_#{params[:index]}", remote: true, method: :post if display_down_button?(params[:index], params[:private])
+    h.link_to '', params[:url], class: down_classes, id: "btn_down_#{params[:index]}", remote: true, method: :post if display_down_button?(params[:index])
   end
 
   private
@@ -23,19 +23,15 @@ class TypeDeChampDecorator < Draper::Decorator
     %w[btn btn-default form-control fa]
   end
 
-  def display_up_button?(index, private)
-    !(index.zero? || count_type_de_champ(private) < 2)
+  def display_up_button?(index)
+    !(index.zero? || count_type_de_champ < 2)
   end
 
-  def display_down_button?(index, private)
-    (index + 1) < count_type_de_champ(private)
+  def display_down_button?(index)
+    (index + 1) < count_type_de_champ
   end
 
-  def count_type_de_champ(private)
-    if private
-      @count_type_de_champ ||= procedure.types_de_champ_private.count
-    else
-      @count_type_de_champ ||= procedure.types_de_champ.count
-    end
+  def count_type_de_champ
+    @count_type_de_champ ||= procedure.types_de_champ.count
   end
 end

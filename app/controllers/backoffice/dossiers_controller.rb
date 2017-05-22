@@ -21,15 +21,6 @@ class Backoffice::DossiersController < Backoffice::DossiersListController
     create_dossier_facade params[:id]
 
     Unread.where(gestionnaire: current_gestionnaire, dossier: params[:id]).delete_all
-
-    unless @facade.nil?
-      @champs_private = @facade.champs_private
-
-      @headers_private = @champs_private.each_with_object([]) do |champ, acc|
-        acc.push(champ) if champ.type_champ == 'header_section'
-        acc
-      end
-    end
   end
 
   def filter

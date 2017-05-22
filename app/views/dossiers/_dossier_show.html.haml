@@ -50,18 +50,3 @@
 
         = render partial: '/users/carte/map', locals: {dossier: @facade.dossier}
         = render partial: 'users/carte/init_carto', locals: {dossier: @facade.dossier}
-
-
-- if @current_gestionnaire && gestionnaire_signed_in? && @champs_private.count > 0
-  .default_data_block.default_visible
-    %div.row.show-block#private-fields
-      %div.header
-        %div.col-xs-10.title
-          %div.carret-right
-          %div.carret-down
-          = "formulaire privé".upcase
-        %div.col-xs-2.count
-          - private_fields_count = @champs_private.count
-          = (private_fields_count == 1) ? "1 champ" : "#{private_fields_count} champs"
-      %div.body
-        = render partial: '/dossiers/infos_private_fields'

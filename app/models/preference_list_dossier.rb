@@ -98,18 +98,6 @@ class PreferenceListDossier < ActiveRecord::Base
       end
     end
 
-    def columns_champs_private_procedure(procedure_id)
-      table = 'champs_private'
-
-      procedure = Procedure.find_by(id: procedure_id)
-      if procedure
-        procedure.types_de_champ_private.inject({}) do |acc, type_de_champ|
-          acc = acc.merge("type_de_champ_private_#{type_de_champ.id}" => create_column(type_de_champ.libelle, table, type_de_champ.id, 'value', 2)) if type_de_champ.field_for_list?
-          acc
-        end
-      end
-    end
-
     def create_column(libelle, table, attr, attr_decorate, bootstrap_lg)
       {
         libelle: libelle,

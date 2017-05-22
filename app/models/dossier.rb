@@ -19,7 +19,6 @@ class Dossier < ActiveRecord::Base
 
   has_many :pieces_justificatives, dependent: :destroy
   has_many :champs, class_name: 'ChampPublic', dependent: :destroy
-  has_many :champs_private, class_name: 'ChampPrivate', dependent: :destroy
   has_many :quartier_prioritaires, dependent: :destroy
   has_many :cadastres, dependent: :destroy
   has_many :commentaires, dependent: :destroy
@@ -79,10 +78,6 @@ class Dossier < ActiveRecord::Base
     procedure.types_de_champ.each do |type_de_champ|
       ChampPublic.create(type_de_champ_id: type_de_champ.id, dossier_id: id)
     end
-
-    procedure.types_de_champ_private.each do |type_de_champ|
-      ChampPrivate.create(type_de_champ_id: type_de_champ.id, dossier_id: id)
-    end
   end
 
   def build_default_individual
@@ -93,10 +88,6 @@ class Dossier < ActiveRecord::Base
 
   def ordered_champs
     champs.joins(', types_de_champ').where("champs.type_de_champ_id = types_de_champ.id AND types_de_champ.procedure_id = #{procedure.id}").order('order_place')
-  end
-
-  def ordered_champs_private
-    champs_private.joins(', types_de_champ').where("champs.type_de_champ_id = types_de_champ.id AND types_de_champ.procedure_id = #{procedure.id}").order('order_place')
   end
 
   def ordered_pieces_justificatives

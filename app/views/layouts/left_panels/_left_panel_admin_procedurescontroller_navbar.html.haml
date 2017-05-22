@@ -20,20 +20,13 @@
         %div.procedure_list_element{class: ('active' if active == 'Description')}
           Description
 
-    - unless @procedure.locked?
       %a{:href => "#{url_for admin_procedure_types_de_champ_path(@procedure)}", id: 'onglet-champs'}
         %div.procedure_list_element{class: ('active' if active == 'Champs')}
           Champs
 
-    - unless @procedure.locked?
       %a{:href => "#{url_for admin_procedure_pieces_justificatives_path(@procedure)}", id: 'onglet-pieces'}
         %div.procedure_list_element{class: ('active' if active == 'Pieces')}
           Pièces justificatives
-
-    - unless @procedure.locked?
-      %a{:href => "#{url_for admin_procedure_types_de_champ_private_path(@procedure)}", id: 'onglet-private-champs'}
-        %div.procedure_list_element{class: ('active' if active == 'Champs privés')}
-          Champs privés
 
     %a{:href => "#{url_for admin_procedure_previsualisation_path(@procedure)}", id: 'onglet-preview'}
       %div.procedure_list_element{class: ('active' if active == 'Prévisualisation')}

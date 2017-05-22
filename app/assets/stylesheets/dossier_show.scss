@@ -89,11 +89,6 @@
   }
   #carto {
   }
-  #private-fields {
-    .text-primary {
-      color: #337ab7;
-    }
-  }
   #pieces-jointes {
     .piece-row {
       margin: 20px;
@@ -114,7 +109,7 @@
     }
   }
 
-  #dossier, #pieces-jointes, .infos, #carto, #private-fields {
+  #dossier, #pieces-jointes, .infos, #carto {
     .body {
       padding: 20px 20px 0 20px;
       color: #000000;

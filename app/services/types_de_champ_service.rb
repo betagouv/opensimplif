@@ -1,6 +1,6 @@
 class TypesDeChampService
-  def self.create_update_procedure_params(params, private = false)
-    attributes = (private ? 'types_de_champ_private_attributes' : 'types_de_champ_attributes')
+  def self.create_update_procedure_params(params)
+    attributes = 'types_de_champ_attributes'
 
     parameters = params
                  .require(:procedure)

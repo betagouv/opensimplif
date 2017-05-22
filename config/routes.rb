@@ -116,12 +116,6 @@ Rails.application.routes.draw do
         post '/:index/move_down' => 'types_de_champ#move_down', as: :move_down
       end
 
-      resources :types_de_champ_private, only: [:destroy]
-      resource :types_de_champ_private, only: %i[show update] do
-        post '/:index/move_up' => 'types_de_champ_private#move_up', as: :move_up
-        post '/:index/move_down' => 'types_de_champ_private#move_down', as: :move_down
-      end
-
       resource :pieces_justificatives, only: %i[show update]
       resources :pieces_justificatives, only: :destroy
       resource :pieces_justificatives, only: %i[show update] do
@@ -161,8 +155,6 @@ Rails.application.routes.draw do
     get 'sign_in' => '/gestionnaires/sessions#new'
     get 'dossiers/search' => 'dossiers#search'
     get 'download_dossiers_tps' => 'dossiers#download_dossiers_tps'
-
-    resource :private_formulaire
 
     resources :dossiers do
       post 'valid' => 'dossiers#valid'

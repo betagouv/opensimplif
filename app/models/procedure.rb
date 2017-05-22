@@ -1,7 +1,6 @@
 class Procedure < ActiveRecord::Base
   has_many :types_de_piece_justificative, dependent: :destroy
-  has_many :types_de_champ, class_name: 'TypeDeChampPublic', dependent: :destroy
-  has_many :types_de_champ_private, dependent: :destroy
+  has_many :types_de_champ, dependent: :destroy
   has_many :dossiers
   has_many :mail_templates
   has_one :mail_received
@@ -22,7 +21,6 @@ class Procedure < ActiveRecord::Base
   accepts_nested_attributes_for :types_de_champ, reject_if: proc { |attributes| attributes['libelle'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :types_de_piece_justificative, reject_if: proc { |attributes| attributes['libelle'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :module_api_carto
-  accepts_nested_attributes_for :types_de_champ_private
 
   mount_uploader :logo, ProcedureLogoUploader
 
@@ -47,10 +45,6 @@ class Procedure < ActiveRecord::Base
     types_de_champ.order(:order_place)
   end
 
-  def types_de_champ_private_ordered
-    types_de_champ_private.order(:order_place)
-  end
-
   def types_de_piece_justificative_ordered
     types_de_piece_justificative.order(:order_place)
   end
@@ -65,10 +59,6 @@ class Procedure < ActiveRecord::Base
 
   def switch_types_de_champ(index_of_first_element)
     switch_list_order(types_de_champ_ordered, index_of_first_element)
-  end
-
-  def switch_types_de_champ_private(index_of_first_element)
-    switch_list_order(types_de_champ_private_ordered, index_of_first_element)
   end
 
   def switch_types_de_piece_justificative(index_of_first_element)
@@ -89,7 +79,7 @@ class Procedure < ActiveRecord::Base
   end
 
   def clone
-    procedure = deep_clone(include: [:types_de_piece_justificative, :types_de_champ, :types_de_champ_private, :module_api_carto, :mail_templates, types_de_champ: [:drop_down_list]])
+    procedure = deep_clone(include: [:types_de_piece_justificative, :types_de_champ, :module_api_carto, :mail_templates, types_de_champ: [:drop_down_list]])
     procedure.archived = false
     procedure.published = false
     procedure.logo_secure_token = nil

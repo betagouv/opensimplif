@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518235454) do
+ActiveRecord::Schema.define(version: 20170522083835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,12 +59,6 @@ ActiveRecord::Schema.define(version: 20170518235454) do
     t.index ["reset_password_token"], name: "index_administrations_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "ar_internal_metadata", primary_key: "key", id: :string, force: :cascade do |t|
-    t.string   "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "assign_tos", id: false, force: :cascade do |t|
     t.integer "gestionnaire_id"
     t.integer "procedure_id"
@@ -100,7 +94,6 @@ ActiveRecord::Schema.define(version: 20170518235454) do
     t.string  "value"
     t.integer "type_de_champ_id"
     t.integer "dossier_id"
-    t.string  "type"
     t.index ["dossier_id"], name: "index_champs_on_dossier_id", using: :btree
     t.index ["type_de_champ_id"], name: "index_champs_on_type_de_champ_id", using: :btree
   end
@@ -349,7 +342,6 @@ ActiveRecord::Schema.define(version: 20170518235454) do
     t.integer "procedure_id"
     t.text    "description"
     t.boolean "mandatory",    default: false
-    t.string  "type"
   end
 
   create_table "types_de_piece_justificative", force: :cascade do |t|
@@ -397,7 +389,7 @@ ActiveRecord::Schema.define(version: 20170518235454) do
   add_foreign_key "procedure_paths", "administrateurs"
   add_foreign_key "procedure_paths", "procedures"
 
-  create_view :searches,  sql_definition: <<-SQL
+  create_view "searches",  sql_definition: <<-SQL
       SELECT dossiers.id AS dossier_id,
       (((((((((((((((((((((((((((((((((((((((((((((((((((((((COALESCE(users.email, ''::character varying))::text || ' '::text) || (COALESCE(france_connect_informations.given_name, ''::character varying))::text) || ' '::text) || (COALESCE(france_connect_informations.family_name, ''::character varying))::text) || ' '::text) || (COALESCE(cerfas.content, ''::character varying))::text) || ' '::text) || (COALESCE(champs.value, ''::character varying))::text) || ' '::text) || (COALESCE(drop_down_lists.value, ''::character varying))::text) || ' '::text) || (COALESCE(entreprises.siren, ''::character varying))::text) || ' '::text) || (COALESCE(entreprises.numero_tva_intracommunautaire, ''::character varying))::text) || ' '::text) || (COALESCE(entreprises.forme_juridique, ''::character varying))::text) || ' '::text) || (COALESCE(entreprises.forme_juridique_code, ''::character varying))::text) || ' '::text) || (COALESCE(entreprises.nom_commercial, ''::character varying))::text) || ' '::text) || (COALESCE(entreprises.raison_sociale, ''::character varying))::text) || ' '::text) || (COALESCE(entreprises.siret_siege_social, ''::character varying))::text) || ' '::text) || (COALESCE(entreprises.nom, ''::character varying))::text) || ' '::text) || (COALESCE(entreprises.prenom, ''::character varying))::text) || ' '::text) || (COALESCE(rna_informations.association_id, ''::character varying))::text) || ' '::text) || (COALESCE(rna_informations.titre, ''::character varying))::text) || ' '::text) || COALESCE(rna_informations.objet, ''::text)) || ' '::text) || (COALESCE(etablissements.siret, ''::character varying))::text) || ' '::text) || (COALESCE(etablissements.naf, ''::character varying))::text) || ' '::text) || (COALESCE(etablissements.libelle_naf, ''::character varying))::text) || ' '::text) || (COALESCE(etablissements.adresse, ''::character varying))::text) || ' '::text) || (COALESCE(etablissements.code_postal, ''::character varying))::text) || ' '::text) || (COALESCE(etablissements.localite, ''::character varying))::text) || ' '::text) || (COALESCE(etablissements.code_insee_localite, ''::character varying))::text) || ' '::text) || (COALESCE(individuals.nom, ''::character varying))::text) || ' '::text) || (COALESCE(individuals.prenom, ''::character varying))::text) || ' '::text) || (COALESCE(pieces_justificatives.content, ''::character varying))::text) AS term
      FROM ((((((((((dossiers

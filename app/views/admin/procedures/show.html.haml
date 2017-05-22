@@ -69,15 +69,6 @@
           = champ.libelle
           %br
 
-      .champs_private.col-xs-6.col-md-3
-        %h4.text-info
-          Champs privés
-          .badge.progress-bar-info
-            = @facade.procedure.types_de_champ_private.size
-        - @facade.procedure.types_de_champ_private.order(:order_place).each do |champ|
-          = champ.libelle
-          %br
-
       .pieces_justificatives.col-xs-6.col-md-3
         %h4.text-info
           Pièces justificatives

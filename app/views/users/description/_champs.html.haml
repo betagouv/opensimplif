@@ -1,6 +1,4 @@
-- render_partial_url = private ? 'users/description/champs/header_private_section' : 'users/description/champs/header_section'
-- @champs = @champs_private if private
-- @headers = @headers_private if private
+- render_partial_url = 'users/description/champs/header_section'
 
 - unless @headers.blank?
   - if @champs.first.type_champ != 'header_section'

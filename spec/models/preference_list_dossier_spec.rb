@@ -79,7 +79,7 @@ describe PreferenceListDossier do
     end
 
     context 'when a procedure ID is pasted' do
-      let(:procedure) { (create :procedure, :with_type_de_champ, :with_type_de_champ_private) }
+      let(:procedure) { (create :procedure, :with_type_de_champ) }
       let(:procedure_id) { procedure.id }
 
       describe 'champs' do

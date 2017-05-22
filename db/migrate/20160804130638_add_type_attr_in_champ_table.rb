@@ -9,13 +9,6 @@ class AddTypeAttrInChampTable < ActiveRecord::Migration
 
   def up
     add_column :champs, :type, :string
-
-    Champ.all.each do |champ|
-      type = 'ChampPublic' if champ.type_de_champ.class == TypeDeChampPublic
-      type = 'ChampPrivate' if champ.type_de_champ.class == TypeDeChampPrivate
-
-      champ.update_attribute(:type, type)
-    end
   end
 
   def down
