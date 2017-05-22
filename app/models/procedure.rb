@@ -2,8 +2,6 @@ class Procedure < ActiveRecord::Base
   has_many :types_de_piece_justificative, dependent: :destroy
   has_many :types_de_champ, dependent: :destroy
   has_many :dossiers
-  has_many :mail_templates
-  has_one :mail_received
 
   has_one :procedure_path, dependent: :destroy
 
@@ -26,12 +24,6 @@ class Procedure < ActiveRecord::Base
 
   validates :libelle, presence: true, allow_blank: false, allow_nil: false
   validates :description, presence: true, allow_blank: false, allow_nil: false
-
-  after_save :build_default_mails, if: proc { id_changed? }
-
-  def build_default_mails
-    MailReceived.create(procedure: self)
-  end
 
   def path
     procedure_path&.path
@@ -79,7 +71,7 @@ class Procedure < ActiveRecord::Base
   end
 
   def clone
-    procedure = deep_clone(include: [:types_de_piece_justificative, :types_de_champ, :module_api_carto, :mail_templates, types_de_champ: [:drop_down_list]])
+    procedure = deep_clone(include: [:types_de_piece_justificative, :types_de_champ, :module_api_carto, types_de_champ: [:drop_down_list]])
     procedure.archived = false
     procedure.published = false
     procedure.logo_secure_token = nil

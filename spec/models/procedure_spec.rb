@@ -5,8 +5,6 @@ describe Procedure do
     it { is_expected.to have_many(:types_de_piece_justificative) }
     it { is_expected.to have_many(:types_de_champ) }
     it { is_expected.to have_many(:dossiers) }
-    it { is_expected.to have_many(:mail_templates) }
-    it { is_expected.to have_one(:mail_received) }
     it { is_expected.to have_one(:module_api_carto) }
     it { is_expected.to belong_to(:administrateur) }
     it { is_expected.to have_many(:preference_list_dossiers) }
@@ -22,34 +20,6 @@ describe Procedure do
     it { is_expected.to have_db_column(:logo_secure_token) }
     it { is_expected.to have_db_column(:cerfa_flag) }
     it { is_expected.to have_db_column(:published) }
-
-    describe 'mail_received' do
-      let(:procedure) { create :procedure }
-
-      before do
-        create :mail_received, procedure: procedure
-      end
-
-      it { expect(procedure.mail_received).not_to be_nil }
-    end
-  end
-
-  describe '#build_default_mails' do
-    subject { build :procedure }
-
-    it 'call the fonction build_default_mails' do
-      expect(subject).to receive(:build_default_mails)
-      subject.save
-    end
-
-    describe 'accessible values' do
-      before do
-        subject.save
-      end
-
-      it { expect(subject.mail_templates.size).to eq 1 }
-      it { expect(subject.mail_received).not_to be_nil }
-    end
   end
 
   describe 'validation' do
@@ -175,10 +145,6 @@ describe Procedure do
     let!(:piece_justificative_0) { create(:type_de_piece_justificative, procedure: procedure, order_place: 0) }
     let!(:piece_justificative_1) { create(:type_de_piece_justificative, procedure: procedure, order_place: 1) }
 
-    before do
-      procedure.mail_received.object = 'Je vais être cloné'
-    end
-
     subject { procedure.clone }
 
     it 'duplicates specific objects with different id' do
@@ -188,17 +154,12 @@ describe Procedure do
 
       expect(subject.types_de_piece_justificative.size).to eq procedure.types_de_piece_justificative.size
       expect(subject.types_de_champ.size).to eq procedure.types_de_champ.size
-      expect(subject.mail_templates.size).to eq procedure.mail_templates.size
 
       subject.types_de_champ.zip(procedure.types_de_champ).each do |stc, ptc|
         expect(stc).to have_same_attributes_as(ptc)
       end
 
       subject.types_de_piece_justificative.zip(procedure.types_de_piece_justificative).each do |stc, ptc|
-        expect(stc).to have_same_attributes_as(ptc)
-      end
-
-      subject.mail_templates.zip(procedure.mail_templates).each do |stc, ptc|
         expect(stc).to have_same_attributes_as(ptc)
       end
     end
