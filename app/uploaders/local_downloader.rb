@@ -14,7 +14,7 @@ class LocalDownloader
   end
 
   def url
-    @url ||= File.join(OpenSimplif::Application::URL, 'downloads', random_folder_name, "#{@filename_suffix}.#{@extension}")
+    @url ||= File.join(TPS::Application::URL, 'downloads', random_folder_name, "#{@filename_suffix}.#{@extension}")
   end
 
   protected

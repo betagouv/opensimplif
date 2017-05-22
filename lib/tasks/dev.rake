@@ -17,7 +17,7 @@ namespace :dev do
     comment = <<EOF
 EOF
     file.write(comment)
-    file.write("OpenSimplif::Application.config.SIADETOKEN = '#{res}'")
+    file.write("TPS::Application.config.SIADETOKEN = '#{res}'")
     file.close
   end
 
