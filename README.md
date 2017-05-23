@@ -15,7 +15,7 @@ Depuis le commit https://github.com/XjulI1/opensimplif/commit/cecb0e9, les tests
 ## Technologies utilisées
 
 Ruby  : 2.3.1
-Rails : 5.0.0.1
+Rails : 5.0.3
 
 
 ## Initialisation de l'environnement de développement
