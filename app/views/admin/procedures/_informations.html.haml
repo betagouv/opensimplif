@@ -21,37 +21,3 @@
     %div{style:'margin-top:5px'}
       %i
         Fichier accepté : JPG / JPEG / PNG
-  -#.col-md-6.col-sm-6.col-xs-6.col-lg-6
-  -#  %h4 Drapeau européen
-  -#  %label
-  -#    =f.check_box :euro_flag
-  -#    Afficher le drapeau européen
-
-  -#.col-md-6.col-sm-6.col-xs-6.col-lg-6
-  -#  %h4 Cartographie
-  -#
-  -#  = f.fields_for :module_api_carto, @procedure.module_api_carto do |ff|
-  -#    %label
-  -#      =ff.check_box :use_api_carto, {id: :procedure_module_api_carto_use_api_carto}
-  -#      Utilisation de la cartographie
-  -#
-  -#    %ul#modules_api_carto
-  -#      %li
-  -#        %label
-  -#          = ff.check_box :quartiers_prioritaires
-  -#          Quartiers Prioritaires
-  -#      %li
-  -#        %label
-  -#          = ff.check_box :cadastre
-  -#          Cadastre
-  -#
-  .col-md-6.col-sm-6.col-xs-6.col-lg-6
-    %h4 Particuliers
-    %div
-      %label
-        =f.check_box :for_individual, {checked: 'checked'}
-        Cette procédure s'adresse à un public qui
-        %b
-          ne possède pas (ou pas encore) de numéro SIRET,
-        qui doivent donc s'identifier en tant que personne physique.
-

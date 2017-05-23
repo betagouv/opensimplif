@@ -151,16 +151,6 @@ describe Admin::ProceduresController, type: :controller do
           it { expect(subject.administrateur_id).to eq(admin.id) }
         end
 
-        describe 'procedure module api carto attributs in database' do
-          let(:procedure) { Procedure.last }
-          let(:use_api_carto) { '1' }
-          let(:quartiers_prioritaires) { '1' }
-
-          subject { ModuleAPICarto.last }
-
-          it { expect(subject.procedure).to eq(procedure) }
-        end
-
         it { expect(subject).to redirect_to(admin_procedure_types_de_champ_path(procedure_id: Procedure.last.id)) }
 
         it { expect(flash[:notice]).to be_present }
