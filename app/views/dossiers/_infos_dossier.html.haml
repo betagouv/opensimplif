@@ -126,7 +126,7 @@
                   %th
                     Lien
                 %thead.tr_content#cerfa
-                  -if @facade.procedure.cerfa_flag?
+                  - if @facade.procedure.cerfa_flag?
                     - if @facade.dossier.cerfa_available?
                       - @facade.cerfas_ordered.each do |cerfa|
                         %tr
@@ -135,7 +135,7 @@
                           %td.col-md-6.col-sm-6.col-xs-6.col-lg-4
                             = cerfa.created_at
                           %td.col-md-6.col-sm-6.col-xs-6.col-lg-4
-                            =link_to 'Récupérer', cerfa.content_url, {target: :blank}
+                            = link_to 'Récupérer', cerfa.content_url, {target: :blank}
                 - @facade.dossier.types_de_piece_justificative.each do |type_de_piece_justificative|
                   %tbody.tr_content{id: "type_de_pj_#{type_de_piece_justificative.id}"}
                     - @facade.dossier.retrieve_all_piece_justificative_by_type(type_de_piece_justificative.id).each do |piece_justificative|
@@ -145,7 +145,7 @@
                         %td.col-md-6.col-sm-6.col-xs-6.col-lg-4
                           = piece_justificative.created_at
                         %td.col-md-6.col-sm-6.col-xs-6.col-lg-4
-                          =link_to 'Récupérer', piece_justificative.content_url, {target: :blank}
+                          = link_to 'Récupérer', piece_justificative.content_url, {target: :blank}
             .modal-footer
 
 #modalCommentairesDossierParChamp.modal.fade{"tabindex" => -1, "role" => "dialog"}

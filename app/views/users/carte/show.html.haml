@@ -16,16 +16,16 @@
       %br
       %br
 
-      =render partial: 'users/carte/map', locals: {dossier: @dossier}
+      = render partial: 'users/carte/map', locals: {dossier: @dossier}
 
       = form_tag(url_for({controller: :carte, action: :save, dossier_id: @dossier.id}), class: 'form-inline', method: 'POST') do
         %br
         %input{type: 'hidden', value: "#{@dossier.json_latlngs}", name: 'json_latlngs', id: 'json_latlngs'}
         %input{id: 'cadastres', type:'hidden', value: "#{@dossier.cadastres.to_json}"}
 
-        -if @dossier.draft?
-          =render partial: '/layouts/etape_suivante'
-        -else
-          =render partial: '/layouts/modifications_terminees'
+        - if @dossier.draft?
+          = render partial: '/layouts/etape_suivante'
+        - else
+          = render partial: '/layouts/modifications_terminees'
 
     = render partial: 'users/carte/init_carto', locals: {dossier: @dossier}

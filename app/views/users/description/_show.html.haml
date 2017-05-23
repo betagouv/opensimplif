@@ -8,7 +8,7 @@
               .fa.fa-info-circle.text-info{style:'font-size: 2em; margin-top: 20%'}
             .col-md-10.col-sm-10.col-xs-10.col-lg-10{style:'padding-right: 0px'}
               %b
-                =link_to 'Accéder au guide', @dossier.procedure.lien_notice, {target: '_blank'}
+                = link_to 'Accéder au guide', @dossier.procedure.lien_notice, {target: '_blank'}
               pour remplir pour votre dossier
 
   %h2.text-info
@@ -18,9 +18,9 @@
   = form_tag(url_for({controller: 'users/description', action: :create, dossier_id: @dossier.id}), class: 'form-inline', method: 'POST', multipart: true) do
     -unless @champs.nil?
       #liste_champs
-        =render partial: 'users/description/champs'
+        = render partial: 'users/description/champs'
 
-    -if !@procedure.lien_demarche.blank? || @procedure.cerfa_flag || @dossier.types_de_piece_justificative.size > 0
+    - if !@procedure.lien_demarche.blank? || @procedure.cerfa_flag || @dossier.types_de_piece_justificative.size > 0
       %br
       %h3 Documents administratifs
 
@@ -36,8 +36,8 @@
       %div{style: 'text-align:right'}
         %h6 Tous les champs portant un * sont obligatoires.
 
-      -if !@dossier.draft?
-        =render partial: '/layouts/modifications_terminees'
-      -else
+      - if !@dossier.draft?
+        = render partial: '/layouts/modifications_terminees'
+      - else
         = submit_tag 'Valider', id: 'suivant', name: 'submit[nouveaux]', class: %w(btn btn btn-success), style: 'float:right', data: { disable_with: 'Valider', submit: true}
     %br
