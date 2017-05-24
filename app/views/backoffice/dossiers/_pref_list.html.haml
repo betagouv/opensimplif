@@ -23,25 +23,23 @@
   Disponibles
 
 %table
-  - PreferenceListDossier.available_columns_for(@facade_data_view.procedure_id).each_with_index do |tables, index|
-    - if index%2 == 0 || tables.first.to_s.include?('champs')
-      %tr
-
-    %td.col-sm-5.col-md-5.col-sm-5.col-xs-5.col-lg-5{style: 'vertical-align: top', colspan: (tables.first == :champs ? 2 : 1)}
-      %h5= tables.first.to_s.gsub('_', ' ').capitalize
-      %ul
-        - if tables.second
-          - tables.second.each do |columns|
-            %li
-              = form_tag backoffice_preference_list_dossier_add_path, method: :post, remote: true do
-                = hidden_field_tag :libelle, columns.second[:libelle]
-                = hidden_field_tag :table, columns.second[:table]
-                = hidden_field_tag :attr, columns.second[:attr]
-                = hidden_field_tag :attr_decorate, columns.second[:attr_decorate]
-                = hidden_field_tag :bootstrap_lg, columns.second[:bootstrap_lg]
-                = hidden_field_tag :procedure_id, @facade_data_view.procedure_id
-
-                = columns.second[:libelle]
-                %button.btn.btn-default.btn-xs{type: :submit, id: "add_pref_list_#{columns.second[:table]}_#{columns.second[:attr]}"}
-                  %i.fa.fa-plus
-
+  - PreferenceListDossier.available_columns_for(@facade_data_view.procedure_id).each_slice(2) do |two_tables|
+    %tr
+      - two_tables.each do |table|
+        %td.col-sm-5.col-md-5.col-sm-5.col-xs-5.col-lg-5{style: 'vertical-align: top', colspan: (table.first == :champs ? 2 : 1)}
+          %h5= table.first.to_s.gsub('_', ' ').capitalize
+          %ul
+            - if table.second
+              - table.second.each do |columns|
+                %li
+                  = form_tag backoffice_preference_list_dossier_add_path, method: :post, remote: true do
+                    = hidden_field_tag :libelle, columns.second[:libelle]
+                    = hidden_field_tag :table, columns.second[:table]
+                    = hidden_field_tag :attr, columns.second[:attr]
+                    = hidden_field_tag :attr_decorate, columns.second[:attr_decorate]
+                    = hidden_field_tag :bootstrap_lg, columns.second[:bootstrap_lg]
+                    = hidden_field_tag :procedure_id, @facade_data_view.procedure_id
+    
+                    = columns.second[:libelle]
+                    %button.btn.btn-default.btn-xs{type: :submit, id: "add_pref_list_#{columns.second[:table]}_#{columns.second[:attr]}"}
+                      %i.fa.fa-plus
