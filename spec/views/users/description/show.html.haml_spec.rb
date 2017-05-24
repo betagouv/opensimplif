@@ -56,7 +56,7 @@ describe 'users/description/show.html.haml', type: :view do
     end
 
     it 'le lien de retour au récapitulatif est présent' do
-      expect(rendered).to have_selector("a[href='/users/dossiers/#{dossier_id}/recapitulatif']")
+      expect(rendered).to have_selector("a[href='/backoffice/dossiers/#{dossier_id}']")
     end
   end
 
