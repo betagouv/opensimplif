@@ -9,8 +9,9 @@
 
   %table.table#liste_gestionnaire
     %thead
-      %th#email Email
-      %th Ajouter
+      %tr
+        %th#email Email
+        %th Ajouter
 
     - @accompagnateurs_not_assign.each do |accompagnateur|
       %tr

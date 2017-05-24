@@ -3,8 +3,9 @@
 - unless smart_listing.empty?
   %table.table#liste_gestionnaire
     %thead
-      %th Enlever
-      %th#email{style:'text-align: right'} Email
+      %tr
+        %th Enlever
+        %th#email{style:'text-align: right'} Email
 
     - @accompagnateurs_assign.each do |accompagnateur|
       %tr

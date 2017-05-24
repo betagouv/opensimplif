@@ -119,12 +119,13 @@
             .modal-body
               %table.table
                 %thead
-                  %th
-                    Utilisateur
-                  %th
-                    Date d'envoi
-                  %th
-                    Lien
+                  %tr
+                    %th
+                      Utilisateur
+                    %th
+                      Date d'envoi
+                    %th
+                      Lien
                 %thead.tr_content#cerfa
                   - if @facade.procedure.cerfa_flag?
                     - if @facade.dossier.cerfa_available?
