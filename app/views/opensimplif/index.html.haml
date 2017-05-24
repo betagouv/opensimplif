@@ -10,8 +10,7 @@
           %div.carret-down
           Mes simplifications
         %div.col-lg-2.col-md-2.col-sm-2.col-xs-2.count
-          =@smart_listings[:mes_dossiers].count
-          SIMPLIFICATIONS
+          = t('common.simplification_count', count: @smart_listings[:mes_dossiers].count)
         %a{href: '/commencer/'+@facade_data_view.procedure.path}
           %div#new-procedure.col-lg-2.col-md-2.col-sm-2.col-xs-2.action
             Nouvelle
@@ -27,8 +26,7 @@
           %div.carret-down
           Les simplifications que je suis
         %div.col-lg-2.col-md-2.col-sm-2.col-xs-2.count
-          =@facade_data_view.suivi_total
-          simplifications
+          = t('common.simplification_count', count: @facade_data_view.suivi_total)
       %div.body
         = smart_listing_render :follow_dossiers
 
@@ -41,7 +39,6 @@
           %div.carret-down
           Toutes les simplifications
         %div.col-lg-2.col-md-2.col-sm-2.col-xs-2.count
-          =@facade_data_view.all_state_total
-          simplifications
+          = t('common.simplification_count', count: @facade_data_view.all_state_total)
       %div.body
         = smart_listing_render :all_state_dossiers

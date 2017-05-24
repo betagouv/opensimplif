@@ -1,0 +1,6 @@
+en:
+  common:
+    simplification_count:
+      zero: 0 simplification
+      one: 1 simplification
+      other: "%{count} simplifications"
