@@ -5,7 +5,7 @@ describe Search do
     subject { liste_dossiers }
 
     let(:liste_dossiers) do
-      described_class.new(gestionnaire: gestionnaire_1, query: terms).results
+      described_class.new(query: terms).results
     end
 
     let(:administrateur_1) { create(:administrateur) }
@@ -47,7 +47,7 @@ describe Search do
     describe 'search on contact email' do
       let(:terms) { 'clap' }
 
-      it { expect(subject.size).to eq(0) }
+      it { expect(subject.size).to eq(1) }
     end
 
     describe 'search on multiple fields' do

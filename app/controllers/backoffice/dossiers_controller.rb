@@ -52,7 +52,6 @@ class Backoffice::DossiersController < Backoffice::DossiersListController
     # full text search
     unless @dossiers.any?
       @dossiers = Search.new(
-        gestionnaire: current_gestionnaire,
         query: @search_terms,
         page: params[:page]
       ).results
