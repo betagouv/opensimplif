@@ -1,39 +1,35 @@
+!!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
-    %title
-      =t('dynamics.page_title')
-    %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge"}
+    %meta{content: 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type'}
+    %title= t('dynamics.page_title')
+    %meta{'http-equiv' => 'X-UA-Compatible', content: 'IE=edge'}
 
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = stylesheet_link_tag    'print', media: 'print', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'application', media: 'all', data: {turbolinks: {track: true}}
+    = stylesheet_link_tag 'print', media: 'print', data: {turbolinks: {track: true}}
+    = javascript_include_tag 'application', data: {turbolinks: {track: true}}
 
     = csrf_meta_tags
     = action_cable_meta_tag
   %body
     = render partial: 'layouts/support_navigator_banner'
-    #beta{class:(Rails.env == 'production' ? '' : 'beta_staging')}
-      - if Rails.env == 'production'
-        Beta
-      - else
-        Env Test
 
-    - if Rails.env == 'test'
+    #beta{class: ('beta_staging' unless Rails.env.production?)}
+      = Rails.env.production? ? 'Beta' : 'Env Test'
+
+    - if Rails.env.test?
       %script{type: 'text/javascript'}
         (typeof jQuery !== 'undefined') && (jQuery.fx.off = true);
 
-
     = render partial: 'layouts/ie_lt_10'
 
-
-    %div#wrap
-      %div.row
-        %div#header.navbar
-          = render partial: "layouts/navbar"
-      %div.row.no-margin
+    #wrap
+      .row
+        #header.navbar
+          = render partial: 'layouts/navbar'
+      .row.no-margin
         - if RenderPartialService.left_panel_exist? @left_pannel_url
-          %div.col-xs-2#left-panel
+          .col-xs-2#left-panel
             - if gestionnaire_signed_in?
               #search-block
                 = render partial: 'layouts/left_panels/search_area'
