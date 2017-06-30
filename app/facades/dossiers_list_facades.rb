@@ -35,6 +35,7 @@ class DossiersListFacades
   end
 
   def gestionnaire_procedures_name_and_id_list
+    # TODO: Choose between @current_devise_profil and current_devise_profil
     @current_devise_profil.procedures.order(:libelle).inject([]) do |acc, procedure|
       unread_procedures_ids = current_devise_profil.unreads.map(&:notification_id)
       unread_notifications = unread_procedures_ids.count { |id| id == procedure.id }

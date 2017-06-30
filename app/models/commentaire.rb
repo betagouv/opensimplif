@@ -3,6 +3,8 @@ class Commentaire < ActiveRecord::Base
   belongs_to :champ
   belongs_to :piece_justificative
 
+  # TODO: Make a validation to be sure one of those three elements is filled
+
   after_save :internal_notification
 
   def header

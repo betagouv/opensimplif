@@ -13,6 +13,7 @@ class Notification < ActiveRecord::Base
       Unread.create gestionnaire: follow.gestionnaire, notification: self, dossier_id: dossier.id
     end
 
-    Unread.create gestionnaire: Gestionnaire.find_by_email(dossier.user.email), notification: self, dossier_id: dossier.id
+    gestionnaire = Gestionnaire.find_by_email(dossier.user.email)
+    Unread.create gestionnaire: gestionnaire, notification: self, dossier_id: dossier.id
   end
 end

@@ -249,7 +249,7 @@ class Dossier < ActiveRecord::Base
   def data_with_champs
     serialized_dossier = DossierProcedureSerializer.new(self)
     data = serialized_dossier.attributes.values
-    data += champs.order('type_de_champ_id ASC').map(&:value)
+    data += champs.order(type_de_champ_id: :asc).map(&:value)
     data += export_entreprise_data.values
     data
   end
@@ -257,25 +257,25 @@ class Dossier < ActiveRecord::Base
   def export_headers
     serialized_dossier = DossierProcedureSerializer.new(self)
     headers = serialized_dossier.attributes.keys
-    headers += procedure.types_de_champ.order('id ASC').map { |types_de_champ| types_de_champ.libelle.parameterize.underscore.to_sym }
+    headers += procedure.types_de_champ.order(id: :asc).map { |types_de_champ| types_de_champ.libelle.parameterize.underscore.to_sym }
     headers += export_entreprise_data.keys
     headers
   end
 
   def self.export_full_generation(dossiers, format)
-    if dossiers && !dossiers.empty?
-      data = []
-      headers = dossiers.first.export_headers
-      dossiers.each do |dossier|
-        data << dossier.convert_specific_array_values_to_string(dossier.data_with_champs)
-      end
-      if ['csv'].include?(format)
-        return SpreadsheetArchitect.to_csv(data: data, headers: headers)
-      elsif ['xlsx'].include?(format)
-        return SpreadsheetArchitect.to_xlsx(data: data, headers: headers)
-      elsif ['ods'].include?(format)
-        return SpreadsheetArchitect.to_ods(data: data, headers: headers)
-      end
+    return if dossiers.empty?
+    headers = dossiers.first.export_headers
+    data = []
+    dossiers.each_with_index do |dossier|
+      data << dossier.convert_specific_array_values_to_string(dossier.data_with_champs)
+    end
+
+    if ['csv'].include?(format)
+      return SpreadsheetArchitect.to_csv(data: data, headers: headers)
+    elsif ['xlsx'].include?(format)
+      return SpreadsheetArchitect.to_xlsx(data: data, headers: headers)
+    elsif ['ods'].include?(format)
+      return SpreadsheetArchitect.to_ods(data: data, headers: headers)
     end
   end
 
