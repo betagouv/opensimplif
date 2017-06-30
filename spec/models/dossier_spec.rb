@@ -635,14 +635,13 @@ describe Dossier do
     describe '#data_with_champs' do
       subject { dossier.data_with_champs }
 
-      it { expect(subject[0]).to be_a_kind_of(Integer) }
-      it { expect(subject[1]).to be_a_kind_of(Time) }
-      it { expect(subject[2]).to be_a_kind_of(Time) }
-      it { expect(subject[3]).to be_in([true, false]) }
-      it { expect(subject[4]).to be_in([true, false]) }
-      it { expect(subject[5]).to eq('draft') }
-      it { expect(subject[6]).to eq(dossier.followers_gestionnaires_emails) }
-      it { expect(subject.count).to eq(DossierProcedureSerializer.new(dossier).attributes.count + dossier.procedure.types_de_champ.count + dossier.export_entreprise_data.count) }
+      it do
+        expect(subject[0]).to be_a_kind_of(Integer)
+        expect(subject[1]).to be_a_kind_of(Time)
+        expect(subject[2]).to be_a_kind_of(Time)
+        expect(subject[3]).to eq(dossier.followers_gestionnaires_emails)
+        expect(subject.count).to eq(DossierProcedureSerializer.new(dossier).attributes.count + dossier.procedure.types_de_champ.count + dossier.export_entreprise_data.count)
+      end
     end
   end
 
