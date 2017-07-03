@@ -158,7 +158,7 @@ class Users::DossiersController < UsersController
   end
 
   def update_params
-    params.require(:dossier).permit(:id, individual_attributes: %i[gender nom prenom])
+    params.require(:dossier).permit(:id, individual_attributes: %i[prenom nom])
   end
 
   def siret

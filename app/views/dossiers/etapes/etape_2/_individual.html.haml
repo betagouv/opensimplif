@@ -15,10 +15,6 @@
           -# FIXME: h4 is supposed to be used as a title, not a form label
           .form-group
             %label
-              %h4= 'Civilité'
-              = ff.select :gender, %w(Mr Mme)
-          .form-group
-            %label
               %h4= 'Nom *'
               = ff.text_field :nom, {class: 'form-control'}
           .form-group

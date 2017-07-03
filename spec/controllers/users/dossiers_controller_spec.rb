@@ -312,14 +312,13 @@ describe Users::DossiersController, type: :controller do
 
     context 'when procedure is for individual' do
       let(:params) { {id: dossier_id, dossier: {id: dossier_id, individual_attributes: individual_params}} }
-      let(:individual_params) { {gender: 'Mr', nom: 'Julien', prenom: 'Xavier'} }
+      let(:individual_params) { {nom: 'Julien', prenom: 'Xavier'} }
       let(:procedure) { create(:procedure, :published, for_individual: true) }
 
       before do
         dossier.reload
       end
 
-      it { expect(dossier.individual.gender).to eq 'Mr' }
       it { expect(dossier.individual.nom).to eq 'Julien' }
       it { expect(dossier.individual.prenom).to eq 'Xavier' }
       it { expect(dossier.procedure.for_individual).to eq true }
