@@ -1,16 +1,13 @@
 .content#commentaires_flux{style:'width:100%;'}
-  %div#champ
-    %div#title
-      %h4
-        =@facade.champ.libelle
-    %div#value
-      =@facade.champ.value.html_safe
+  #champ
+    #title
+      %h4= @facade.champ.libelle
+    #value= @facade.champ.value.html_safe
   %br
-  %div#copy_champ_value{style:'text-align: right'}
-    %button.btn.btn-sm.btn-warning
-      Copier dans le commentaire
+  #copy_champ_value{style:'text-align: right'}
+    %button.btn.btn-sm.btn-warning= 'Copier dans le commentaire'
   %br
-  %div#commentaire_new{style: 'width:80%; margin-left:auto; margin-right:auto; margin-bottom:7%'}
+  #commentaire_new{style: 'width:80%; margin-left:auto; margin-right:auto; margin-bottom:7%'}
     = form_tag(url_for({ controller: 'commentaires', action: :create, dossier_id: @facade.dossier.id, champ_id: @facade.champ_id }), class: 'form-inline', method: 'POST', multipart: true) do
       %textarea.form-control{id: 'texte_commentaire', class: 'wysihtml5', name: 'texte_commentaire', style: 'width: 100%; margin-bottom:2%', rows: '5', placeholder:"Commentaire"}
       %h4.text-primary{style: 'margin-top: 0px'} Ajouter un fichier
@@ -19,10 +16,10 @@
 
   -@facade.commentaires.each do |com|
     %span.text-info#email_contact{style: 'font-weight:bold'}
-      =com.email
+      = com.email
     %span#created_at
       \-
-      =com.created_at_fr
+      = com.created_at_fr
     - unless com.piece_justificative.nil?
       \-
       %span#piece_justificative
@@ -31,9 +28,6 @@
 
     %br
     .description#body
-      =com.body.html_safe
+      = com.body.html_safe
 
     %br
-  %script{type:'text/javascript'}
-    copy_champ_value();
-    $('#commentaire_new #texte_commentaire').wysihtml5({ toolbar:{ "fa": true, "link": false, "color": true }, "locale": "fr-FR" });

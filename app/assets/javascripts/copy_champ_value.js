@@ -1,5 +1,5 @@
-function copy_champ_value(){
+function copyChampValueToCommentField(){
     $("#copy_champ_value button").on('click', function(){
-        $('.wysihtml5-sandbox').contents().find('body').html($.trim($("#champ #value").html()));
+        $('#modalCommentairesDossierParChamp .wysihtml5-sandbox').contents().find('body').html($.trim($("#champ #value").html()));
     });
 }

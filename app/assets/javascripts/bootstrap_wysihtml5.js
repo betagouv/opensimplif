@@ -1,8 +1,12 @@
-$(document).ready(wysihtml5_active);
-$(document).on('page:load', wysihtml5_active);
+$(document).ready(activateWysihtml5);
+$(document).on('page:load', activateWysihtml5);
 
-function wysihtml5_active (){
-    $('.wysihtml5').each(function(i, elem) {
+function activateWysihtml5(){
+    activateWysihtml5InDiv('body');
+}
+
+function activateWysihtml5InDiv(wrapperId){
+    $(wrapperId + ' .wysihtml5').each(function(i, elem) {
         $(elem).wysihtml5({ toolbar:{ "fa": true, "link": false, "color": true }, "locale": "fr-FR" });
     });
     replaceColorStylesWithInlineCss();
