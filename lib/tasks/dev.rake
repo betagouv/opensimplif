@@ -2,12 +2,19 @@ namespace :dev do
   desc 'Initialise dev environment'
   task :init do
     puts 'start initialisation'
+    Rake::Task['dev:generate_ga_file'].invoke
     Rake::Task['dev:generate_token_file'].invoke
     Rake::Task['dev:generate_franceconnect_file'].invoke
     Rake::Task['dev:generate_fog_credentials_file'].invoke
     Rake::Task['dev:generate_features_file'].invoke
 
     puts 'end initialisation'
+  end
+
+  task :generate_ga_file do
+    puts 'creating token.rb file'
+    file = File.new('app/views/layouts/_google_analytics.html.haml', 'w+')
+    file.close
   end
 
   task :generate_token_file do
@@ -56,7 +63,7 @@ EOF
   task :generate_features_file do
     puts 'creating features.yml file'
     content = <<EOF
-remote_storage: true
+remote_storage: false
 EOF
     file = File.new('config/initializers/features.yml', 'w+')
     file.write(content)
