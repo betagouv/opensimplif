@@ -153,7 +153,7 @@ Rails.application.routes.draw do
   namespace :backoffice do
     get 'sign_in' => '/gestionnaires/sessions#new'
     get 'dossiers/search' => 'dossiers#search'
-    get 'download_dossiers_tps' => 'dossiers#download_dossiers_tps'
+    get 'download_dossiers' => 'dossiers#download_dossiers'
 
     resources :dossiers do
       post 'valid' => 'dossiers#valid'
