@@ -4,11 +4,15 @@
 .col-lg-3.col-md-3.col-sm-3.col-xs-3.options
   .row
     .col-lg-12.col-md-12.col-sm-12.col-xs-12{style: 'margin-top: 10px'}
-      - if current_gestionnaire.follow?(@facade.dossier.id)
-        = link_to backoffice_dossier_follow_path(dossier_id: @facade.dossier.id), data: { method: :put }, class: 'button-navbar-action', id: "suivre_dossier_#{@facade.dossier.id}" do
-          %i.fa.fa-user-times
-          = 'Ne plus suivre'
-      - else
-        = link_to backoffice_dossier_follow_path(dossier_id: @facade.dossier.id), data: { method: :put }, class: 'button-navbar-action', id: "suivre_dossier_#{@facade.dossier.id}" do
-          %i.fa.fa-user-plus
-          = 'Suivre le dossier'
+      #dossier-navbar-buttons
+        = link_to '#', class: 'button-navbar-action', onclick: 'window.print();' do
+          %i.fa.fa-print
+          = 'Imprimer'
+        - if current_gestionnaire.follow?(@facade.dossier.id)
+          = link_to backoffice_dossier_follow_path(dossier_id: @facade.dossier.id), data: { method: :put }, class: 'button-navbar-action', id: "suivre_dossier_#{@facade.dossier.id}" do
+            %i.fa.fa-user-times
+            = 'Ne plus suivre'
+        - else
+          = link_to backoffice_dossier_follow_path(dossier_id: @facade.dossier.id), data: { method: :put }, class: 'button-navbar-action', id: "suivre_dossier_#{@facade.dossier.id}" do
+            %i.fa.fa-user-plus
+            = 'Suivre le dossier'

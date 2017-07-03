@@ -173,22 +173,24 @@
   cursor: pointer;
 }
 
-.button-navbar-action {
-  background-color: #E4594F;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: block;
-  width: 150px;
-  text-align: center;
-  padding: 2px;
+#dossier-navbar-buttons {
   float: right;
-  .fa {
-    font-size: 20px;
-    margin-right: 10px;
+  .button-navbar-action {
+    background-color: #E4594F;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    padding: 2px 10px;
+    margin-left: 8px;
+    .fa {
+      font-size: 20px;
+      margin-right: 10px;
+    }
   }
-}
-.button-navbar-action:hover {
-  color: #F2F6FA;
+  .button-navbar-action:hover {
+    color: #F2F6FA;
+  }
 }
 
 .button_navbar:hover, .button-navbar-action:hover {
