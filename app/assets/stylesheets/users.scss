@@ -19,6 +19,30 @@
 }
 
 #description_page {
+  #lien_notice_panel {
+    width: 280px;
+    position: fixed;
+    background-color: white;
+    right: 5%;
+    top: 80px;
+    z-index: 200;
+    .panel-info {
+      margin-bottom: 0;
+      .text-info{
+        font-size: 2em;
+        margin-top: 20%;
+      }
+      #right-column{
+        padding-right: 0;
+      }
+    }
+  }
+  .align-right {
+    text-align: right;
+  }
+  input[type='submit'] {
+    float: right;
+  }
 }
 
 #carto_page {
