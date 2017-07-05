@@ -17,7 +17,7 @@
       = hidden_field_tag :authenticity_token, form_authenticity_token
       %textarea.form-control{id: 'texte_commentaire', class: 'wysihtml5', name: 'texte_commentaire', style: 'width: 100%; margin-bottom: 2%;', rows: '5', placeholder: 'Commentaire'}
       %h4.text-primary{style: 'margin-top: 0px;'}= 'Ajouter un fichier'
-      = file_field_tag "piece_justificative[content]", accept:  PieceJustificative.accept_format, style: 'float: left; margin-left: 20px;'
+      = file_field_tag 'piece_justificative[content]', accept: PieceJustificative.accept_format, style: 'float: left; margin-left: 20px;'
       %input.form-control.btn.btn-success{type: 'submit', value: 'Poster', style: 'float:right'}
 
   %hr
