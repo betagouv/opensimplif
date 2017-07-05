@@ -66,8 +66,6 @@ class Dossier < ActiveRecord::Base
       LEFT OUTER JOIN individuals i ON d.id = i.dossier_id
       LEFT OUTER JOIN champs ch ON d.id = ch.dossier_id
       LEFT OUTER JOIN commentaires com ON d.id = com.dossier_id
-      LEFT OUTER JOIN types_de_champ t ON p.id = t.procedure_id
-      LEFT OUTER JOIN drop_down_lists dd ON t.id = dd.type_de_champ_id
       LEFT OUTER JOIN pieces_justificatives pj ON d.id = pj.dossier_id
       WHERE
         u.email ~ :search_terms
@@ -75,8 +73,6 @@ class Dossier < ActiveRecord::Base
         OR i.nom ~ :search_terms OR i.prenom ~ :search_terms 
         OR ch.value ~ :search_terms
         OR com.body ~ :search_terms
-        OR t.libelle ~ :search_terms OR t.description ~ :search_terms
-        OR dd.value ~ :search_terms
         OR pj.original_filename ~ :search_terms
     SQL
     self.find_by_sql([query, {search_terms: search_terms}]).uniq

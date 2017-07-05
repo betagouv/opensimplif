@@ -84,25 +84,6 @@ describe Dossier do
           end
         end
 
-        describe 'types_de_champ' do
-          it do
-            procedure = create :procedure
-            create :type_de_champ, procedure: procedure, libelle: search_term
-            expected_dossier.update procedure: procedure
-            is_expected.to eq [expected_dossier]
-          end
-        end
-
-        describe 'drop_down_lists' do
-          it do
-            procedure = create :procedure
-            type_de_champ = create :type_de_champ, procedure: procedure, libelle: search_term
-            create :drop_down_list, type_de_champ: type_de_champ, value: search_term
-            expected_dossier.update procedure: procedure
-            is_expected.to eq [expected_dossier]
-          end
-        end
-
         describe 'pieces_justificatives' do
           it do
             create :piece_justificative, :contrat, dossier: expected_dossier, original_filename: search_term
