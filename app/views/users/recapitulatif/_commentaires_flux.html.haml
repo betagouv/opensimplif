@@ -1,7 +1,5 @@
 .content#commentaires_flux{style: 'width:100%;'}
-  %label{style: 'text-transform: uppercase; font-size: 0.8em; color: #aaa;'}= 'Champ'
-  %p= @facade.champ.libelle
-  %label{style: 'text-transform: uppercase; font-size: 0.8em; color: #aaa;'}= 'Valeur'
+  %label{style: 'text-transform: uppercase; font-size: 0.8em; color: #aaa;'}= @facade.champ.libelle
   - if @facade.champ.value
     %p#value= @facade.champ.value.html_safe
     #copy_champ_value
