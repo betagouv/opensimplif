@@ -54,15 +54,6 @@ describe Dossier do
           end
         end
 
-        describe 'procedure' do
-          let(:procedure) { create :procedure, libelle: search_term }
-
-          it do
-            expected_dossier.update procedure: procedure
-            is_expected.to eq [expected_dossier]
-          end
-        end
-
         describe 'individual' do
           it do
             create :individual, dossier: expected_dossier, nom: search_term
@@ -94,12 +85,12 @@ describe Dossier do
 
       describe 'several results' do
         before do
-          individual_dossier = create :dossier
-          create :individual, dossier: individual_dossier, prenom: search_term
-
           user = create :user, email: "#{search_term}@sgmap.com"
           create :dossier, user: user
           create :dossier, user: user
+
+          individual_dossier = create :dossier
+          create :individual, dossier: individual_dossier, prenom: search_term
 
           champ_dossier = create :dossier
           create :champ, dossier: champ_dossier, value: search_term
@@ -110,9 +101,12 @@ describe Dossier do
 
           commentaire_dossier = create :dossier
           create :commentaire, dossier: commentaire_dossier, body: search_term
+
+          pj_dossier = create :dossier
+          create :piece_justificative, :contrat, dossier: pj_dossier, original_filename: search_term
         end
 
-        it { expect(results.count).to eq 5 }
+        it { expect(results.count).to eq 6 }
       end
     end
   end
