@@ -37,36 +37,66 @@ describe Dossier do
 
   describe 'scopes' do
     describe 'search' do
-      subject { Dossier.search term }
+      subject(:results) { Dossier.search search_term }
 
+      let(:search_term) { 'search_term' }
       let!(:random_other_dossier) { create :dossier }
 
-      describe 'individual' do
-        let(:individual) { create :individual }
-        let(:term) { individual.nom }
+      describe 'one result' do
+        let(:expected_dossier) { create :dossier }
 
-        it do
-          dossier = create :dossier, individual: individual
-          is_expected.to eq [dossier]
+        describe 'individual' do
+          it do
+            create :individual, dossier: expected_dossier, nom: search_term
+            is_expected.to eq [expected_dossier]
+          end
+        end
+
+        describe 'creator email' do
+          let(:user) { create :user, email: "#{search_term}@sgmap.fr" }
+
+          it do
+            expected_dossier.update user: user
+            is_expected.to eq [expected_dossier]
+          end
+        end
+
+        describe 'champs' do
+          it do
+            create :champ, dossier: expected_dossier, value: search_term
+            is_expected.to eq [expected_dossier]
+          end
+        end
+
+        describe 'commentaires' do
+          it do
+            create :commentaire, dossier: expected_dossier, body: search_term
+            is_expected.to eq [expected_dossier]
+          end
         end
       end
 
-      describe 'creator email' do
-        let(:user) { create :user }
-        let(:term) { user.email }
+      describe 'several results' do
+        before do
+          individual_dossier = create :dossier
+          create :individual, dossier: individual_dossier, prenom: search_term
 
-        it do
-          dossier = create :dossier, user: user
-          is_expected.to eq [dossier]
+          user = create :user, email: "#{search_term}@sgmap.com"
+          create :dossier, user: user
+          create :dossier, user: user
+
+          champ_dossier = create :dossier
+          create :champ, dossier: champ_dossier, value: search_term
+
+          # This dossier can be found both by its user email and its champ value.
+          # We make sure it appears only once in the active record collection
+          champ_dossier.update user: user
+
+          commentaire_dossier = create :dossier
+          create :commentaire, dossier: commentaire_dossier, body: search_term
         end
-      end
 
-      describe 'champs' do
-        let(:dossier) { create :dossier }
-        let(:champ) { create :champ, dossier: dossier, value: 'Simplification' }
-        let(:term) { champ.value }
-
-        it { is_expected.to eq [dossier] }
+        it { expect(results.count).to eq 5 }
       end
     end
   end
