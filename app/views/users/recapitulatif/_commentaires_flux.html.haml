@@ -1,7 +1,8 @@
 .content#commentaires_flux{style: 'width:100%;'}
   %label{style: 'text-transform: uppercase; font-size: 0.8em; color: #aaa;'}= @facade.champ.libelle
   - if @facade.champ.value
-    %p#value= @facade.champ.value.html_safe
+    #value-wrapper-block
+      = @facade.champ.value.html_safe
     #copy_champ_value
       %button.btn.btn-xs.btn-primary
         %i.fa.fa-arrow-down
