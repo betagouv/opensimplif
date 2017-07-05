@@ -45,18 +45,27 @@ describe Dossier do
       describe 'one result' do
         let(:expected_dossier) { create :dossier }
 
-        describe 'individual' do
-          it do
-            create :individual, dossier: expected_dossier, nom: search_term
-            is_expected.to eq [expected_dossier]
-          end
-        end
-
         describe 'creator email' do
           let(:user) { create :user, email: "#{search_term}@sgmap.fr" }
 
           it do
             expected_dossier.update user: user
+            is_expected.to eq [expected_dossier]
+          end
+        end
+
+        describe 'procedure' do
+          let(:procedure) { create :procedure, libelle: search_term }
+
+          it do
+            expected_dossier.update procedure: procedure
+            is_expected.to eq [expected_dossier]
+          end
+        end
+
+        describe 'individual' do
+          it do
+            create :individual, dossier: expected_dossier, nom: search_term
             is_expected.to eq [expected_dossier]
           end
         end
@@ -71,6 +80,32 @@ describe Dossier do
         describe 'commentaires' do
           it do
             create :commentaire, dossier: expected_dossier, body: search_term
+            is_expected.to eq [expected_dossier]
+          end
+        end
+
+        describe 'types_de_champ' do
+          it do
+            procedure = create :procedure
+            create :type_de_champ, procedure: procedure, libelle: search_term
+            expected_dossier.update procedure: procedure
+            is_expected.to eq [expected_dossier]
+          end
+        end
+
+        describe 'drop_down_lists' do
+          it do
+            procedure = create :procedure
+            type_de_champ = create :type_de_champ, procedure: procedure, libelle: search_term
+            create :drop_down_list, type_de_champ: type_de_champ, value: search_term
+            expected_dossier.update procedure: procedure
+            is_expected.to eq [expected_dossier]
+          end
+        end
+
+        describe 'pieces_justificatives' do
+          it do
+            create :piece_justificative, :contrat, dossier: expected_dossier, original_filename: search_term
             is_expected.to eq [expected_dossier]
           end
         end
