@@ -57,6 +57,26 @@ class Dossier < ActiveRecord::Base
   TERMINE = %w[closed refused without_continuation].freeze
   ALL_STATE = %w[initiated updated replied validated submitted received closed refused without_continuation].freeze
 
+  scope :search, (lambda do |search_terms|
+    query = <<-SQL
+      SELECT d.*
+        FROM dossiers d
+        INNER JOIN users u ON d.user_id = u.id
+        WHERE u.email ~ :search_terms
+      UNION
+      SELECT d.*
+        FROM dossiers d
+        INNER JOIN individuals i ON d.id = i.dossier_id
+        WHERE i.nom ~ :search_terms OR i.prenom ~ :search_terms
+      UNION
+      SELECT d.*
+        FROM dossiers d
+        INNER JOIN champs ON d.id = champs.dossier_id
+        WHERE champs.value ~ :search_terms
+    SQL
+    self.find_by_sql([query, {search_terms: search_terms}])
+  end)
+
   def unreaded_notifications
     @unreaded_notif ||= notifications.where(already_read: false)
   end

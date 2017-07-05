@@ -35,6 +35,42 @@ describe Dossier do
     it { is_expected.to delegate_method(:france_connect_information).to(:user) }
   end
 
+  describe 'scopes' do
+    describe 'search' do
+      subject { Dossier.search term }
+
+      let!(:random_other_dossier) { create :dossier }
+
+      describe 'individual' do
+        let(:individual) { create :individual }
+        let(:term) { individual.nom }
+
+        it do
+          dossier = create :dossier, individual: individual
+          is_expected.to eq [dossier]
+        end
+      end
+
+      describe 'creator email' do
+        let(:user) { create :user }
+        let(:term) { user.email }
+
+        it do
+          dossier = create :dossier, user: user
+          is_expected.to eq [dossier]
+        end
+      end
+
+      describe 'champs' do
+        let(:dossier) { create :dossier }
+        let(:champ) { create :champ, dossier: dossier, value: 'Simplification' }
+        let(:term) { champ.value }
+
+        it { is_expected.to eq [dossier] }
+      end
+    end
+  end
+
   describe 'methods' do
     let(:dossier) { create(:dossier, :with_entreprise, user: user) }
 
