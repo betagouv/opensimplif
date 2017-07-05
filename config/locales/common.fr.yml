@@ -4,3 +4,7 @@ fr:
       zero: 0 simplification
       one: 1 simplification
       other: "%{count} simplifications"
+    dossier_count:
+      zero: 0 dossier
+      one: 1 dossier
+      other: "%{count} dossiers"
