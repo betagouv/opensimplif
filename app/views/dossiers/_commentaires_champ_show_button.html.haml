@@ -1,0 +1,6 @@
+- route = Rails.application.routes.recognize_path(request.referrer)
+- unless route[:controller].match('admin')
+  - data_href = backoffice_dossier_commentaires_path(champ.dossier, champs_id: champ.id)
+  - link_style = 'margin-left: -15px; font-size: 0.7em; text-decoration: none;'
+  = link_to '', title: 'Voir les commentaires pour ce champ', style: link_style, data: {href: data_href, toggle: 'modal', target: '#modalCommentairesDossierParChamp'} do
+    %i.fa.fa-comment-o

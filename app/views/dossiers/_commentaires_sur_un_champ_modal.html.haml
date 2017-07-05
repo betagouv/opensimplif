@@ -1,0 +1,12 @@
+#modalCommentairesDossierParChamp.modal.fade{'tabindex' => -1, 'role' => 'dialog'}
+  .modal-dialog.modal-lg{'role' => 'document'}
+    .modal-content
+      .modal-header
+        %button.close{'data-dismiss' => 'modal', 'aria-label' => 'Fermer'}
+          %span{'aria-hidden' => true}
+            &times;
+        .modal-title= 'Commentaires'
+      .modal-body
+        %p= 'Chargement des commentaires en cours...'
+      .modal-footer
+        %button.btn.btn-primary{'data-dismiss' => 'modal'}= 'Fermer'

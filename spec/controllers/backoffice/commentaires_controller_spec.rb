@@ -16,7 +16,7 @@ describe Backoffice::CommentairesController, type: :controller do
       sign_in gestionnaire
     end
 
-    context "création correct d'un commentaire" do
+    context "création correcte d'un commentaire" do
       subject { post :create, params: {dossier_id: dossier_id, email_commentaire: email_commentaire, texte_commentaire: texte_commentaire} }
 
       it 'depuis la page admin' do

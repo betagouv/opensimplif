@@ -24,7 +24,7 @@ class CommentairesController < ApplicationController
       @commentaire.dossier.next_step! 'user', 'comment' if current_user.email == @commentaire.dossier.user.email
     end
 
-    unless params[:piece_justificative].nil?
+    if params[:piece_justificative].present?
       pj = PiecesJustificativesService.upload_one! @commentaire.dossier, current_user, params
 
       if pj.errors.empty?
@@ -35,36 +35,24 @@ class CommentairesController < ApplicationController
     end
 
     @commentaire.body = params['texte_commentaire']
-    saved = false
     if @commentaire.body.blank? && @commentaire.piece_justificative.nil?
       flash.alert = 'Veuillez rédiger un message ou ajouter une pièce jointe.'
-    else
-      saved = @commentaire.save unless flash.alert
+    elsif !flash.alert
+      @commentaire.save
     end
 
-    notify_user_with_mail(@commentaire) if saved
+    if gestionnaire? && !current_gestionnaire.follow?(@commentaire.dossier)
+      current_gestionnaire.toggle_follow_dossier @commentaire.dossier
+    end
 
-    if gestionnaire?
-      unless current_gestionnaire.follow? @commentaire.dossier
-        current_gestionnaire.toggle_follow_dossier @commentaire.dossier
-      end
-
-      redirect_to url_for(controller: 'backoffice/dossiers', action: :show, id: params['dossier_id'])
-    elsif current_user.email != @commentaire.dossier.user.email
-      invite = Invite.where(dossier: @commentaire.dossier, email: current_user.email).first
-      redirect_to url_for(controller: 'users/dossiers/invites', action: :show, id: invite.id)
+    if pj || params[:champ_id].blank?
+      redirect_to backoffice_dossier_path(@commentaire.dossier)
     else
-      redirect_to users_dossier_recapitulatif_path(params['dossier_id'])
+      @modal_url = backoffice_dossier_commentaires_path(@commentaire.dossier, champs_id: params[:champ_id])
     end
   end
 
   def gestionnaire?
     false
-  end
-
-  private
-
-  def notify_user_with_mail(commentaire)
-    # NotificationMailer.new_answer(commentaire.dossier).deliver_now! unless current_user.try(:email) == commentaire.dossier.user.email
   end
 end

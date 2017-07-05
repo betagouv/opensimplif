@@ -24,7 +24,6 @@
       %br
       %h3= 'Documents administratifs'
 
-    -# TODO: Refactor
     .row
       .col-lg-8
         = render partial: 'users/description/pieces_justificatives', locals: { dossier: @dossier }
@@ -35,7 +34,9 @@
         %h6= 'Tous les champs portant un * sont obligatoires.'
 
       - if !@dossier.draft?
-        = render partial: '/layouts/modifications_terminees'
+        = render partial: 'layouts/modifications_terminees'
       - else
         = submit_tag 'Valider', id: 'suivant', name: 'submit[nouveaux]', class: %w(btn btn btn-success), data: { disable_with: 'Valider', submit: true }
     %br
+
+= render partial: 'dossiers/commentaires_sur_un_champ_modal'

@@ -145,18 +145,4 @@
                           = link_to 'Récupérer', piece_justificative.content_url, {target: :blank}
             .modal-footer
 
-#modalCommentairesDossierParChamp.modal.fade{"tabindex" => -1, "role" => "dialog"}
-  .modal-dialog.modal-lg{"role" => "document"}
-    .modal-content
-      .modal-header
-        %button.close{"data-dismiss" => "modal", "aria-label" => "Fermer"}
-          %span{"aria-hidden" => true}
-            &times;
-        .modal-title
-          Commentaires
-      .modal-body
-        %p
-          Chargement des commentaires en cours...
-      .modal-footer
-        %button.btn.btn-primary{"data-dismiss" => "modal"}
-          Fermer
+= render partial: 'dossiers/commentaires_sur_un_champ_modal'

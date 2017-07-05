@@ -1,10 +1,12 @@
--champs.each do |champ|
+- champs.each do |champ|
   - if champ.order_place > order_place
+
     - if champ.type_champ == 'header_section'
       - break
 
-    - unless champ.type_champ == 'checkbox' || champ.type_champ == 'engagement'
-      %h4
+    - unless %w(checkbox engagement).include? champ.type_champ
+      %h4{style: 'margin-bottom: 10px'}
+        = render partial: 'dossiers/commentaires_champ_show_button', locals: { champ: champ }
         = champ.libelle
         - if champ.mandatory?
           = '*'
@@ -40,7 +42,7 @@
       = render partial: 'users/description/champs/departements', locals: {champ: champ}
 
     - else
-      %input.form-control{name:"champs['#{champ.id}']",
+      %input.form-control{name: "champs['#{champ.id}']",
                       placeholder: champ.libelle,
                       id: "champs_#{champ.id}",
                       value: champ.value,
@@ -50,5 +52,5 @@
 
   - unless champ.description.empty? || champ.type_champ == 'engagement'
     .row
-      .col-lg-8.col-md-8.col-sm-8.col-xs-8{class: 'description_div', id:"description_champs_#{champ.id}"}
+      .col-lg-8.col-md-8.col-sm-8.col-xs-8{class: 'description_div', id: "description_champs_#{champ.id}"}
         = champ.description
