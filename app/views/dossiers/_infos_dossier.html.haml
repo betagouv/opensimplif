@@ -17,7 +17,7 @@
 
     - unless @facade.champs.nil?
       - @facade.champs.each do |champ|
-        - if champ.type_champ == 'header_section'
+        - if champ.id == 'header_section'
           .row.title-row.margin-top-40
             %div.col-md-3.col-sm-3.col-xs-3.col-lg-3.split-hr
             %div.col-md-6.col-sm-6.col-xs-6.col-lg-6.dossier-title= champ.libelle.upcase

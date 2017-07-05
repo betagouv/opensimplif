@@ -14,7 +14,7 @@ class DossierFacades
   end
 
   def champs
-    @dossier.ordered_champs
+    @dossier.ordered_champs.includes(:type_de_champ)
   end
 
   def entreprise
@@ -42,7 +42,7 @@ class DossierFacades
   end
 
   def commentaires
-    @dossier.ordered_commentaires.where(champ_id: @champ_id).decorate
+    @dossier.ordered_commentaires.where(champ_id: @champ_id).includes(:piece_justificative).decorate
   end
 
   def procedure
