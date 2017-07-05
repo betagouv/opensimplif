@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :piece_justificative do
+    association :user
+
     trait :rib do
       content Rack::Test::UploadedFile.new('./spec/support/files/RIB.pdf', 'application/pdf')
     end

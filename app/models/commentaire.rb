@@ -15,16 +15,16 @@ class Commentaire < ActiveRecord::Base
   private
 
   def internal_notification
-    NotificationService.new('commentaire', notification_text, dossier.id).notify
+    if !piece_justificative && body.present?
+      NotificationService.new('commentaire', notification_text, dossier.id).notify
+    end
   end
 
   def notification_text
     if champ
       "Nouveau commentaire sur le champ #{champ.type_de_champ.libelle} par #{email}."
-    elsif piece_justificative
-      "Nouveau commentaire sur la pièce #{piece_justificative.content} par #{email}."
     else
-      "Nouveau commentaire sur la simplification par #{email}."
+      "Nouveau commentaire dans la messagerie par #{email}."
     end
   end
 end

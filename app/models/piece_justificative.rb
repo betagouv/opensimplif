@@ -9,11 +9,13 @@ class PieceJustificative < ActiveRecord::Base
 
   alias_attribute :type, :type_de_piece_justificative_id
 
+  attr_accessor :commentaire_champ_libelle
+
   mount_uploader :content, PieceJustificativeUploader
   validates :content, file_size: {maximum: 20.megabytes}
   validates :content, presence: true, allow_blank: false, allow_nil: false
 
-  after_save :internal_notification, if: proc { !dossier.nil? }
+  after_save :internal_notification, if: proc { dossier.present? }
 
   def empty?
     content.blank?
@@ -39,7 +41,7 @@ class PieceJustificative < ActiveRecord::Base
   end
 
   def self.accept_format
-    " application/pdf,
+    ' application/pdf,
       application/msword,
       application/vnd.openxmlformats-officedocument.wordprocessingml.document,
       application/vnd.ms-excel,
@@ -51,14 +53,23 @@ class PieceJustificative < ActiveRecord::Base
       application/vnd.oasis.opendocument.spreadsheet,
       image/png,
       image/jpeg
-    "
+    '
   end
 
   private
 
   def internal_notification
-    unless type_de_piece_justificative.nil? && dossier.state == 'draft'
-      NotificationService.new('piece_justificative', libelle, dossier.id).notify
+    if !type_de_piece_justificative.nil? || dossier.state != 'draft'
+      NotificationService.new('piece_justificative', notification_text, dossier.id).notify
+    end
+  end
+
+  def notification_text
+    filename = original_filename.to_s.first(50)
+    if commentaire_champ_libelle
+      "Le fichier #{filename} a été joint au champ #{commentaire_champ_libelle} par #{user.email}."
+    else
+      "Le fichier #{filename} a été partagé dans la messagerie par #{user.email}."
     end
   end
 end

@@ -19,9 +19,9 @@ class PiecesJustificativesService
     errors
   end
 
-  def self.upload_one!(dossier, user, params)
+  def self.upload_one!(dossier, user, params, commentaire_champ_libelle = nil)
     if ClamavService.safe_file? params[:piece_justificative][:content].path
-      piece_justificative = PieceJustificative.new(content: params[:piece_justificative][:content], dossier: dossier, type_de_piece_justificative: nil, user: user)
+      piece_justificative = PieceJustificative.new(content: params[:piece_justificative][:content], dossier: dossier, type_de_piece_justificative: nil, user: user, commentaire_champ_libelle: commentaire_champ_libelle)
       piece_justificative.save
     else
       piece_justificative = PieceJustificative.new

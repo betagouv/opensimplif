@@ -25,7 +25,8 @@ class CommentairesController < ApplicationController
     end
 
     if params[:piece_justificative].present?
-      pj = PiecesJustificativesService.upload_one! @commentaire.dossier, current_user, params
+      commentaire_champ_libelle = @commentaire.champ.type_de_champ.libelle if @commentaire.champ
+      pj = PiecesJustificativesService.upload_one! @commentaire.dossier, current_user, params, commentaire_champ_libelle
 
       if pj.errors.empty?
         @commentaire.piece_justificative = pj
