@@ -45,9 +45,6 @@ class Backoffice::DossiersController < Backoffice::DossiersListController
   def search
     @search_terms = params[:q]
 
-    # exact id match?
-    @dossiers = Dossier.where(id: @search_terms.to_i) if @search_terms.to_i < 2_147_483_647
-
     # full text search
     # unless @dossiers.any?
     #   @dossiers = Search.new(
@@ -56,7 +53,7 @@ class Backoffice::DossiersController < Backoffice::DossiersListController
     #   ).results
     # end
 
-    @dossiers = Dossier.search(@search_terms) if @dossiers.empty?
+    @dossiers = Dossier.not_archived.not_draft.search(@search_terms)
     @dossiers = Dossier.none if @dossiers.empty?
 
     smart_listing_create :search,

@@ -43,7 +43,7 @@ class Search < ActiveRecord::Base
   def results
     return Search.none unless @query.present?
     search_term = Search.connection.quote(to_tsquery)
-    dossier_ids = Dossier.where(archived: false).where.not(state: 'draft').pluck(:id)
+    dossier_ids = Dossier.not_archived.not_draft.pluck(:id)
 
     q = Search
         .select('DISTINCT(searches.dossier_id)')

@@ -1,7 +1,7 @@
 class DossierFacades
   # TODO: rechercher en fonction de la personne/email
   def initialize(dossier_id, _email, champ_id = nil)
-    @dossier = Dossier.where(archived: false).find(dossier_id)
+    @dossier = Dossier.not_archived.find(dossier_id)
     @champ_id = champ_id
   end
 

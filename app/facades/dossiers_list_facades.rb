@@ -19,7 +19,7 @@ class DossiersListFacades
   end
 
   def total_dossier
-    current_devise_profil.dossiers.where(archived: false).count
+    current_devise_profil.dossiers.not_archived.count
   end
 
   def total_dossier_follow

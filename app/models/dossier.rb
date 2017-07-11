@@ -57,6 +57,9 @@ class Dossier < ActiveRecord::Base
   TERMINE = %w[closed refused without_continuation].freeze
   ALL_STATE = %w[initiated updated replied validated submitted received closed refused without_continuation].freeze
 
+  scope :not_archived, (->() { where(archived: false) })
+  scope :not_draft, (->() { where.not(state: 'draft') })
+
   scope :search, (lambda do |search_terms|
     query = <<-SQL
       SELECT d.*
